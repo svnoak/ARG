@@ -1,0 +1,14 @@
+{
+    "name": "Test Web",
+    "short_name": "TestWeb",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#D55234",
+    "theme_color": "#2D5AF9",
+    "orientation": "portrait-primary",
+    "icons": [{
+      "src": "/img/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }]
+  }
