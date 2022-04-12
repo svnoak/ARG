@@ -3,7 +3,7 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').then((reg) => console.log('service worker registered', reg)).catch((error) => console.log('service worker not registered', error));
 }
 
-
+/*
 
 Notification.requestPermission(status => {
     console.log('notification permission status:' , status)
@@ -16,7 +16,7 @@ if(Notification.permission === 'granted'){
 }
 
 
-/*
+
 function displayNotification() {
     if (Notification.permission === 'granted') {
         navigator.serviceWorker.getRegistration('sw.js').then(reg => {
@@ -25,7 +25,7 @@ function displayNotification() {
         })
     }
 }
-*/
+
 
 function showNotification() {
     Notification.requestPermission(function(result) {
@@ -38,3 +38,4 @@ function showNotification() {
   }
 
   showNotification();
+*/
