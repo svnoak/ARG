@@ -11,14 +11,12 @@ Notification.requestPermission(status => {
 
 if(Notification.permission === 'granted'){
  //  alert('we have permission');
-testNotification();
+const notification = new notification("game title", {
+    body: "time to play the game"
+});
 }
 
-function testNotification(){
-    const notification = new Notification("new message from game", {
-        body: "the game is telling you to play the game more!"
-    });
-}
+
 
 /*
 
