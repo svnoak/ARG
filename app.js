@@ -19,7 +19,7 @@ if(Notification.permission === 'granted'){
 
 
 
-/*
+
 
 function showNotification() {
     Notification.requestPermission(function(result) {
@@ -31,5 +31,5 @@ function showNotification() {
     });
   }
 
-  */
+
 
