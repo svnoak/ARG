@@ -4,12 +4,13 @@ if('serviceWorker' in navigator){
 }
 
 
-
+/*
 Notification.requestPermission(status => {
     console.log('notification permission status:' , status)
 });
+*/
 
-
+/*
 function displayNotification() {
     if (Notification.permission === 'granted') {
         navigator.serviceWorker.getRegistration('sw.js').then(reg => {
@@ -18,11 +19,14 @@ function displayNotification() {
         })
     }
 }
+*/
 
-displayNotification();
-navigator.serviceWorker.getRegistration('sw.js').then(function(registration) {
-    if(registration){
-        registration.showNotification('Hello world!');
-        console.log("hej hopp 2");
-    }
-  });
+function showNotification() {
+    Notification.requestPermission(function(result) {
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Vibration Sample')
+        });
+      }
+    });
+  }
