@@ -4,13 +4,14 @@ if('serviceWorker' in navigator){
 }
 */
 
+
 Notification.requestPermission(status => {
     console.log('notification permission status:' , status)
 });
 
 function displayNotification() {
     if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration().then(reg => {
+        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
             reg.showNotification('Hello world!');
         })
     }
