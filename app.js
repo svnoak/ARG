@@ -10,16 +10,18 @@ Notification.requestPermission(status => {
 });
 
 if(Notification.permission === 'granted'){
- //  alert('we have permission');
- const greeting = new Notification('Hi, How are you?',{
-    body: 'Have a good day',
-    icon: './img/goodday.png'
-  });
+   alert('we have permission');
+
+   
 }
 
+function testNotification(){
+    const notification = new notification("new message from game", {
+        body: "the game is telling you to play the game more!"
+    });
+}
 
-
-
+/*
 
 function showNotification() {
     Notification.requestPermission(function(result) {
@@ -31,5 +33,5 @@ function showNotification() {
     });
   }
 
-
+  */
 
