@@ -11,3 +11,15 @@ navigator.serviceWorker.getRegistration().then(reg => {
     });
 });
 }
+
+Notification.requestPermission(status => {
+    console.log('notification permission status:' , status)
+});
+
+function displayNotification() {
+    if (Notification.permission === 'Granted') {
+        navigator.serviceWorker.getRegistration().then(reg => {
+            reg.showNotification('Hello world!');
+        })
+    }
+}
