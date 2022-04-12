@@ -19,6 +19,7 @@ function displayNotification() {
     }
 }
 
+displayNotification();
 navigator.serviceWorker.getRegistration('sw.js').then(function(registration) {
     if(registration){
         registration.showNotification('Hello world!');
