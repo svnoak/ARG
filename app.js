@@ -4,11 +4,11 @@ if('serviceWorker' in navigator){
 }
 
 
-/*
+
 Notification.requestPermission(status => {
     console.log('notification permission status:' , status)
 });
-*/
+
 
 /*
 function displayNotification() {
