@@ -31,4 +31,4 @@ function showNotification() {
     });
   }
 
-  self.addEventListener('notificationclick', function(event) {showNotification()})
+  showNotification();
