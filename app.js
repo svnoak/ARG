@@ -11,7 +11,7 @@ Notification.requestPermission(status => {
 
 function displayNotification() {
     if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration('/sw.js').then(reg => {
+        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
             reg.showNotification('Hello world!');
         })
     }
