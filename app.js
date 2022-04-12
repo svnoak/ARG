@@ -11,9 +11,10 @@ Notification.requestPermission(status => {
 
 if(Notification.permission === 'granted'){
  //  alert('we have permission');
-const notification = new notification("game title", {
-    body: "time to play the game"
-});
+ const greeting = new Notification('Hi, How are you?',{
+    body: 'Have a good day',
+    icon: './img/goodday.png'
+  });
 }
 
 
