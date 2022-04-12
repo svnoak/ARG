@@ -10,30 +10,27 @@ Notification.requestPermission(status => {
 });
 
 if(Notification.permission === 'granted'){
-   alert('we have permission');
-    showNotification('hello');
+ //  alert('we have permission');
+testNotification();
 }
 
+function testNotification(){
+    const notification = new notification("new message from game", {
+        body: "the game is telling you to play the game more!"
+    });
+}
 
 /*
-function displayNotification() {
-    if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
-            reg.showNotification('Hello world!');
-            console.log("hej hopp 1");
-        })
-    }
-}
-*/
 
 function showNotification() {
     Notification.requestPermission(function(result) {
       if (result === 'granted') {
         navigator.serviceWorker.ready.then(function(registration) {
-          registration.showNotification('Vibration Sample')
+          registration.showNotification('sw registered')
         });
       }
     });
   }
 
-  showNotification();
+  */
+
