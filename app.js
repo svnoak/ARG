@@ -31,6 +31,5 @@ function showNotification() {
     });
   }
 
-  addEventListener('notificationclick', event => { });
+  addEventListener('notificationclick', event => { showNotification() });
 
-  onnotificationclick = event => { showNotification()};
