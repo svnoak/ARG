@@ -12,7 +12,7 @@ Notification.requestPermission(status => {
 if(Notification.permission === 'granted'){
  //  alert('we have permission');
 
-   
+   testNotification();
 }
 
 function testNotification(){
