@@ -10,8 +10,9 @@ Notification.requestPermission(status => {
 });
 
 
-        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
-            console.log(reg);
-        })
-    
+navigator.serviceWorker.getRegistration('/sw.js').then(function(registration) {
+    if(registration){
+     console.log("sw registered");
+    }
+  });
 
