@@ -10,9 +10,9 @@ Notification.requestPermission(status => {
 });
 
 if(Notification.permission === 'granted'){
-    const greeting = new Notification('Hi, How are you?',{
-        body: 'Have a good day'
-      });
+    const notification = new Notification("tjenare", {
+        body: "what do we do now"
+    });
 }
 
 
