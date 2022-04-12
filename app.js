@@ -10,7 +10,7 @@ Notification.requestPermission(status => {
 });
 
 if(Notification.permission === 'granted'){
-   alert('we have permission');
+ //  alert('we have permission');
 
    
 }
