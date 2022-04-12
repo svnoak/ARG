@@ -12,8 +12,9 @@ Notification.requestPermission(status => {
 
 function displayNotification() {
     if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration().then(reg => {
+        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
             reg.showNotification('Hello world!');
+            console.log("hej hopp 1");
         })
     }
 }
@@ -21,5 +22,6 @@ function displayNotification() {
 navigator.serviceWorker.getRegistration('sw.js').then(function(registration) {
     if(registration){
         registration.showNotification('Hello world!');
+        console.log("hej hopp 2");
     }
   });
