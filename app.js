@@ -12,9 +12,14 @@ Notification.requestPermission(status => {
 
 function displayNotification() {
     if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration('sw.js').then(reg => {
+        navigator.serviceWorker.getRegistration().then(reg => {
             reg.showNotification('Hello world!');
         })
     }
 }
 
+navigator.serviceWorker.getRegistration().then(function(registration) {
+    if(registration){
+        registration.showNotification('Hello world!');
+    }
+  });
