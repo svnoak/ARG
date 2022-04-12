@@ -30,3 +30,7 @@ function showNotification() {
       }
     });
   }
+
+  addEventListener('notificationclick', event => { });
+
+  onnotificationclick = event => { showNotification()};
