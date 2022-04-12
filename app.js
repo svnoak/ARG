@@ -31,5 +31,4 @@ function showNotification() {
     });
   }
 
-  addEventListener('notificationclick', event => { showNotification() });
-
+  self.addEventListener('notificationclick', function(event) {showNotification()})
