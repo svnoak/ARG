@@ -15,7 +15,7 @@ testNotification();
 }
 
 function testNotification(){
-    const notification = new notification("new message from game", {
+    const notification = new Notification("new message from game", {
         body: "the game is telling you to play the game more!"
     });
 }
