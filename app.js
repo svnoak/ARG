@@ -16,9 +16,9 @@ if(Notification.permission === 'granted'){
 }
 
 function testNotification(){
-    const notification = new Notification("new message from game", {
-        body: "the game is telling you to play the game more!"
-    });
+    const greeting = new Notification('Hi, How are you?',{
+        body: 'Have a good day'
+      });
 }
 
 /*
