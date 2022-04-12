@@ -9,6 +9,10 @@ Notification.requestPermission(status => {
     console.log('notification permission status:' , status)
 });
 
+if(Notification.permission === 'granted'){
+    alert('we have permission');
+}
+
 
 /*
 function displayNotification() {
