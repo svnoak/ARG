@@ -7,30 +7,22 @@
 </head>
 <body>
     <h1>Notification API</h1>
-    <p id="output"></p>
+    <button id="permissionask">notify me!</button>
     <script>
         //Notification objects have a close() method. SOME browser automatically close them.
         //Notification Events - click, error, close, show
-        if( 'Notification' in window){
-            
-            if (Notification.permission === 'granted') {
-                // If it's okay let's create a notification
-                doNotify();
-            }else{
-                //notification == denied
-                Notification.requestPermission()
+document.querySelector("#permissionask").addEventListener("click", click => {
+    Notification.requestPermission()
                     .then(function(result) {
                         console.log(result);  //granted || denied
                         if( Notification.permission == 'granted'){ 
                             doNotify();
                         }
                     })
-                    .catch( (err) => {
-                        console.log(err);
-                    });
-            }
+})
+
         
-        }
+        
         
         function doNotify(){
             let title = "The Title";
