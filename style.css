@@ -26,6 +26,11 @@ nav > a{
 
 }
 
+.email-layer{
+    cursor: pointer;
+    text-decoration: none;;
+}
+
 .email{
     display: grid;
     grid-template-columns: 1fr 6fr;
@@ -33,8 +38,6 @@ nav > a{
     background-color: snow;
     margin: .5em;
     padding: 1em;
-    cursor: pointer;
-    text-decoration: none;
     color: black;
 }
 
