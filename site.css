@@ -12,3 +12,21 @@ p{
     color: white;
     text-align: center;
 }
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+input{
+    height: 2em;
+}
+
+button {
+	border: none;
+	border-radius: 5px;
+	height: 3em;
+	background-color: indigo;
+	color: white;
+	margin-top: 2em;
+}
