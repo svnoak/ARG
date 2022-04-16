@@ -1,10 +1,10 @@
 document.querySelector("button").addEventListener("click", checkPass);
-if( !sessionStorage.getItem("buttonPress") ){
-    sessionStorage.setItem("buttonPress", 0);
+if( !localStorage.getItem("buttonPress") ){
+    localStorage.setItem("buttonPress", 0);
 }
 
 function checkPass(){
-    let buttonPress = sessionStorage.getItem("buttonPress");
+    let buttonPress = localStorage.getItem("buttonPress");
     const input = document.querySelector("input").value;
     let pass = input.trim().toLowerCase();
     const correct = "kinder sind in gefahr";
@@ -15,6 +15,7 @@ function checkPass(){
             alert("Geschafft! Danke, dass du mein Rätsel testest :)")
     }   else{
         alert("Du verstehst noch nicht.");
+        console.log(intParse(buttonPress) === 5);
             switch (intParse(buttonPress)) {
                 case 5:
                     alert("Datum und Zeit sind nicht immer nur dafür da, um Zeit anzugeben.");
@@ -22,7 +23,6 @@ function checkPass(){
                 case 8:
                     alert("Jede Zahl gehört zu einem Block");
                     break;
-
                 case 10:
                     alert("Es gibt 4 Blöcke.");
                     break;
@@ -30,7 +30,7 @@ function checkPass(){
                     break;
             }
             buttonPress++
-            sessionStorage.setItem("buttonPress", buttonPress);
+            localStorage.setItem("buttonPress", buttonPress);
         }
     }
 }
