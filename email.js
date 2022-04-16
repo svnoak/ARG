@@ -14,18 +14,33 @@ var Email = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Email.__proto__ || Object.getPrototypeOf(Email)).call(this, props));
 
-        _this.state = { read: props.read == "true" ? true : false };
+        _this.state = {
+            read: false
+        };
+        _this.showEmail = _this.showEmail.bind(_this);
         return _this;
     }
 
     _createClass(Email, [{
+        key: "markRead",
+        value: function markRead() {
+            if (!this.state.read) this.setState({ read: true });
+        }
+    }, {
+        key: "showEmail",
+        value: function showEmail() {
+            this.markRead();
+            var id = this.props.id;
+            console.log(id);
+        }
+    }, {
         key: "render",
         value: function render() {
-            return React.createElement(
+            var email = React.createElement(
                 "div",
-                { className: "email " + (this.state.read ? "" : "unread"), id: this.props.id },
+                { className: "email " + (this.state.read ? "" : "unread"), id: this.props.id, onClick: this.showEmail },
                 React.createElement(ReadIndicator, { read: this.state.read }),
-                React.createElement(Avatar, { shortName: this.props.sender }),
+                React.createElement(Avatar, { shortName: this.props.sender.firstName }),
                 React.createElement(
                     "div",
                     { className: "email-content" },
@@ -35,7 +50,9 @@ var Email = function (_React$Component) {
                         React.createElement(
                             "h2",
                             null,
-                            this.props.sender
+                            this.props.sender.firstName,
+                            " ",
+                            this.props.sender.lastName
                         ),
                         React.createElement(EmailDate, { date: this.props.date })
                     ),
@@ -47,9 +64,16 @@ var Email = function (_React$Component) {
                             null,
                             this.props.subject
                         )
+                    ),
+                    this.props.detail == "true" && React.createElement(
+                        "div",
+                        null,
+                        React.createElement(Addresses, { address: this.props.address })
                     )
                 )
             );
+
+            return email;
         }
     }]);
 
@@ -116,53 +140,140 @@ function EmailDate(props) {
     );
 }
 
-var EmailList = function (_React$Component4) {
-    _inherits(EmailList, _React$Component4);
+var Addresses = function (_React$Component4) {
+    _inherits(Addresses, _React$Component4);
+
+    function Addresses(props) {
+        _classCallCheck(this, Addresses);
+
+        return _possibleConstructorReturn(this, (Addresses.__proto__ || Object.getPrototypeOf(Addresses)).call(this, props));
+    }
+
+    _createClass(Addresses, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { className: "adresses" },
+                React.createElement(
+                    "p",
+                    null,
+                    "Fr\xE5n: ",
+                    this.props.address
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    "Till: namn@redaktionen.se"
+                )
+            );
+        }
+    }]);
+
+    return Addresses;
+}(React.Component);
+
+var EmailText = function (_React$Component5) {
+    _inherits(EmailText, _React$Component5);
+
+    function EmailText(props) {
+        _classCallCheck(this, EmailText);
+
+        return _possibleConstructorReturn(this, (EmailText.__proto__ || Object.getPrototypeOf(EmailText)).call(this, props));
+    }
+
+    _createClass(EmailText, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { className: "email-text" },
+                React.createElement(
+                    "p",
+                    null,
+                    "Namn"
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    "Ingen verkar f\xF6rst\xE5 vad som sker. Barnen kan se, de vet mycket er."
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    "Vi gl\xF6mmer n\xE4r tiden g\xE5r. \xC4r vi noga kan vi se."
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    "Staden har m\xE5nga hemligheter som verkar ha ett eget liv i sig."
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    "Jag har varit i fara. Det beh\xF6vs andra v\xE4ga att kommunicera f\xF6r att du ska f\xF6rst\xE5."
+                ),
+                React.createElement(
+                    "a",
+                    { href: "site.html" },
+                    "https://kommunicerasakert.se"
+                )
+            );
+        }
+    }]);
+
+    return EmailText;
+}(React.Component);
+
+var EmailList = function (_React$Component6) {
+    _inherits(EmailList, _React$Component6);
 
     function EmailList(props) {
         _classCallCheck(this, EmailList);
 
-        var _this4 = _possibleConstructorReturn(this, (EmailList.__proto__ || Object.getPrototypeOf(EmailList)).call(this, props));
+        var _this6 = _possibleConstructorReturn(this, (EmailList.__proto__ || Object.getPrototypeOf(EmailList)).call(this, props));
 
-        _this4.state = {
+        _this6.state = {
             mailElements: [],
             mailContents: [{
-                "id": "2",
-                "sender": "Thomas Hallon",
+                "id": 2,
+                "sender": { firstName: "Thomas", lastName: "Hallon" },
                 "address": "thomas-hallon@redaktionen.se",
                 "subject": "Mötet imorgon",
                 "date": "Igår",
                 "time": "15:43",
                 "body": "",
-                "read": "true"
+                "read": true
             }, {
-                "id": "3",
-                "sender": "Fredrik Söderberg",
+                "id": 3,
+                "sender": { firstName: "Fredrik", lastName: "Söderberg" },
+                "address": "fredrik-soderberg@redaktionen.se",
                 "subject": "Vem skulle fixa fikat?",
                 "date": "Igår",
                 "time": "12:16",
                 "body": "",
-                "read": "true"
+                "read": true
             }]
         };
-        return _this4;
+        return _this6;
     }
 
     _createClass(EmailList, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            var _this5 = this;
+            var _this7 = this;
 
             setTimeout(function () {
-                _this5.addEmail();
+                _this7.addEmail();
             }, 2000);
         }
     }, {
         key: "addEmail",
         value: function addEmail() {
             this.state.mailContents.unshift({
-                "id": "1",
-                "sender": "Anonymous",
+                "id": 1,
+                "sender": { "firstName": "Anonymous", "lastName": "" },
+                "address": "",
                 "subject": "Jag vet",
                 "date": "7e April",
                 "time": "11:05",
@@ -176,7 +287,16 @@ var EmailList = function (_React$Component4) {
         key: "render",
         value: function render() {
             this.state.mailElements = this.state.mailContents.map(function (email) {
-                return React.createElement(Email, { key: email.id, id: email.id, sender: email.sender, date: email.date, subject: email.subject, read: email.read });
+                return React.createElement(Email, {
+                    detail: "false",
+                    key: email.id,
+                    id: email.id,
+                    sender: email.sender,
+                    date: email.date,
+                    subject: email.subject,
+                    read: email.read,
+                    address: email.address
+                });
             });
 
             return React.createElement(
