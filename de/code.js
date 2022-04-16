@@ -15,7 +15,7 @@ function checkPass(){
             alert("Geschafft! Danke, dass du mein Rätsel testest :)")
     }   else{
         alert("Du verstehst noch nicht.");
-            switch (buttonPress) {
+            switch (intParse(buttonPress)) {
                 case 5:
                     alert("Datum und Zeit sind nicht immer nur dafür da, um Zeit anzugeben.");
                     break;
