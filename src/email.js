@@ -1,15 +1,17 @@
 class Email extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {read: props.read == "true" ? true : false}
     }
     render() {
         return( 
-            <div className="email" id={this.props.id}>
-                <Avatar shortName={this.props.sender}/>
+            <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}>
+                <ReadIndicator read={this.state.read} />
+                <Avatar shortName={this.props.sender} />
                 <div className="email-content">
                     <div className="email-heading">
                         <h2>{this.props.sender}</h2>
-                        <EmailDate date={this.props.date}/>
+                        <EmailDate date={this.props.date} />
                     </div>
                     <div className="email-body">
                         <h3>{this.props.subject}</h3>
@@ -20,7 +22,7 @@ class Email extends React.Component{
     }
 }
 
-class Avatar extends Email{
+class Avatar extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +36,15 @@ class Avatar extends Email{
                 <span>{this.state.shortName}</span>
             </div>
         )
+    }
+}
+
+class ReadIndicator extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+    render(){
+        return <div className="read-indicator" style={{backgroundColor: this.props.read ? "lightgray" : "blue"  }}></div>
     }
 }
 
@@ -54,7 +65,8 @@ class EmailList extends React.Component{
                     "subject": "Mötet imorgon",
                     "date": "Igår",
                     "time": "15:43",
-                    "body": ""
+                    "body": "",
+                    "read": "true"
                 },
                 {
                     "id": "3",
@@ -62,7 +74,8 @@ class EmailList extends React.Component{
                     "subject": "Vem skulle fixa fikat?",
                     "date": "Igår",
                     "time": "12:16",
-                    "body": ""
+                    "body": "",
+                    "read": "true"
                 }
             ]
         }
@@ -82,17 +95,16 @@ class EmailList extends React.Component{
                 "subject": "Jag vet",
                 "date": "7e April",
                 "time": "11:05",
-                "body": ""
+                "body": "",
+                "read": "false"
             })
         const newList = this.state.mailContents;
-        console.log(newList);
         this.setState({mailContents: newList});
-        console.log(this.state.mailContents);
     }
 
     render(){
         this.state.mailElements = this.state.mailContents.map(email => {
-            return <Email key={email.id} id={email.id} sender={email.sender} date={email.date} subject={email.subject}/>
+            return <Email key={email.id} id={email.id} sender={email.sender} date={email.date} subject={email.subject} read={email.read}/>
         });
 
         return(
