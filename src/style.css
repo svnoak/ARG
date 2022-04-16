@@ -4,7 +4,7 @@ body{
     background-color: lightgray;
 }
 
-main{
+#root{
     max-width: 500px;
 }
 
@@ -39,6 +39,7 @@ nav > a{
     margin: .5em;
     padding: 1em;
     color: black;
+    font-size: 2em;
 }
 
 .avatar,
@@ -56,7 +57,7 @@ nav > a{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    /* background-color: black; */
     border-radius: 100%;
     height: 3em;
     width: 3em;

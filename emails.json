@@ -1,0 +1,19 @@
+[
+    {
+        "id": "2",
+        "sender": "Thomas Hallon",
+        "address": "thomas-hallon@redaktionen.se",
+        "subject": "Mötet imorgon",
+        "date": "Igår",
+        "time": "15:43",
+        "body": ""
+    },
+    {
+        "id": "3",
+        "sender": "Fredrik Söderberg",
+        "subject": "Vem skulle fixa fikat?",
+        "date": "Igår",
+        "time": "12:16",
+        "body": ""
+    }
+]

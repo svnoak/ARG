@@ -3,38 +3,17 @@
   <head>
     <meta charset="utf-8" />
 
-    <title>Hello React!</title>
+    <title>Email inbox</title>
 
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="./src/email.js" type="text/babel" defer></script>
+    <link rel="stylesheet" href="./src/style.css">
   </head>
 
   <body>
+    <div id="main"></div>
     <div id="root"></div>
-
-    <script type="text/babel">
-      class App extends React.Component {
-        render() {
-            return
-            <div class="email" id="email-1">
-            <div class="avatar">
-                <span>A</span>
-            </div>
-            <div class="email-content">
-                <div class="email-heading">
-                <h2>Anonymous</h2>
-                <p>Nu</p>
-                </div>
-                <div class="email-body">
-                    <h3>Jag vet</h3>
-                </div>
-            </div>
-        </div>
-        }
-      }
-
-      ReactDOM.render(<App />, document.getElementById('root'))
-    </script>
   </body>
 </html>

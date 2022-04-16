@@ -6,58 +6,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './style.css';
+var Email = function (_React$Component) {
+    _inherits(Email, _React$Component);
 
-var Email = function (_Component) {
-    _inherits(Email, _Component);
-
-    function Email() {
+    function Email(props) {
         _classCallCheck(this, Email);
 
-        return _possibleConstructorReturn(this, (Email.__proto__ || Object.getPrototypeOf(Email)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (Email.__proto__ || Object.getPrototypeOf(Email)).call(this, props));
     }
 
     _createClass(Email, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
-                { 'class': 'email', id: 'email-1' },
+                "div",
+                { className: "email", id: this.props.id },
+                React.createElement(Avatar, { shortName: this.props.sender }),
                 React.createElement(
-                    'div',
-                    { 'class': 'avatar' },
+                    "div",
+                    { className: "email-content" },
                     React.createElement(
-                        'span',
-                        null,
-                        'A'
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { 'class': 'email-content' },
-                    React.createElement(
-                        'div',
-                        { 'class': 'email-heading' },
+                        "div",
+                        { className: "email-heading" },
                         React.createElement(
-                            'h2',
+                            "h2",
                             null,
-                            'Anonymous'
+                            this.props.sender
                         ),
-                        React.createElement(
-                            'p',
-                            null,
-                            'Nu'
-                        )
+                        React.createElement(EmailDate, { date: this.props.date })
                     ),
                     React.createElement(
-                        'div',
-                        { 'class': 'email-body' },
+                        "div",
+                        { className: "email-body" },
                         React.createElement(
-                            'h3',
+                            "h3",
                             null,
-                            'Jag vet'
+                            this.props.subject
                         )
                     )
                 )
@@ -66,6 +50,120 @@ var Email = function (_Component) {
     }]);
 
     return Email;
-}(Component);
+}(React.Component);
 
-ReactDOM.render(React.createElement(Email, null), document.getElementById('root'));
+var Avatar = function (_Email) {
+    _inherits(Avatar, _Email);
+
+    function Avatar(props) {
+        _classCallCheck(this, Avatar);
+
+        var _this2 = _possibleConstructorReturn(this, (Avatar.__proto__ || Object.getPrototypeOf(Avatar)).call(this, props));
+
+        _this2.state = {
+            shortName: props.shortName.charAt(0).toUpperCase(),
+            color: Math.floor(Math.random() * 16777215).toString(16)
+        };
+        return _this2;
+    }
+
+    _createClass(Avatar, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { className: "avatar", style: { backgroundColor: '#' + this.state.color } },
+                React.createElement(
+                    "span",
+                    null,
+                    this.state.shortName
+                )
+            );
+        }
+    }]);
+
+    return Avatar;
+}(Email);
+
+function EmailDate(props) {
+    return React.createElement(
+        "p",
+        null,
+        props.date
+    );
+}
+
+var EmailList = function (_React$Component2) {
+    _inherits(EmailList, _React$Component2);
+
+    function EmailList(props) {
+        _classCallCheck(this, EmailList);
+
+        var _this3 = _possibleConstructorReturn(this, (EmailList.__proto__ || Object.getPrototypeOf(EmailList)).call(this, props));
+
+        _this3.state = {
+            mailElements: [],
+            mailContents: [{
+                "id": "2",
+                "sender": "Thomas Hallon",
+                "address": "thomas-hallon@redaktionen.se",
+                "subject": "Mötet imorgon",
+                "date": "Igår",
+                "time": "15:43",
+                "body": ""
+            }, {
+                "id": "3",
+                "sender": "Fredrik Söderberg",
+                "subject": "Vem skulle fixa fikat?",
+                "date": "Igår",
+                "time": "12:16",
+                "body": ""
+            }]
+        };
+        return _this3;
+    }
+
+    _createClass(EmailList, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this4 = this;
+
+            setTimeout(function () {
+                _this4.addEmail();
+            }, 2000);
+        }
+    }, {
+        key: "addEmail",
+        value: function addEmail() {
+            this.state.mailContents.unshift({
+                "id": "1",
+                "sender": "Anonymous",
+                "subject": "Jag vet",
+                "date": "7e April",
+                "time": "11:05",
+                "body": ""
+            });
+            var newList = this.state.mailContents;
+            console.log(newList);
+            this.setState({ mailContents: newList });
+            console.log(this.state.mailContents);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            this.state.mailElements = this.state.mailContents.map(function (email) {
+                return React.createElement(Email, { key: email.id, id: email.id, sender: email.sender, date: email.date, subject: email.subject });
+            });
+
+            return React.createElement(
+                "div",
+                { id: "email-list" },
+                this.state.mailElements
+            );
+        }
+    }]);
+
+    return EmailList;
+}(React.Component);
+
+ReactDOM.render(React.createElement(EmailList, null), document.getElementById("main"));
