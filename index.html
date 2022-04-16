@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="corporate">
-<head>
-    <meta charset="UTF-8">
-    <title>Email inbox</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <main>
-    <nav>
-        <h1>Email inbox</h1>
-    </nav>
-    <a class="email-layer" href="./email.html">
-        <div class="email">
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Hello React!</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      class App extends React.Component {
+        render() {
+            return
+            <div class="email" id="email-1">
             <div class="avatar">
                 <span>A</span>
             </div>
@@ -26,7 +31,10 @@
                 </div>
             </div>
         </div>
-    </a>
-    </main>
-</body>
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'))
+    </script>
+  </body>
 </html>

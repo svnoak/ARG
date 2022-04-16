@@ -1,14 +1,28 @@
-[
-    {
+{
+    "1":{
+        "email-id": "1",
+        "sender": "Anonymous",
+        "address": "",
+        "subject": "Jag vet",
+        "date": "7e April",
+        "time": "11:05",
+        "body": "Lorem ipsum."
+    },
+    "2":{
+        "email-id": "2",
         "sender": "Thomas Hallon",
+        "address": "thomas-hallon@redaktionen.se",
         "subject": "Mötet imorgon",
         "date": "",
-        "time": "11:05"
+        "time": "11:05",
+        "body": ""
     },
-    {
+    "3":{
+        "email-id": "3",
         "sender": "",
         "subject": "",
         "date": "",
-        "time": "11:05"
+        "time": "11:05",
+        "body": ""
     }
-]
+}

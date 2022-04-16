@@ -1,0 +1,113 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+    background-color: lightgray;
+}
+
+main{
+    max-width: 500px;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: snow;
+    box-shadow: 0px 0px 1px black;
+    padding: 0 1em;
+}
+
+nav > h1{
+    font-weight: bold;
+    font-size: 2em;
+}
+
+nav > a{
+
+}
+
+.email-layer{
+    cursor: pointer;
+    text-decoration: none;;
+}
+
+.email{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    border-radius: 5px;
+    background-color: snow;
+    margin: .5em;
+    padding: 1em;
+    color: black;
+}
+
+.avatar,
+.avatar > span,
+.email-content,
+.email-heading,
+.email-heading > h2,
+.email-heading > p{
+    pointer-events: none;
+}
+
+
+
+.avatar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    border-radius: 100%;
+    height: 3em;
+    width: 3em;
+    justify-self: center;
+    align-self: center; 
+}
+
+.avatar > span{
+    color: white;
+}
+
+.email-content {
+	overflow: hidden;
+	padding-left: 1em;
+}
+
+.email-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.email-heading > h2 {
+	font-weight: normal;
+	margin: 0;
+	font-size: 1.2em;
+}
+
+.email-heading > p{
+    color: blue;
+    margin: 0;
+}
+
+.email-body > h3 {
+	font-weight: normal;
+	margin: 0;
+	font-style: italic;
+	font-size: 1em;
+}
+
+.adresses{
+    grid-column: 1 / 3;
+    color: grey;
+    margin: 1em 0;
+}
+
+.adresses > p{
+    margin: 0;
+}
+
+.email-text{
+    grid-column: 1 / 3;
+}
+
