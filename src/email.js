@@ -10,9 +10,12 @@ class EmailList extends React.Component{
     componentDidMount() {
         fetch('/api/email')
         .then(response => response.json())
-        .then(data => this.setState({ data }));
+        .then(data => {
+            this.setState({ data })
+            console.log(this.state.data);
+        });
 
-        console.log(this.state.data);
+        
 
         setTimeout(() => {
             this.addEmail();
