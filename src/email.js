@@ -8,7 +8,7 @@ class EmailList extends React.Component{
     }
 
     componentDidMount() {
-        const request = new Request('https:dev.svnoak.net/api/email/')
+        const request = new Request('https://dev.svnoak.net/api/email/')
         fetch(request)
         .then(response => response.json())
         .then(data => {
