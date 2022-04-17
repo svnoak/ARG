@@ -20,7 +20,7 @@ $className = ucfirst($class);
 
 var_dump($uri);
 
-if (class_exists($className) ){
+/* if (class_exists($className) ){
 
   if( $class && $id ){
     $result = $className::getById($id);
@@ -31,7 +31,7 @@ if (class_exists($className) ){
   
 } else{
   sendJSON("Bad request", 400);
-}
+} */
 
 
 ?>
