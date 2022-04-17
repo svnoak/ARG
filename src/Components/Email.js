@@ -20,32 +20,34 @@ class Email extends React.Component{
         let day = parseInt(this.props.date) < 0
         ? moment().add(this.props.date, 'days').format("Do MMMM")
         : this.props.date;
-        const email = (
+        return (
             <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}  onClick={this.showEmail}>
                 <ReadIndicator read={this.state.read} />
                 <Avatar shortName={this.props.firstName} />
-                <div className="email-content">
-                    <div className="email-heading">
-                        <h2>{this.props.firstName} {this.props.lastName}</h2>
-                        <EmailDate date={day} />
-                    </div>
-                    <div className="email-body">
-                        <h3>{this.props.subject}</h3>
-                    </div>
-                    {this.props.detail === "true" &&
-                        <div>
-                        <Addresses address={this.props.address} />
-                        <EmailText body={this.props.body} />
-                        </div>
-                    }                        
-                </div>
+                <EmailContent day={day} data={this.props}/>
             </div>
         )
-
-        return(
-            email
-        )
     }
+}
+
+function EmailContent(props){
+    return(
+        <div className="email-content">
+            <div className="email-heading">
+                <h2>{props.data.firstName} {props.data.lastName}</h2>
+                <EmailDate date={props.day} />
+            </div>
+            <div className="email-body">
+                <h3>{props.data.subject}</h3>
+            </div>
+            {props.data.detail === "true" &&
+            <div>
+            <Addresses address={props.data.address} />
+            <EmailText body={props.databody} />
+            </div>
+            }                        
+        </div>
+    )
 }
 
 function Avatar(props){
