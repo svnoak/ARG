@@ -2,7 +2,6 @@ class EmailList extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            mailElements: [],
             data: []
         }
     }
@@ -12,10 +11,9 @@ class EmailList extends React.Component{
         fetch(request)
         .then(response => response.json())
         .then(data => {
-            this.setState({ data });
+            data = data.slice(1) 
+            this.setState({ data});
             });
-
-        
 
         setTimeout(() => {
             this.addEmail();
@@ -23,21 +21,15 @@ class EmailList extends React.Component{
       }
 
     addEmail(){
-        console.log(this.state.data);
-
-        this.state.data.unshift(
-            {
-                "id": 1,
-                "sender": {"firstName": "Anonymous", "lastName": ""},
-                "address": "",
-                "subject": "Jag vet",
-                "date": "7e April",
-                "time": "11:05",
-                "body": "",
-                "read": "false"
-            })
-        const newList = this.state.data;
-        this.setState({data: newList});
+        const request = new Request('https://dev.svnoak.net/api/email/1')
+        fetch(request)
+        .then(response => response.json())
+        .then(data => {
+            this.state.data.unshift(data[0]);
+            const newList = this.state.data;
+            console.log(newList);
+            this.setState({data: newList});
+            });
     }
 
     render(){
@@ -45,12 +37,13 @@ class EmailList extends React.Component{
             return (
             <Email 
             detail="false"
-            key={email.id} 
-            id={email.id} 
-            sender={email.sender} 
-            date={email.date} 
-            subject={email.subject} 
-            read={email.read} 
+            key={email.email_id} 
+            id={email.email_id} 
+            firstName={email.firstName}
+            lastName={email.lastName}
+            date={email.date}
+            subject={email.subject}
+            read={email.read}
             address={email.address}
             />
             )
@@ -66,7 +59,7 @@ class Email extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            read: false
+            read: props.read == 1 ? true : false,
         }
         this.showEmail = this.showEmail.bind(this);
     }
@@ -78,18 +71,22 @@ class Email extends React.Component{
     showEmail(){
         this.markRead();
         const id = this.props.id;
-        console.log(id);
     }
 
     render() {
+        moment.locale('sv');
+        const date = new Date();
+        let day = parseInt(this.props.date) < 0
+        ? moment().add(this.props.date, 'days').format("Do MMMM")
+        : this.props.date;
         const email = (
             <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}  onClick={this.showEmail}>
                 <ReadIndicator read={this.state.read} />
-                <Avatar shortName={this.props.sender.firstName} />
+                <Avatar shortName={this.props.firstName} />
                 <div className="email-content">
                     <div className="email-heading">
-                        <h2>{this.props.sender.firstName} {this.props.sender.lastName}</h2>
-                        <EmailDate date={this.props.date} />
+                        <h2>{this.props.firstName} {this.props.lastName}</h2>
+                        <EmailDate date={day} />
                     </div>
                     <div className="email-body">
                         <h3>{this.props.subject}</h3>
