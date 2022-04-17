@@ -8,12 +8,14 @@ class EmailList extends React.Component{
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:3000/api/email/')
+/*         fetch('http://127.0.0.1:3000/api/email/')
         .then(response => response.json())
         .then(data => {
             this.setState({ data });
+            
+            }); */
+
             console.log(process.cwd());
-            });
 
         
 
