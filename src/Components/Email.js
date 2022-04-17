@@ -21,7 +21,7 @@ class Email extends React.Component{
         ? moment().add(this.props.date, 'days').format("Do MMMM")
         : this.props.date;
         return (
-            <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}  onClick={this.showEmail}>
+            <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}  onClick={this.markRead}>
                 <ReadIndicator read={this.state.read} />
                 <Avatar shortName={this.props.firstName} />
                 <EmailContent day={day} data={this.props}/>
