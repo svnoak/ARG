@@ -13,14 +13,12 @@ $stmt->execute(); */
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
-$class = $uri[1];
-$id = $uri[2];
+$class = $uri[2];
+$id = $uri[3];
 
 $className = ucfirst($class);
 
-var_dump($uri);
-
-/* if (class_exists($className) ){
+if (class_exists($className) ){
 
   if( $class && $id ){
     $result = $className::getById($id);
@@ -31,7 +29,7 @@ var_dump($uri);
   
 } else{
   sendJSON("Bad request", 400);
-} */
+}
 
 
 ?>
