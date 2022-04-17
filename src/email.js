@@ -12,6 +12,8 @@ class EmailList extends React.Component{
         .then(response => response.json())
         .then(data => this.setState({ data }));
 
+        console.log(this.state.data);
+
         setTimeout(() => {
             this.addEmail();
         }, 2000);
