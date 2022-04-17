@@ -1,3 +1,60 @@
+class EmailList extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            mailElements: [],
+            data: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://127.0.0.1/api/email')
+        .then(response => response.json())
+        .then(data => this.setState({ data }));
+
+        setTimeout(() => {
+            this.addEmail();
+        }, 2000);
+      }
+
+    addEmail(){
+        this.state.data.unshift(
+            {
+                "id": 1,
+                "sender": {"firstName": "Anonymous", "lastName": ""},
+                "address": "",
+                "subject": "Jag vet",
+                "date": "7e April",
+                "time": "11:05",
+                "body": "",
+                "read": "false"
+            })
+        const newList = this.state.data;
+        this.setState({data: newList});
+    }
+
+    render(){
+        const emails = this.state.data.map(email => {
+            return (
+            <Email 
+            detail="false"
+            key={email.id} 
+            id={email.id} 
+            sender={email.sender} 
+            date={email.date} 
+            subject={email.subject} 
+            read={email.read} 
+            address={email.address}
+            />
+            )
+        });
+
+        return(
+            <div id="email-list">{emails}</div>
+        )
+    }
+}
+
 class Email extends React.Component{
     constructor(props) {
         super(props);
@@ -115,80 +172,6 @@ class EmailText extends React.Component{
                 </p>
                 <a href="site.html">https://kommunicerasakert.se</a>
             </div>
-        )
-    }
-}
-
-class EmailList extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            mailElements: [],
-            mailContents: [
-                {
-                    "id": 2,
-                    "sender": {firstName: "Thomas", lastName: "Hallon"},
-                    "address": `thomas-hallon@redaktionen.se`,
-                    "subject": "Mötet imorgon",
-                    "date": "Igår",
-                    "time": "15:43",
-                    "body": "",
-                    "read": true
-                },
-                {
-                    "id": 3,
-                    "sender": {firstName: "Fredrik", lastName: "Söderberg"},
-                    "address": `fredrik-soderberg@redaktionen.se`,
-                    "subject": "Vem skulle fixa fikat?",
-                    "date": "Igår",
-                    "time": "12:16",
-                    "body": "",
-                    "read": true
-                }
-            ]
-        }
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.addEmail();
-        }, 2000);
-      }
-
-    addEmail(){
-        this.state.mailContents.unshift(
-            {
-                "id": 1,
-                "sender": {"firstName": "Anonymous", "lastName": ""},
-                "address": "",
-                "subject": "Jag vet",
-                "date": "7e April",
-                "time": "11:05",
-                "body": "",
-                "read": "false"
-            })
-        const newList = this.state.mailContents;
-        this.setState({mailContents: newList});
-    }
-
-    render(){
-        this.state.mailElements = this.state.mailContents.map(email => {
-            return (
-            <Email 
-            detail="false"
-            key={email.id} 
-            id={email.id} 
-            sender={email.sender} 
-            date={email.date} 
-            subject={email.subject} 
-            read={email.read} 
-            address={email.address}
-            />
-            )
-        });
-
-        return(
-            <div id="email-list">{this.state.mailElements}</div>
         )
     }
 }
