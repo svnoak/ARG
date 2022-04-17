@@ -18,8 +18,6 @@ $id = $uri[2];
 
 $className = ucfirst($class);
 
-var_dump($uri);
-
 /* if (class_exists($className) ){
 
   if( $class && $id ){
