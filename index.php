@@ -18,7 +18,7 @@ $id = $uri[2];
 
 $className = ucfirst($class);
 
-sendJSON($uri);
+var_dump($uri);
 
 if (class_exists($className) ){
 
