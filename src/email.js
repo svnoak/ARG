@@ -8,11 +8,11 @@ class EmailList extends React.Component{
     }
 
     componentDidMount() {
-        fetch('/api/email')
+        fetch('http://localhost:3000/api/email')
         .then(response => response.json())
         .then(data => {
             this.setState({ data })
-            console.log(this.state.data);
+            
         });
 
         
