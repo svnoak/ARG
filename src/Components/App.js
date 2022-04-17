@@ -10,7 +10,10 @@ class App extends React.Component {
   componentDidMount(){
     fetch(new Request('https://dev.svnoak.net/api/email/'))
     .then(response => response.json())
-    .then(data =>  this.setState({data: data.slice(1)}))
+    .then(data =>  {
+      data = data.slice(1);
+      this.setState({ data })
+    })
 
       setTimeout(() => {
         this.addEmail();
