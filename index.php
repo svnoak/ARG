@@ -2,6 +2,14 @@
 require_once("config.php");
 include_once("email.php");
 
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+  // Tillåt alla (origins) och alla headers
+  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: *");
+  exit();
+}
+header("Access-Control-Allow-Origin: *");
+
 /* 
 $name = 'Kim';
 $password = 1234;
