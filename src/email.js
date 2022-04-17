@@ -13,7 +13,6 @@ class EmailList extends React.Component{
         .then(response => response.json())
         .then(data => {
             this.setState({ data });
-            console.log(this.state.data);
             });
 
         
@@ -24,6 +23,8 @@ class EmailList extends React.Component{
       }
 
     addEmail(){
+        console.log(this.state.data);
+
         this.state.data.unshift(
             {
                 "id": 1,
