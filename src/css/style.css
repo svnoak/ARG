@@ -15,6 +15,7 @@ nav{
     background-color: snow;
     box-shadow: 0px 0px 1px black;
     padding: 0 1em;
+    height: 10vh;
 }
 
 nav > h1{
@@ -22,7 +23,7 @@ nav > h1{
     font-size: 2em;
 }
 
-nav > a{
+nav > div{
 
 }
 
@@ -50,6 +51,10 @@ nav > a{
     pointer-events: none;
 }
 
+.email-text > a{
+    pointer-events: all;
+}
+
 .read-indicator {
 	height: 140%;
 	width: 130%;
@@ -57,8 +62,6 @@ nav > a{
 	align-self: center;
 	border-radius: 5px;
 }
-
-
 
 .avatar{
     display: flex;
@@ -122,4 +125,19 @@ nav > a{
 .unread > .email-content > .email-heading > h2,
 .unread > .email-content > .email-body > h3{
     font-weight: bold;
+}
+
+.hidden{
+    display: none;
+}
+
+.email-detail {
+	position: absolute;
+	top: 10vh;
+	left: 0;
+	height: 100vw;
+}
+
+.email-detail > .read-indicator{
+    height: 100%;
 }

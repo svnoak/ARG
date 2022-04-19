@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import moment from 'moment';
 import "../css/style.css"
 
@@ -7,6 +7,7 @@ class Email extends React.Component{
         super(props);
         this.state = {
             read: parseInt(props.read) === 1 ? true : false,
+            hidden: parseInt(props.id) === 1 ? true : false
         }
         this.markRead = this.markRead.bind(this);
     }
@@ -15,13 +16,20 @@ class Email extends React.Component{
         if( !this.state.read ) this.setState({read: true});
     }
 
+
+    componentDidMount(){
+        setTimeout(() => {
+            this.setState({hidden: false});
+        }, 2000);
+    }
+
     render() {
         moment.locale('sv');
         let day = parseInt(this.props.date) < 0
         ? moment().add(this.props.date, 'days').format("Do MMMM")
         : this.props.date;
         return (
-            <div className={`email ${this.state.read ? "":"unread"}`} id={this.props.id}  onClick={this.markRead}>
+            <div className={`email ${this.state.read ? "":"unread"} ${this.state.hidden ? "hidden" : ""}`} id={this.props.id}  onClick={() => {this.markRead(); this.props.showEmail(this.props.id)} } >
                 <ReadIndicator read={this.state.read} />
                 <Avatar shortName={this.props.firstName} />
                 <EmailContent day={day} data={this.props}/>
@@ -40,19 +48,13 @@ function EmailContent(props){
             <div className="email-body">
                 <h3>{props.data.subject}</h3>
             </div>
-            {props.data.detail === "true" &&
-            <div>
-            <Addresses address={props.data.address} />
-            <EmailText body={props.databody} />
-            </div>
-            }                        
         </div>
     )
 }
 
 function Avatar(props){
     const shortName = props.shortName.charAt(0).toUpperCase();
-    const color = Math.floor(Math.random()*16777215).toString(16);
+    const color = 'black' /* Math.floor(Math.random()*16777215).toString(16); */
 
     return(
         <div className="avatar" style={{backgroundColor: '#' + color}}>
@@ -67,23 +69,6 @@ function ReadIndicator(props){
 
 function EmailDate(props){
     return <p>{props.date}</p>;
-}
-
-function Addresses(props){
-    return(
-        <div className="adresses">
-            <p>Från: {props.address}</p>
-            <p>Till: namn@redaktionen.se</p>
-        </div>
-    )
-}
-
-function EmailText(props){
-    return(
-        <div className="email-text">
-            {props.body}
-        </div>
-    )
 }
 
 export default Email;

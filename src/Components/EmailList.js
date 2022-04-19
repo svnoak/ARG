@@ -1,38 +1,11 @@
 import React from "react";
+
 import Email from "./Email";
 
 class EmailList extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            batch: [],
-            anon: {},
-            all: []
-        }
-    }
-
-    componentDidMount() {
-        if( this.state.batch.length === 0 ){
-            const request = new Request('https://dev.svnoak.net/api/email/')
-            fetch(request)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({all:data, batch:data.slice(1), anon: data[0]})
-            });
-        }
-        setTimeout(() => {
-            if( this.state.batch.length !== this.state.all.length )
-            this.addEmail();
-        }, 2000);
-      }
-
-    addEmail(){
-        this.state.batch.unshift(this.state.anon);
-        this.setState({batch: this.state.batch});
-    }
 
     render(){
-        const emails = this.state.batch.map(email => {
+        const emails = this.props.data.map(email => {
             return (
             <Email 
             detail="false"
@@ -44,6 +17,7 @@ class EmailList extends React.Component{
             subject={email.subject}
             read={email.read}
             address={email.address}
+            showEmail={this.props.showEmail}
             />
             )
         });
