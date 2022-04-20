@@ -1,6 +1,5 @@
 import React from "react";
 import moment from 'moment';
-import "../css/style.css"
 
 class Email extends React.Component{
     constructor(props) {
@@ -25,7 +24,13 @@ class Email extends React.Component{
         this.setAvatarColor();
         setTimeout(() => {
             this.setState({hidden: false});
-        }, 2000);
+            this.props.toggleAlert(true);
+            let audio = new Audio('https://proxy.notificationsounds.com/notification-sounds/definite-555/download/file-sounds-1085-definite.mp3');
+            audio.play();
+            setTimeout(() => {
+                this.props.toggleAlert(false);
+            }, 2000);
+        }, 5000);
     }
 
     render() {

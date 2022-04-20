@@ -1,11 +1,11 @@
 import React from "react";
-
 import Email from "./Email";
 
 class EmailList extends React.Component{
 
     render(){
-        const emails = this.props.data.map(email => {
+
+        const emails = this.props.state.emails.map(email => {
             return (
             <Email 
             detail="false"
@@ -18,11 +18,13 @@ class EmailList extends React.Component{
             read={email.read}
             address={email.address}
             showEmail={this.props.showEmail}
+            toggleAlert={this.props.toggleAlert}
             />
             )
         });
+
         return(
-            <div id="email-list" className={this.props.hidden ? "hidden" : ""}>{emails}</div>
+            <div id="email-list" className={this.props.state.showEmail? "hidden" : ""}>{emails}</div>
         )
     }
 }

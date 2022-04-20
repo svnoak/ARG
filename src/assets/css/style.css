@@ -1,10 +1,11 @@
-body{
-    margin: 0;
-    font-family: sans-serif;
-    background-color: lightgray;
+body {
+	margin: 0;
+	font-family: sans-serif;
+	background-color: lightgray;
 }
 
 #root{
+    display: grid;
     max-width: 500px;
 }
 
@@ -146,4 +147,19 @@ nav > div{
 
 .email-detail > .email-content {
     grid-column: 1/4;
+}
+
+.alert{
+    height: 5vh;
+    width: 90vw;
+    background-color: rgb(61, 184, 61);
+    color: rgb(19, 63, 19);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(19, 63, 19);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 5vh;
+    justify-self: center;
 }

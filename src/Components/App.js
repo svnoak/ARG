@@ -2,6 +2,9 @@ import React from "react";
 import Nav from "./Nav";
 import EmailList from "./EmailList";
 import Slide from "./Slide";
+import Login from "./Login";
+import Alert from "./Alert";
+import "../assets/css/style.css"
 
 class App extends React.Component {
   constructor(props){
@@ -11,11 +14,13 @@ class App extends React.Component {
       emails: [],
       emailId: null,
       showEmail: false,
-
+      loggedIn: false,
+      name: "",
+      showAlert: false
     }
   }
 
-  componentDidMount() {  
+  componentDidMount() {
     const request = new Request('https://dev.svnoak.net/api/email/')
     fetch(request)
     .then(response => response.json())
@@ -32,12 +37,26 @@ class App extends React.Component {
     this.setState({showEmail: false});
   }
 
+  loginUser = (name) =>{
+    this.setState({name: name, loggedIn: true});
+  }
+
+  toggleAlert = (state) => {
+    this.setState({ showAlert: state })
+  }
+
   render(){
     return (
       <>
+      { !this.state.loggedIn && <Login login={this.loginUser}/> }
+      { this.state.loggedIn && 
+        <>
         <Nav backBtn={this.state.showEmail} closeEmail={this.closeEmail}/>
-        <EmailList showEmail={this.showEmail} data={this.state.emails} wait="1" hidden={this.state.showEmail}/>
-        { this.state.showEmail && <Slide data={this.state.emails[this.state.emailId]} /> }
+        <EmailList showEmail={this.showEmail} state={this.state} wait="1" toggleAlert={this.toggleAlert}/>
+        { this.state.showEmail && <Slide data={this.state.emails[this.state.emailId]} name={this.state.name}/> }
+        </>
+      }
+      { (this.state.showAlert && this.state.showEmail) && <Alert /> }
       </>
     )
   }

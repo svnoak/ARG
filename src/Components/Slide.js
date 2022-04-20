@@ -1,22 +1,16 @@
 import React from "react";
 import moment from 'moment';
-import "../css/style.css";
 
-class Slide extends React.Component{
-    render() {
-        const data = this.props.data;
-        moment.locale('sv');
-        let day = parseInt(data.date) < 0
-        ? moment().add(data.date, 'days').format("Do MMMM")
-        : data.date;
-        return (
-            <div className={`email email-detail`} id={data.id} >
-                <ReadIndicator read={true} />
-                <Avatar shortName={data.firstName} />
-                <EmailContent day={day} time={data.time} data={data}/>
-            </div>
-        )
-    }
+function Slide(props){
+    moment.locale('sv');
+    let day = parseInt(props.data.date) < 0
+    ? moment().add(props.data.date, 'days').format("Do MMMM")
+    : props.data.date;
+    return (
+        <div className={`email email-detail`} id={props.data.id} >
+            <EmailContent day={day} time={props.data.time} data={props.data} name={props.name}/>
+        </div>
+    )
 }
 
 function EmailContent(props){
@@ -29,25 +23,10 @@ function EmailContent(props){
             <div className="email-body">
                 <h3 dangerouslySetInnerHTML={{__html: `${props.data.subject}`}}></h3>
             </div>
-            <Addresses address={props.data.address} />
+            <Addresses address={props.data.address} name={props.name}/>
             <EmailText body={props.data.body} />
         </div>
     )
-}
-
-function Avatar(props){
-    const shortName = props.shortName.charAt(0).toUpperCase();
-    const color = 'black' /* Math.floor(Math.random()*16777215).toString(16); */
-
-    return(
-        <div className="avatar" style={{backgroundColor: '#' + color}}>
-            <span>{shortName}</span>
-        </div>
-    )
-}
-
-function ReadIndicator(props){
-    return <div className="read-indicator" style={{backgroundColor: 'white' }}></div>
 }
 
 function EmailDate(props){
@@ -59,7 +38,7 @@ function Addresses(props){
     return(
         <div className="adresses">
             <p>Från: {props.address}</p>
-            <p>Till: namn@redaktionen.se</p>
+            <p>Till: {props.name}@redaktionen.se</p>
         </div>
     )
 }
