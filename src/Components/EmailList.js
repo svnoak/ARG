@@ -21,9 +21,8 @@ class EmailList extends React.Component{
             />
             )
         });
-
         return(
-            <div id="email-list">{emails}</div>
+            <div id="email-list" className={this.props.hidden ? "hidden" : ""}>{emails}</div>
         )
     }
 }

@@ -10,7 +10,8 @@ class App extends React.Component {
     this.state = {
       emails: [],
       emailId: null,
-      showEmail: false
+      showEmail: false,
+
     }
   }
 
@@ -35,7 +36,7 @@ class App extends React.Component {
     return (
       <>
         <Nav backBtn={this.state.showEmail} closeEmail={this.closeEmail}/>
-        <EmailList showEmail={this.showEmail} data={this.state.emails} wait="1" />
+        <EmailList showEmail={this.showEmail} data={this.state.emails} wait="1" hidden={this.state.showEmail}/>
         { this.state.showEmail && <Slide data={this.state.emails[this.state.emailId]} /> }
       </>
     )
