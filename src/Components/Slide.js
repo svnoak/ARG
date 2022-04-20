@@ -1,11 +1,10 @@
 import React from "react";
 import moment from 'moment';
-import "../css/style.css"
+import "../css/style.css";
 
 class Slide extends React.Component{
     render() {
         const data = this.props.data;
-        console.log(data.time);
         moment.locale('sv');
         let day = parseInt(data.date) < 0
         ? moment().add(data.date, 'days').format("Do MMMM")
@@ -37,7 +36,6 @@ function EmailContent(props){
 }
 
 function Avatar(props){
-    console.log(props);
     const shortName = props.shortName.charAt(0).toUpperCase();
     const color = 'black' /* Math.floor(Math.random()*16777215).toString(16); */
 

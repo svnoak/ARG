@@ -1,5 +1,4 @@
 function Nav(props){
-    console.log(props.backBtn)
     return (
         <nav>
             { props.backBtn && <div onClick={props.closeEmail}>Tillbaka</div>}
