@@ -5,6 +5,7 @@ import "../css/style.css"
 class Slide extends React.Component{
     render() {
         const data = this.props.data;
+        console.log(data.time);
         moment.locale('sv');
         let day = parseInt(data.date) < 0
         ? moment().add(data.date, 'days').format("Do MMMM")
@@ -13,7 +14,7 @@ class Slide extends React.Component{
             <div className={`email email-detail`} id={data.id} >
                 <ReadIndicator read={true} />
                 <Avatar shortName={data.firstName} />
-                <EmailContent day={day} data={data}/>
+                <EmailContent day={day} time={data.time} data={data}/>
             </div>
         )
     }
@@ -24,7 +25,7 @@ function EmailContent(props){
         <div className="email-content">
             <div className="email-heading">
                 <h2>{props.data.firstName} {props.data.lastName}</h2>
-                <EmailDate date={props.day} />
+                <EmailDate date={props.day} time={props.time} />
             </div>
             <div className="email-body">
                 <h3 dangerouslySetInnerHTML={{__html: `${props.data.subject}`}}></h3>
@@ -52,7 +53,8 @@ function ReadIndicator(props){
 }
 
 function EmailDate(props){
-    return <p>{props.date}</p>;
+    const time = props.time.slice(0,5);
+    return <p>{props.date} {time}</p>;
 }
 
 function Addresses(props){

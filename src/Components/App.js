@@ -14,13 +14,13 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-        const request = new Request('https://dev.svnoak.net/api/email/')
-        fetch(request)
-        .then(response => response.json())
-        .then(data => {
-            this.setState({emails: data});
-          });
+  componentDidMount() {  
+    const request = new Request('https://dev.svnoak.net/api/email/')
+    fetch(request)
+    .then(response => response.json())
+    .then(data => {
+        this.setState({emails: data});
+      });
   }
 
   showEmail = (id) => {
@@ -35,7 +35,7 @@ class App extends React.Component {
     return (
       <>
         <Nav backBtn={this.state.showEmail} closeEmail={this.closeEmail}/>
-        <EmailList showEmail={this.showEmail} data={this.state.emails} wait="1"/>
+        <EmailList showEmail={this.showEmail} data={this.state.emails} wait="1" />
         { this.state.showEmail && <Slide data={this.state.emails[this.state.emailId]} /> }
       </>
     )

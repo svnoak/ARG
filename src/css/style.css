@@ -132,12 +132,19 @@ nav > div{
 }
 
 .email-detail {
+    display: grid;
+	grid-template-columns: .1fr 1fr 6fr;
 	position: absolute;
 	top: 10vh;
 	left: 0;
 	height: 100vw;
 }
 
-.email-detail > .read-indicator{
-    height: 100%;
+.email-detail > .read-indicator,
+.email-detail > .avatar {
+    display: none;
+}
+
+.email-detail > .email-content {
+    grid-column: 1/4;
 }

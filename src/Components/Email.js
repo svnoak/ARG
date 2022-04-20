@@ -7,7 +7,8 @@ class Email extends React.Component{
         super(props);
         this.state = {
             read: parseInt(props.read) === 1 ? true : false,
-            hidden: parseInt(props.id) === 1 ? true : false
+            hidden: parseInt(props.id) === 1 ? true : false,
+            color: undefined
         }
         this.markRead = this.markRead.bind(this);
     }
@@ -16,8 +17,12 @@ class Email extends React.Component{
         if( !this.state.read ) this.setState({read: true});
     }
 
+    setAvatarColor(){
+        if( !this.state.color ) this.setState({color: Math.floor(Math.random()*16777215).toString(16)});
+    }
 
     componentDidMount(){
+        this.setAvatarColor();
         setTimeout(() => {
             this.setState({hidden: false});
         }, 2000);
@@ -31,7 +36,7 @@ class Email extends React.Component{
         return (
             <div className={`email ${this.state.read ? "":"unread"} ${this.state.hidden ? "hidden" : ""}`} id={this.props.id}  onClick={() => {this.markRead(); this.props.showEmail(this.props.id)} } >
                 <ReadIndicator read={this.state.read} />
-                <Avatar shortName={this.props.firstName} />
+                <Avatar shortName={this.props.firstName} color={this.state.color}/>
                 <EmailContent day={day} data={this.props}/>
             </div>
         )
@@ -54,10 +59,8 @@ function EmailContent(props){
 
 function Avatar(props){
     const shortName = props.shortName.charAt(0).toUpperCase();
-    const color = 'black' /* Math.floor(Math.random()*16777215).toString(16); */
-
     return(
-        <div className="avatar" style={{backgroundColor: '#' + color}}>
+        <div className="avatar" style={{backgroundColor: '#' + props.color}}>
             <span>{shortName}</span>
         </div>
     )
