@@ -14,7 +14,7 @@ function Login(props){
     }
 
     return(
-        <div>
+        <div className="login">
             <p>Vad ska vi kalla dig?</p>
             <form>
                 <input type="text" id="name"></input>

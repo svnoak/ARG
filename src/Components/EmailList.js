@@ -19,6 +19,7 @@ class EmailList extends React.Component{
             address={email.address}
             showEmail={this.props.showEmail}
             toggleAlert={this.props.toggleAlert}
+            audio={this.props.audio}
             />
             )
         });

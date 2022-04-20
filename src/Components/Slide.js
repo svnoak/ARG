@@ -2,7 +2,7 @@ import React from "react";
 import moment from 'moment';
 
 function Slide(props){
-    moment.locale('sv');
+    moment.locale('sv-SE');
     let day = parseInt(props.data.date) < 0
     ? moment().add(props.data.date, 'days').format("Do MMMM")
     : props.data.date;

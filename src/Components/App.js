@@ -9,6 +9,7 @@ import "../assets/css/style.css"
 class App extends React.Component {
   constructor(props){
     super(props)
+    this.audio = new Audio('https://proxy.notificationsounds.com/notification-sounds/definite-555/download/file-sounds-1085-definite.mp3');
     this.showEmail = this.showEmail.bind(this);
     this.state = {
       emails: [],
@@ -52,7 +53,7 @@ class App extends React.Component {
       { this.state.loggedIn && 
         <>
         <Nav backBtn={this.state.showEmail} closeEmail={this.closeEmail}/>
-        <EmailList showEmail={this.showEmail} state={this.state} wait="1" toggleAlert={this.toggleAlert}/>
+        <EmailList showEmail={this.showEmail} state={this.state} wait="1" toggleAlert={this.toggleAlert} audio={this.audio}/>
         { this.state.showEmail && <Slide data={this.state.emails[this.state.emailId]} name={this.state.name}/> }
         </>
       }

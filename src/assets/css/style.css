@@ -2,11 +2,13 @@ body {
 	margin: 0;
 	font-family: sans-serif;
 	background-color: lightgray;
+    display: grid;
 }
 
 #root{
     display: grid;
-    max-width: 500px;
+    width: 100vw;
+    justify-self: center;
 }
 
 nav{
@@ -24,8 +26,9 @@ nav > h1{
     font-size: 2em;
 }
 
-nav > div{
-
+.login{
+    justify-self: center;
+    pointer-events: all;
 }
 
 .email-layer{

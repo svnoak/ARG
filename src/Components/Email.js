@@ -1,5 +1,7 @@
 import React from "react";
 import moment from 'moment';
+import 'moment/locale/sv';
+
 
 class Email extends React.Component{
     constructor(props) {
@@ -25,8 +27,8 @@ class Email extends React.Component{
         setTimeout(() => {
             this.setState({hidden: false});
             this.props.toggleAlert(true);
-            let audio = new Audio('https://proxy.notificationsounds.com/notification-sounds/definite-555/download/file-sounds-1085-definite.mp3');
-            audio.play();
+            
+            this.props.audio.play();
             setTimeout(() => {
                 this.props.toggleAlert(false);
             }, 2000);
@@ -34,7 +36,9 @@ class Email extends React.Component{
     }
 
     render() {
-        moment.locale('sv');
+        console.log(moment.locales("sv"));
+        let momentjs = moment;
+        console.warn(momentjs.locale("sv"));
         let day = parseInt(this.props.date) < 0
         ? moment().add(this.props.date, 'days').format("Do MMMM")
         : this.props.date;
