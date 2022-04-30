@@ -45,7 +45,7 @@ if (class_exists($class) ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       if( isset($_POST) ){
         $username = $_POST['username'];
-        $pw = $_POST['password'];
+        $password = $_POST['password'];
         if( $action == "create" ){
           User::create($username, $password);
           sendJSON( USER::get($username, $password) );
