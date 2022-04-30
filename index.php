@@ -40,21 +40,23 @@ if (class_exists($table) ){
 
   if( $table == 'User' ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-      $username = $_POST['username'];
-      $pw = $_POST['password'];
-      if( $action == "get" ){  
-        User::create($username, $password);
-        sendJSON( USER::get($username, $password) );
-        exit();
+      if( isset($_POST) ){
+        $username = $_POST['username'];
+        $pw = $_POST['password'];
+        if( $action == "get" ){
+          User::create($username, $password);
+          sendJSON( USER::get($username, $password) );
+          exit();
 
-      } elseif ( $action == "create" ) {
-        sendJSON( User::get($username, $password) );
+        } elseif ( $action == "create" ) {
+          sendJSON( User::get($username, $password) );
+          exit();
+        }
+        
+      } else{
+        sendJSON( "WRONG METHOD", 403 );
         exit();
       }
-      
-    } else{
-      sendJSON( "WRONG METHOD", 403 );
-      exit();
     }
   }
 
