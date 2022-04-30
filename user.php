@@ -23,7 +23,7 @@ class User
     static function exists($username){
         global $mysqli;
         $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username'");
-        return $user == null;
+        return $user->fetch_object() == null;
     }
 }
 
