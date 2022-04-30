@@ -27,6 +27,7 @@ $table = $uri[2];
 $action = $uri[3];
 
 sendJSON($table);
+sendJSON($action);
 
 $table = ucfirst($table);
 
