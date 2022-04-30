@@ -23,10 +23,11 @@ class User
     static function getName($username){
         global $mysqli;
         $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = $username");
-            while ($row = $user->fetch_object()){
+            /* while ($row = $user->fetch_object()){
                 $user_arr[] = $row;
             }
-            return $user_arr;
+            return $user_arr; */
+            return $user;
     }
 }
 
