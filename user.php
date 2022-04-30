@@ -16,6 +16,7 @@ class User
             while ($row = $user->fetch_object()){
                 $user_arr[] = $row;
             }
+        sendJONS(mysqli_report(MYSQLI_REPORT_ALL));
             return $user_arr;
     }
 
