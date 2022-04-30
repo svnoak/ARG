@@ -60,10 +60,11 @@ if (class_exists($class) ){
       } else {
         sendJSON( "Bad Request", 400);
         exit();
+        }
+      } else {
+        sendJSON( Dialog::getAll() );
+        exit();
       }
-    } else {
-      sendJSON( Dialog::getAll() );
-      exit();
     }
   }
 
