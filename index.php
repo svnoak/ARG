@@ -44,7 +44,10 @@ if (class_exists($class) ){
     sendJSON("USER CLASS");
     exit();
     if($_SERVER['REQUEST_METHOD'] == "POST"){
+      sendJSON($_POST);
       if( isset($_POST) ){
+
+        
         /* $username = $_POST['username'];
         $pw = $_POST['password']; */
         if( $action == "get" ){
