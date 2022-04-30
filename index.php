@@ -28,8 +28,6 @@ $action = $uri[3];
 
 $class = ucfirst($table);
 
-sendJSON(class_exists($class));
-
 if (class_exists($class) ){
 
   if( $class == 'Email' ){
