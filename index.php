@@ -21,22 +21,49 @@ $stmt->execute(); */
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
-$class = $uri[2];
-$id = $uri[3];
+$table = $uri[2];
+$action = $uri[3];
 
-$className = ucfirst($class);
+$table = ucfirst($table);
 
-if (class_exists($className) ){
+if (class_exists($table) ){
 
-  if( $class && $id ){
-    $result = $className::getById($id);
-    sendJSON($result);
-  } elseif ($class ) {
-    sendJSON($className::getAll());
+  if( $table == 'Email' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      sendJSON( Email::getAll() );
+      exit();
+    } else{
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
+    }
   }
+
+  if( $table == 'User' ){
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+      $username = $_POST['username'];
+      $pw = $_POST['password'];
+      if( $action == "get" ){  
+        User::create($username, $password);
+        sendJSON( USER::get($username, $password) );
+        exit();
+
+      } elseif ( $action == "create" ) {
+        sendJSON( User::get($username, $password) );
+        exit();
+      }
+      
+    } else{
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
+    }
+  }
+
+  sendJSON("Bad request", 400);
+  exit();
   
 } else{
   sendJSON("Bad request", 400);
+  exit();
 }
 
 
