@@ -47,7 +47,7 @@ if (class_exists($class) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
         if( $action == "create" ){
-          $exists = User::getName($username);
+          /* $exists = User::getName($username); */
           if( count($exists) == 0 ){
             sendJSON( User::create($username, $password)->error );
             //sendJSON( USER::get($username, $password) );
