@@ -6,7 +6,7 @@ class User
 
     static function create($username, $password){
         global $mysqli;
-        $response = mysqli_query($mysqli, "INSERT INTO User VALUES ('NULL', $username, $password)");
+        $response = mysqli_query($mysqli, "INSERT INTO User(name, password) VALUES ($username, $password)");
         return $response;
     }
 
