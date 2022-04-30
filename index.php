@@ -26,14 +26,11 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $action = $uri[3];
 
-$table = ucfirst($table);
+$class = ucfirst($table);
 
-sendJSON($table);
-sendJSON($action);
+if (class_exists($class) ){
 
-if (class_exists($table) ){
-
-  if( $table == 'Email' ){
+  if( $class == 'Email' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
       sendJSON( Email::getAll() );
       exit();
@@ -43,9 +40,10 @@ if (class_exists($table) ){
     }
   }
 
-  if( $table == 'User' ){
+  if( $class == 'User' ){
+    sendJSON("USER CLASS");
+    exit();
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-      sendJSON($_POST);
       if( isset($_POST) ){
         /* $username = $_POST['username'];
         $pw = $_POST['password']; */
