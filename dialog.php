@@ -6,11 +6,11 @@ class Dialog
 
     static function getAll(){
         global $mysqli;
-        $npc = mysqli_query($mysqli, "SELECT * FROM NPC");
-            while ($row = $npc->fetch_object()){
-                $npc_arr[] = $row;
+        $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog");
+            while ($row = $dialog->fetch_object()){
+                $dialog_arr[] = $row;
             }
-           return $npc_arr;
+           return $dialog_arr;
     }
 
     static function getDialogsByNpcId($id){
