@@ -35,3 +35,57 @@ Body: username (string), password (6 integers)
 **Success**
 Returns: Userobject (id, username, password)
 Response: 200
+
+### /dialog
+
+Request Method: GET
+
+**Success**
+Returns: Array of Objects with all dialog entries
+Response: 200
+
+### /dialog/{NPC ID}
+
+Request Method: GET
+
+**Success**
+Returns: Array of Objects with all dialog entries for specific ID
+Response: 200
+
+Returns empty array if no dialogs are found.
+
+### /npc
+
+Request Method: GET
+
+**Success**
+Returns: Array of Objects with all npc entries
+Response: 200
+
+### /npc/{NPC ID}
+
+Request Method: GET
+
+**Success**
+Returns: NPC Object
+Response: 200
+
+Returns empty Object if no NPC found in database.
+
+### /item
+
+Request Method: GET
+
+**Success**
+Returns: Array of Objects with all item entries
+Response: 200
+
+### /item/{Puzzle ID}
+
+Request Method: GET
+
+**Success**
+Returns: Object for the item for the specific puzzle.
+Response: 200
+
+Returns empty Object if no NPC found in database.
