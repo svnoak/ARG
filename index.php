@@ -1,6 +1,8 @@
 <?php
-require_once("config.php");
+require_once('return.php');
+/*require_once("config.php");
 include_once("email.php");
+include_once("user.php"); */
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
   // Tillåt alla (origins) och alla headers
@@ -41,15 +43,16 @@ if (class_exists($table) ){
   if( $table == 'User' ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       if( isset($_POST) ){
-        $username = $_POST['username'];
-        $pw = $_POST['password'];
+        /* $username = $_POST['username'];
+        $pw = $_POST['password']; */
         if( $action == "get" ){
-          User::create($username, $password);
-          sendJSON( USER::get($username, $password) );
+          sendJSON($action);
+          /* User::create($username, $password);
+          sendJSON( USER::get($username, $password) ); */
           exit();
 
         } elseif ( $action == "create" ) {
-          sendJSON( User::get($username, $password) );
+          /* sendJSON( User::get($username, $password) ); */
           exit();
         }
         
