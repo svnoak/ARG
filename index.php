@@ -41,18 +41,22 @@ if (class_exists($class) ){
   }
 
   if( $class == 'User' ){
-
+    
     if($_SERVER['REQUEST_METHOD'] == "POST"){
+
       if( isset($_POST) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
+
         if( $action == "create" ){
-          $exists = User::exists($username);
-          sendJSON($exists);
-            $response = User::create($username, $password);
-            sendJSON( $response );
-            //sendJSON( USER::get($username, $password) );
+          if( User::exists($username) ){
+            sendJSON("User already exists", 409);
             exit();
+          }
+            $response = User::create($username, $password);
+            sendJSON( User::get($username, $password)['id'], 201 );
+            exit();
+
         } elseif ( $action == "get" ) {
           sendJSON( User::get($username, $password) );
           exit();
