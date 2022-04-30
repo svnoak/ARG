@@ -26,7 +26,7 @@ class User
             while ($row = $user->fetch_object()){
                 $user_arr[] = $row;
             }
-            return count($userArr) > 0;
+            return count($user_arr) > 0;
     }
 }
 
