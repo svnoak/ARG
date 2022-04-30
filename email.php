@@ -6,7 +6,7 @@ class Email
 
     static function getAll(){
         global $mysqli;
-        $emails = mysqli_query($mysqli, "SELECT * FROM email");
+        $emails = mysqli_query($mysqli, "SELECT * FROM Email");
             while ($row = $emails->fetch_object()){
                 $email_arr[] = $row;
             }
@@ -15,7 +15,7 @@ class Email
 
     static function getById($id){
         global $mysqli;
-        $emails = mysqli_query($mysqli, "SELECT * FROM email WHERE email_id = $id");
+        $emails = mysqli_query($mysqli, "SELECT * FROM Email WHERE email_id = $id");
             while ($row = $emails->fetch_object()){
                 $email_arr[] = $row;
             }
