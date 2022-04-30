@@ -12,5 +12,6 @@ class Place
             }
            return $place_arr;
     }
+    
 }
 ?>

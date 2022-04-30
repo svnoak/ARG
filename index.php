@@ -25,7 +25,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
 $table = $uri[2];
-$action = $uri[3];
+$arg = $uri[3];
 
 $class = ucfirst($table);
 
@@ -51,6 +51,22 @@ if (class_exists($class) ){
     }
   }
 
+  if( $class == 'Dialog' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      if( isset($arg) ){
+        if(is_numeric($arg)) {
+          sendJSON( Dialog::getDialogsByNpcId($arg) );
+          exit();
+      } else {
+        sendJSON( "Bad Request", 400);
+        exit();
+      }
+    } else {
+      sendJSON( Dialog::getAll() );
+      exit();
+    }
+  }
+
   if( $class == 'User' ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -59,7 +75,7 @@ if (class_exists($class) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if( $action == "create" ){
+        if( $arg == "create" ){
           if( User::exists($username) ){
             sendJSON("User already exists", 409);
             exit();
@@ -73,7 +89,7 @@ if (class_exists($class) ){
             }
             
 
-        } elseif ( $action == "get" ) {
+        } elseif ( $arg == "get" ) {
           sendJSON( User::get($username, $password) );
           exit();
         }
