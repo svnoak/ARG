@@ -23,7 +23,7 @@ class User
     static function exists($username){
         global $mysqli;
         $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username'");
-        sendJSON($user);
+        sendJSON($user-->fetch_object());
             while ($row = $user->fetch_object()){
                 $user_arr[] = $row;
             }
