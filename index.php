@@ -104,6 +104,23 @@ if (class_exists($class) ){
     }
   }
 
+  if( $class == 'Npc' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      if( isset($arg) ){
+        if(is_numeric($arg)) {
+          sendJSON( Npc::getById($arg) );
+          exit();
+      } else {
+        sendJSON( "Bad Request", 400);
+        exit();
+        }
+      } else {
+        sendJSON( Npc::getAll() );
+        exit();
+      }
+    }
+  }
+
   sendJSON("Bad request", 400);
   exit();
   
