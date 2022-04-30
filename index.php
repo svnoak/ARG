@@ -26,6 +26,8 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $action = $uri[3];
 
+sendJSON($table);
+
 $table = ucfirst($table);
 
 if (class_exists($table) ){
