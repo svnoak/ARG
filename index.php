@@ -26,10 +26,10 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $action = $uri[3];
 
+$table = ucfirst($table);
+
 sendJSON($table);
 sendJSON($action);
-
-$table = ucfirst($table);
 
 if (class_exists($table) ){
 
