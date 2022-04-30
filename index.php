@@ -55,8 +55,7 @@ if (class_exists($class) ){
           }
             $response = User::create($username, $password);
             if( $response ){
-              $user = User::get($username, $password);
-              sendJSON( $user['id'], 201 );
+              sendJSON( User::get($username, $password), 201 );
               exit();
             } else{
               sendJSON( "Error creating user", 500 );
