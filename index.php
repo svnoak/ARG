@@ -54,8 +54,13 @@ if (class_exists($class) ){
             exit();
           }
             $response = User::create($username, $password);
-            sendJSON( User::get($username, $password)['id'], 201 );
-            exit();
+            if( $response ){
+              sendJSON( User::get($username, $password)['id'], 201 );
+              exit();
+            } else{
+              sendJSON( "Error creating user", 500 );
+            }
+            
 
         } elseif ( $action == "get" ) {
           sendJSON( User::get($username, $password) );
