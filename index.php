@@ -41,8 +41,7 @@ if (class_exists($class) ){
   }
 
   if( $class == 'User' ){
-    sendJSON("USER CLASS");
-    exit();
+
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       sendJSON($_POST);
       if( isset($_POST) ){
