@@ -41,6 +41,16 @@ if (class_exists($class) ){
     }
   }
 
+  if( $class == 'Place' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      sendJSON( Place::getAll() );
+      exit();
+    } else{
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
+    }
+  }
+
   if( $class == 'User' ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
