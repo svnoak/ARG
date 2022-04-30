@@ -47,16 +47,10 @@ if (class_exists($class) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
         if( $action == "create" ){
-          /* $exists = User::getName($username); */
-          if( count($exists) == 0 ){
             $response = User::create($username, $password);
             sendJSON( $response );
             //sendJSON( USER::get($username, $password) );
             exit();
-          } else{
-            sendJSON("Username already in use", 400);
-            exit();
-          }
         } elseif ( $action == "get" ) {
           sendJSON( User::get($username, $password) );
           exit();
