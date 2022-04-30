@@ -4,6 +4,8 @@ require_once("config.php");
 include_once("email.php");
 include_once("user.php");
 include_once("place.php");
+include_once("dialog.php");
+include_once("npc.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
   // Tillåt alla (origins) och alla headers
