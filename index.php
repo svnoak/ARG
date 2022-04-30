@@ -50,7 +50,7 @@ if (class_exists($class) ){
           /* $exists = User::getName($username); */
           if( count($exists) == 0 ){
             $response = User::create($username, $password);
-            sendJSON( $response->error );
+            sendJSON( $response );
             //sendJSON( USER::get($username, $password) );
             exit();
           } else{
