@@ -7,7 +7,7 @@ class User
     static function create($username, $password){
         mysqli_report(MYSQLI_REPORT_ALL);
         global $mysqli;
-        $response = mysqli_query($mysqli, "INSERT INTO User VALUES (2, $username, $password)");
+        $response = mysqli_query($mysqli, "INSERT INTO User VALUES (2, '$username', $password)");
         return $response;
     }
 
