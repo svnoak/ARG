@@ -13,7 +13,7 @@ class User
 
     static function get($username, $password){
         global $mysqli;
-        $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = $username AND password = $password");
+        $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username' AND password = $password");
             while ($row = $user->fetch_object()){
                 $user_arr[] = $row;
             }
@@ -23,7 +23,7 @@ class User
     static function exists($username){
         global $mysqli;
         $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username'");
-        return $user->fetch_object() == null;
+        return $user->fetch_object() !== null;
     }
 }
 
