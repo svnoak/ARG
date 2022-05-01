@@ -40,10 +40,17 @@ if (class_exists($class) ){
 
   if( $class == 'Place' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      sendJSON( Place::getData($arg_1, $arg_2) );
-      exit();
+      if( isset($arg_1) && $_arg1 == 'get'){
+        sendJSON( Place::getPlaceByID($arg_2));
+        exit();
+      } elseif( isset($arg_1) && is_numeric($arg_1) ) {
+          sendJSON( Place::getData($arg_1, $arg_2) );
+          exit();
+      } else {
+          sendJSON( "Bad Request", 400 );
+          exit();
+      }
     }
-    
     else{
       sendJSON( "WRONG METHOD", 403 );
       exit();
@@ -75,17 +82,12 @@ if (class_exists($class) ){
         } elseif ( $arg_1 == "get" ) {
           sendJSON( User::get($id) );
           exit();
-        } elseif( $arg_1 == 'dialog' ){
-          if( $arg_2  == "current" ){
-            User::getCurrentDialog($id);
-          }
         }
-
-      } else{
+      }
+    } else{
         sendJSON( "WRONG METHOD", 403 );
         exit();
       }
-    }
   }
 
   if( $class == 'Npc' ){
@@ -94,54 +96,40 @@ if (class_exists($class) ){
         if(is_numeric($arg_1)) {
           sendJSON( Npc::getById($arg_1) );
           exit();
+        } else {
+            sendJSON( "Bad Request", 400);
+            exit();
+          }
       } else {
-        sendJSON( "Bad Request", 400);
-        exit();
-        }
-      } else {
-        sendJSON( Npc::getAll() );
-        exit();
+          sendJSON( Npc::getAll() );
+          exit();
       }
+    } else{
+        sendJSON( "WRONG METHOD", 403 );
+        exit();
     }
   }
 
   if( $class == 'Dialog' ){
-    if($_SERVER['REQUEST_METHOD'] == "GET"){
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+      $dialogID = $_POST['dialog'];
+      $userID = $_POST['user'];
+      $placeID = $_POST['place'];
+      $answer = $_POST['answer'];
       if( isset($arg_1) ){
-        if(is_numeric($arg_1)) {
-          sendJSON( Dialog::getDialogsByNpcId($arg_1) );
+        if( $arg_1 == 'done' ) {
+          sendJSON( Dialog::markDone($dialogID, $userID, $placeID, $answer) );
           exit();
-      } else {
-        sendJSON( "Bad Request", 400);
-        exit();
         }
       } else {
-        sendJSON( Dialog::getAll() );
+          sendJSON( "Bad Request", 400);
+          exit();
+        }
+    } else{
+        sendJSON( "WRONG METHOD", 403 );
         exit();
       }
     }
-  }
-
-  if( $class == 'Puzzle' ){
-    if($_SERVER['REQUEST_METHOD'] == "GET"){
-        if (isset($arg_1) && $arg_1 == 'npc' && isset($arg_2)) {
-        sendJSON(Puzzle::getPuzzlesByNPCId($arg_1));
-        exit();
-      } elseif (($arg_1 == 'order' && is_numeric($arg_2))) {
-        sendJSON(Puzzle::getByOrder($arg_2));
-        exit();
-      }
-    }
-
-    if( $_SERVER['REQUEST_METHOD'] == "POST" ){
-      if( isset($arg_1) && $arg_1 == 'solution' && isset($arg_2) ){
-        $puzzleOrder = $arg_2;
-        $answer = $_POST['answer'];
-        sendJSON( Puzzle::checkAnswerByPuzzleOrder($puzzleOrder, $answer) );
-        exit();
-    }
-    }
-  }
 
   sendJSON("Bad request", 400);
   exit();

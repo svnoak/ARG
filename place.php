@@ -66,7 +66,7 @@ class Place
         $dialogData = self::getDialog($placeID, $userID);
         $dialogs = self::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
-        $data = ["npc" =>$npc, "dialog"=>$dialogs];
+        $data = ["npc" =>$npc, "dialog"=>$dialogs, "place"=>$place];
         return $dialogs;
     }
     

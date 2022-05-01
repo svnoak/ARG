@@ -1,5 +1,7 @@
 <?php
 require_once("./config.php");
+include_once("./place.php");
+include_once("./puzzle.php");
 
 class Dialog
 {
@@ -18,6 +20,27 @@ class Dialog
             $dialog_arr[] = $row;
         }
        return $dialog_arr;
+    }
+
+    static function markDone($dialogID, $userID, $placeID, $answer){
+        global $mysql;
+        if( $answer != "" ){
+            $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
+            if( !$puzzleSolved ){
+                return $puzzleSolved;
+            }            
+        }
+
+        $dialog_respone = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID WHERE id = $userID");
+        $reward_query = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
+        $reward = $reward_query->fetch_object();
+        $reward_response = true;
+        if( $reward != null ){
+           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES($userID, $reward) ");
+        }
+           $archive_response = mysql_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES($userID, $placeID) ");
+
+        return $dialog_respone && $reward_response && $archive_response;
     }
 /* 
 

@@ -19,27 +19,14 @@ class Puzzle
            return $puzzle_arr;
     }
 
-    static function checkAnswerByPuzzleOrder($order, $answer){
+    static function checkAnswer($id, $answer){
         global $mysqli;
-        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order` = $order AND `type` = 'puzzle'");
+        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `id` = $id AND `type` = 'puzzle'");
         $puzzle = $query->fetch_object();
         $fileName = $puzzle->jsonLink;
         $path = "./puzzle/$fileName";
         $file = json_decode(file_get_contents($path),true);
         return $file['solution'] == $answer;
-    }
-
-    static function setPuzzleSolved( $userID, $order ){
-        global $mysqli;
-        mysqli_query($mysqli, "UPDATE User SET lastDialog = $order WHERE id = $userID");
-        $rewardId = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE order = $order");
-        giveItemToUser( $userID, $rewardId);
-    }
-
-    private function giveItemToUser( $userID, $item ){
-        global $mysqli;
-        $response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ('$userID', $item)");
-        return $response;
     }
 }
 
