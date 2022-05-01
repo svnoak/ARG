@@ -22,12 +22,11 @@ class Archive
 
         foreach( $places as $place ){
             $placeID = $place->id;
-            $npcs = Npc::getByPlace($placeID);
-            while ($row = $npcs->fetch_object()){
-                $npc_arr[] = $row;
-            }
+            $npc = Npc::getByPlace($placeID);
+            $npc_arr[] = $npc;
         }
-       return $npc_arr;
+        
+        return $npc_arr;
     }
 
     static function getPlaces($userID){
