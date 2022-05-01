@@ -33,11 +33,10 @@ class Dialog
 
         $dialog_respone = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID WHERE id = $userID");
         $reward_query = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
-        $reward = $reward_query->fetch_object();
+        $rewardID = $reward_query->fetch_object()->id;
         $reward_response = true;
         if( $reward != null ){
-           return mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $reward) ");
-           exit();
+           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $reward) ");
         }
            $archive_response = mysql_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
 
