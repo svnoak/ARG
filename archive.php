@@ -37,6 +37,8 @@ class Archive
             $archivePlaces_arr[] = $row;
         }
 
+        return $archivePlaces_arr;
+
         $places_arr = [];
 
         foreach( $archivePlaces_arr as $place ){
