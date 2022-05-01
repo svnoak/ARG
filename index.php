@@ -125,16 +125,21 @@ if (class_exists($class) ){
 
   if( $class == 'Puzzle' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      if( isset($arg_2) ){
-          sendJSON( Puzzle::checkAnswerByPuzzleOrder($arg_1, $arg_2) );
-          exit();
-      } elseif (isset($arg_1) && is_numeric($arg_1)) {
+        if (isset($arg_1) && $arg_1 == 'npc' && isset($arg_2)) {
         sendJSON(Puzzle::getPuzzlesByNPCId($arg_1));
         exit();
-      } elseif (($arg_1 == 'order')) {
+      } elseif (($arg_1 == 'order' && is_numeric($arg_2))) {
         sendJSON(Puzzle::getByOrder($arg_2));
         exit();
       }
+    }
+
+    if( $_SERVER['REQUEST_METHOD'] == "POST" ){
+      if( isset($arg_1) && $arg_1 == 'solution' && isset($arg_2) ){
+        $puzzleOrder = $arg_2;
+        $answer = $_POST['answer'];
+        sendJSON( Puzzle::checkAnswerByPuzzleOrder($puzzleOrder, $answer) );
+        exit();
     }
   }
 
