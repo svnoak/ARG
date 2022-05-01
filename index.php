@@ -141,6 +141,7 @@ if (class_exists($class) ){
         sendJSON( Puzzle::checkAnswerByPuzzleOrder($puzzleOrder, $answer) );
         exit();
     }
+    }
   }
 
   sendJSON("Bad request", 400);
