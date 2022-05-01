@@ -5,6 +5,7 @@ include_once("email.php");
 include_once("user.php");
 include_once("place.php");
 include_once("dialog.php");
+include_once("puzzle.php");
 include_once("npc.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
@@ -27,7 +28,8 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 
 $table = $uri[2];
-$arg = $uri[3];
+$arg_1 = $uri[3];
+$arg_2 = $uri[4];
 
 $class = ucfirst($table);
 
@@ -53,23 +55,6 @@ if (class_exists($class) ){
     }
   }
 
-  if( $class == 'Dialog' ){
-    if($_SERVER['REQUEST_METHOD'] == "GET"){
-      if( isset($arg) ){
-        if(is_numeric($arg)) {
-          sendJSON( Dialog::getDialogsByNpcId($arg) );
-          exit();
-      } else {
-        sendJSON( "Bad Request", 400);
-        exit();
-        }
-      } else {
-        sendJSON( Dialog::getAll() );
-        exit();
-      }
-    }
-  }
-
   if( $class == 'User' ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -78,7 +63,7 @@ if (class_exists($class) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if( $arg == "create" ){
+        if( $arg_1 == "create" ){
           if( User::exists($username) ){
             sendJSON("User already exists", 409);
             exit();
@@ -92,7 +77,7 @@ if (class_exists($class) ){
             }
             
 
-        } elseif ( $arg == "get" ) {
+        } elseif ( $arg_1 == "get" ) {
           sendJSON( User::get($username, $password) );
           exit();
         }
@@ -106,9 +91,9 @@ if (class_exists($class) ){
 
   if( $class == 'Npc' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      if( isset($arg) ){
-        if(is_numeric($arg)) {
-          sendJSON( Npc::getById($arg) );
+      if( isset($arg_1) ){
+        if(is_numeric($arg_1)) {
+          sendJSON( Npc::getById($arg_1) );
           exit();
       } else {
         sendJSON( "Bad Request", 400);
@@ -117,6 +102,32 @@ if (class_exists($class) ){
       } else {
         sendJSON( Npc::getAll() );
         exit();
+      }
+    }
+  }
+
+  if( $class == 'Dialog' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      if( isset($arg_1) ){
+        if(is_numeric($arg_1)) {
+          sendJSON( Dialog::getDialogsByNpcId($arg_1) );
+          exit();
+      } else {
+        sendJSON( "Bad Request", 400);
+        exit();
+        }
+      } else {
+        sendJSON( Dialog::getAll() );
+        exit();
+      }
+    }
+  }
+
+  if( $class == 'Puzzle' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      if( isset($arg_2) ){
+          sendJSON( Puzzle::checkAnswerByPuzzleOrder($arg_1, $arg_2) );
+          exit();
       }
     }
   }
