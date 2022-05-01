@@ -31,10 +31,11 @@ class Place
         global $mysqli;
         $lastDialog = Dialog::getLastDialog($userID);
         $dialog_query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place = $placeID AND `order` > $lastDialog");
-        while ($row = $dialog_query->fetch_object()){
+        return $dialog_query;
+        /* while ($row = $dialog_query->fetch_object()){
             $dialog_arr[] = $row;
         }
-        return $dialog_arr;
+        return $dialog_arr; */
     }
 
     static function getData($placeID, $userID){
