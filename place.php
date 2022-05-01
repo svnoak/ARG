@@ -51,8 +51,9 @@ class Place
             } else {
                 $dialogs[] = $file;
             }
-
         }
+
+        return $dialogs;
     }
 
     static function getData($placeID, $userID){
