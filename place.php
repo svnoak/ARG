@@ -45,11 +45,9 @@ class Place
             $path = "./$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
             if( $type == 'puzzle' ){
-                $newFile = ["text"=>$file['text'], "tips"=>$file['tips']];
-                $dialogs[] = $newFile;
-            } else {
-                $dialogs[] = $file;
+                unset($file['solution']);
             }
+            $dialogs[] = $file;
         }
 
         return $dialogs;
