@@ -30,10 +30,10 @@ Response: 409
 ### /user/get
 
 Request Method: POST
-Body: username (string), password (6 integers)
+Body: id (int)
 
 **Success**
-Returns: Userobject (id, username, password)
+Returns: Userobject (id, username, password, lastDialog)
 Response: 200
 
 ### /dialog

@@ -41,7 +41,9 @@ if (class_exists($class) ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
       sendJSON( Place::getAll() );
       exit();
-    } else{
+    }
+    
+    else{
       sendJSON( "WRONG METHOD", 403 );
       exit();
     }
@@ -54,6 +56,7 @@ if (class_exists($class) ){
       if( isset($_POST) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $id = $_POST['id'];
 
         if( $arg_1 == "create" ){
           if( User::exists($username) ){
@@ -62,18 +65,21 @@ if (class_exists($class) ){
           }
             $response = User::create($username, $password);
             if( $response ){
-              sendJSON( User::get($username, $password), 201 );
+              sendJSON( User::login($username, $password), 201 );
               exit();
             } else{
               sendJSON( "Error creating user", 500 );
             }
-            
 
         } elseif ( $arg_1 == "get" ) {
-          sendJSON( User::get($username, $password) );
+          sendJSON( User::get($id) );
           exit();
+        } elseif( $arg_1 == 'dialog' ){
+          if( $arg_2  == "current" ){
+            User::getCurrentDialog($id);
+          }
         }
-        
+
       } else{
         sendJSON( "WRONG METHOD", 403 );
         exit();

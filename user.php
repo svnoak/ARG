@@ -10,23 +10,26 @@ class User
         return $response;
     }
 
-    static function get($username, $password){
-        global $mysqli;
-        $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username' AND password = $password");
-            return $user->fetch_object();
-    }
-
     static function exists($username){
         global $mysqli;
         $user = mysqli_query($mysqli, "SELECT * FROM User WHERE name = '$username'");
         return $user->fetch_object() !== null;
     }
 
-    static function getNextDialog($username, $password){
+    static function login($username, $password){
         global $mysqli;
-        $lastDialog = mysqli_query($mysqli, "SELECT lastDialog FROM User WHERE name = '$username' AND password = $password");
-        return $lastDialog + 1;
+        $user = mysqli_query($mysqli, "SELECT id FROM User WHERE name = '$username' AND password = $password");
+            return $user->fetch_object();
     }
+
+    static function get($id){
+        global $mysqli;
+        $user = mysqli_query($mysqli, "SELECT * FROM User WHERE id = $id");
+            return $user->fetch_object();
+    }
+
+
+
 }
 
 ?>
