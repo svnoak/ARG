@@ -44,8 +44,7 @@ class Place
             $type = $dialog->type;
             $path = "./$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
-
-            if( isset($file->solution) ){
+            if( $type == 'puzzle' ){
                 $newFile = ["text"=>$file->text, "tips"=>$file->tips];
                 $dialogs[] = $newFile;
             } else {
