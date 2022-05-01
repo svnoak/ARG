@@ -7,7 +7,7 @@ class Dialog
     static function getLastDialog($userID){
         global $mysqli;
         $currentDialog = mysqli_query($mysqli, "SELECT lastDialog FROM User WHERE id = $userID");
-        return $currentDialog->fetch_object();
+        return $currentDialog->fetch_object()->lastDialog;
     }
 
     static function getByPlace($placeID, $userID){
