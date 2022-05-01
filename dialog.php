@@ -42,11 +42,11 @@ class Dialog
         $placeExists_query = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND place = $placeID ");
         $placeExists = $placeExists_query->fetch_object();
 
-        return $placeExists;
-        
-        //$archivePlaceResponse = mysqli_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
-
-        return $dialogRespone && $rewardResponse && $archiveResponse;
+        $archivePlaceResponse = true;
+        if( $placeExists == null ){
+            $archivePlaceResponse = mysqli_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
+        }
+        return $dialogRespone && $rewardResponse && $archivePlaceResponse;
     }
 /* 
 
