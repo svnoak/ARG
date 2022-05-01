@@ -40,7 +40,7 @@ if (class_exists($class) ){
 
   if( $class == 'Place' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      sendJSON( Place::getDialog($arg_1, $arg_2) );
+      sendJSON( Place::getData($arg_1, $arg_2) );
       exit();
     }
     
