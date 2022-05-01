@@ -8,11 +8,10 @@ class Place
     static function getAll(){
         global $mysqli;
         $places = mysqli_query($mysqli, "SELECT * FROM Place");
-        return $places->fetch_object();
-            /* while ($row = $places->fetch_object()){
+            while ($row = $places->fetch_object()){
                 $place_arr[] = $row;
             }
-           return $place_arr; */
+           return $place_arr;
     }
 
     static function getPlaceByID($id){
