@@ -90,7 +90,7 @@ if (class_exists($class) ){
       exit();
     }
   }
-
+/* 
   if( $class == 'Npc' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
       if( isset($arg_1) ){
@@ -109,7 +109,7 @@ if (class_exists($class) ){
         sendJSON( "WRONG METHOD", 403 );
         exit();
     }
-  }
+  } */
 
   if( $class == 'Dialog' ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){

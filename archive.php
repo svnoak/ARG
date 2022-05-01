@@ -6,6 +6,7 @@ include_once("./npc.php");
 class Archive
 {
 
+    // Takes all Menuoptions that are defined in the DB and renders them as a list.
     static function getMenuOptions(){
         global $mysqli;
         $options = mysqli_query($mysqli, "SELECT * FROM ArchiveMenu");
@@ -15,6 +16,8 @@ class Archive
         return $option_arr;
     }
 
+    // Gets NPCS according to Places in the UserArchiveTable
+    // Each place has one NPC but NPCs can be found in several places.
     static function getNpcs($userID){
         global $mysqli;
         $places = self::getPlaces($userID);
@@ -29,6 +32,7 @@ class Archive
         return $npc_arr;
     }
 
+    // Gets places user has been to.
     static function getPlaces($userID){
         global $mysqli;
         $archivePlaces = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND place IS NOT NULL");
@@ -49,7 +53,22 @@ class Archive
     }
 
     static function getItems($userID){
+        global $mysqli;
+        $archiveItems = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND item IS NOT NULL");
+        while ($row = $archiveItems->fetch_object()){
+            $archiveItems_arr[] = $row;
+        }
 
+        $items_arr = [];
+
+        foreach( $archiveItems_arr as $item ){
+            $id = $item->item;
+            $items = mysqli_query($mysqli, "SELECT * FROM Item WHERE id = $id");
+            while ($row = $items->fetch_object()){
+                $items_arr[] = $row;
+            }
+        }
+        return $items_arr;
     }
 
     static function getDialog($placeID, $userID){
@@ -92,7 +111,7 @@ class Archive
         $dialogs = self::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
         $data = ["npc" =>$npc, "dialog"=>$dialogs, "place"=>$place];
-        return $dialogs;
+        return $data;
     }
     
 }
