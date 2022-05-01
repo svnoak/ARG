@@ -23,7 +23,7 @@ class Dialog
     }
 
     static function markDone($dialogID, $userID, $placeID, $answer){
-        global $mysql;
+        global $mysqli;
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
