@@ -22,8 +22,8 @@ class Archive
 
         foreach( $places as $place ){
             $placeID = $place->id;
-            $npc_query = Npc::getByPlace($placeID);
-            while ($row = $options->fetch_object()){
+            $npcs = Npc::getByPlace($placeID);
+            while ($row = $npcs->fetch_object()){
                 $npc_arr[] = $row;
             }
         }
@@ -32,9 +32,21 @@ class Archive
 
     static function getPlaces($userID){
         global $mysqli;
-        $npcID = self::getPlaceByID($id)->npc;
-        $npc_query = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID");
-        return $npc_query->fetch_object();
+        $archivePlaces = mysqli_query($mysqli, "SELECT place FROM UserArchive WHERE user = $userID AND place != NULL");
+        while ($row = $archivePlaces->fetch_object()){
+            $archivePlaces_arr[] = $row;
+        }
+
+        $places_arr = [];
+
+        foreach( $archivePlaces_arr as $place ){
+            $id = $place->place;
+            $places = mysqli_query($mysqli, "SELECT * FROM Place WHERE id = $id");
+            while ($row = $places->fetch_object()){
+                $places_arr[] = $row;
+            }
+        }
+        return $places_arr;
     }
 
     static function getItems($userID){
