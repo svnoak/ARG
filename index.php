@@ -22,10 +22,6 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $arg_1 = $uri[3];
 $arg_2 = $uri[4];
-$arg_3;
-if( isset($uri[5]) ){
-  $arg_3 = $uri[5];
-}
 
 
 $class = ucfirst($table);
@@ -44,7 +40,7 @@ if (class_exists($class) ){
 
   if( $class == 'Place' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      sendJSON( Place::getData($arg_2, $arg_3) );
+      sendJSON( Place::getData($arg_1, $arg_2) );
       exit();
     }
     
