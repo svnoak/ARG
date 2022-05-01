@@ -22,7 +22,11 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $arg_1 = $uri[3];
 $arg_2 = $uri[4];
-$arg_3 = $uri[5];
+$arg_3;
+if( isset($uri[5]) ){
+  $arg_3 = $uri[5];
+}
+
 
 $class = ucfirst($table);
 
