@@ -28,8 +28,6 @@ class User
             return $user->fetch_object();
     }
 
-
-
 }
 
 ?>

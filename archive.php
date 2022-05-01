@@ -52,6 +52,7 @@ class Archive
         return $places_arr;
     }
 
+    // Gets items user has in inventory
     static function getItems($userID){
         global $mysqli;
         $archiveItems = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND item IS NOT NULL");
@@ -71,6 +72,7 @@ class Archive
         return $items_arr;
     }
 
+    // Gets relevant dialog that user has not yet gotten.
     static function getDialog($placeID, $userID){
         global $mysqli;
         $lastDialog = Dialog::getLastDialog($userID);
@@ -81,6 +83,7 @@ class Archive
         return $dialog_arr;
     }
 
+    // Gets dialogues and puzzles, and removes and adds relevant info for the client to be directly used.
     static function fetchDialogs($dialogData){
         $dialogs = [];
         foreach( $dialogData as $dialog ){
@@ -105,6 +108,7 @@ class Archive
         return $dialogs;
     }
 
+    // Packs all data for client to be used for each place.
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
         $dialogData = self::getDialog($placeID, $userID);
