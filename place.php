@@ -59,7 +59,7 @@ class Place
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
         $dialogData = self::getDialog($placeID, $userID);
-        $dialogs = fetchDialogs($dialogData);
+        $dialogs = self::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
 
         $data = ["npc" =>$npc, "dialog"=>$dialogs];
