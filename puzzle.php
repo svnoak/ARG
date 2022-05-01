@@ -25,7 +25,7 @@ class Puzzle
         $puzzle = $query->fetch_object();
         $fileName = $puzzle->jsonLink;
         $path = "./puzzle/$fileName";
-        $file = json_decode(file_get_contents($path),true);
+        $file = file_get_contents($path);
         return $file->solution;
     }
 }
