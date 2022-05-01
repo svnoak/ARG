@@ -53,6 +53,7 @@
         "text": "Om du löser denna gåtan kan du få med dig en del av mitt underbara vatten. Om inte så kan jag visa dig hur vi hade roligt förr i tiden!",
         "type": "dialog",
         "speaker": "Bäckahästen",
-        "audio": "link to audio file"
+        "audio": "link to audio file",
+        "markDone": true
     }
 ]

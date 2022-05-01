@@ -46,10 +46,12 @@ class Place
             $file = json_decode(file_get_contents($path), true);
             if( $type == 'puzzle' ){
                 unset($file['solution']);
+                $file['id'] = $dialog->id;
                 $dialogs[] = $file;
             } else {
-                foreach( $file as $arr ){
-                    $dialogs[] = $arr;
+                foreach( $file as $dialogObject ){
+                    $dialogObject['id'] = $dialog->id;
+                    $dialogs[] = $dialogObject;
                 }
             }
         }
