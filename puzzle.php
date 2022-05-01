@@ -21,7 +21,7 @@ class Puzzle
 
     static function checkAnswerByPuzzleOrder(int $order, string $answer){
         global $mysqli;
-        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE order = $id AND type = 'puzzle'");
+        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE order = $order AND type = 'puzzle'");
         $puzzle = $query->fetch_object();
         $path = $puzzle.jsonLink;
         $file = file_get_contents(json_decode("./puzzle/$path", true));
