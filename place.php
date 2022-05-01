@@ -14,20 +14,20 @@ class Place
            return $place_arr;
     }
 
-    static function getPlaceByID($id){
+    private function getPlaceByID($id){
         global $mysqli;
         $place_query = mysqli_query($mysqli, "SELECT * FROM Place WHERE id = $id");
         return $place_query->fetch_object();
     }
 
-    static function getNPC($id){
+    private function getNPC($id){
         global $mysqli;
         $npcID = getPlaceByID($id)->npc;
         $npc_query = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID");
         return $npc_query->fetch_object();
     }
 
-    static function getDialog($placeID, $userID){
+    private function getDialog($placeID, $userID){
         global $mysqli;
         $lastDialog = Dialog::getLastDialog($userID);
         $dialog_query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place = $placeID AND order > $lastDialog");
@@ -38,9 +38,9 @@ class Place
     }
 
     static function getData($placeID, $userID){
-        $npc = Place->getNPC($placeID);
-        $dialog = Place->getDialog($placeID, $userID);
-        $place = Place->getPlaceByID($placeID);
+        $npc = $this->getNPC($placeID);
+        $dialog = $this->getDialog($placeID, $userID);
+        $place = $this->getPlaceByID($placeID);
 
         $data = ["npc" =>$npc, "dialog"=>$dialog, "place"=>$place];
         return $data;
