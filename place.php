@@ -38,9 +38,9 @@ class Place
     }
 
     static function getData($placeID, $userID){
-        $npc = $this->getNPC($placeID);
-        $dialog = $this->getDialog($placeID, $userID);
-        $place = $this->getPlaceByID($placeID);
+        $npc = self::getNPC($placeID);
+        $dialog = self::getDialog($placeID, $userID);
+        $place = self::getPlaceByID($placeID);
 
         $data = ["npc" =>$npc, "dialog"=>$dialog, "place"=>$place];
         return $data;
