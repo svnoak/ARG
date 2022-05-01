@@ -10,7 +10,7 @@ class Puzzle
         return $dialog->fetch_object();
     }
 
-    static function getPuzzlesByNPCId(int $id){
+    static function getPuzzlesByNPCId($id){
         global $mysqli;
         $puzzle = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE type = 'puzzle' AND npc = $id");
             while ($row = $puzzle->fetch_object()){
@@ -19,7 +19,7 @@ class Puzzle
            return $puzzle_arr;
     }
 
-    static function checkAnswerByPuzzleOrder(int $order, string $answer){
+    static function checkAnswerByPuzzleOrder($order, $answer){
         global $mysqli;
         $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE order = $order AND type = 'puzzle'");
         $puzzle = $query->fetch_object();
