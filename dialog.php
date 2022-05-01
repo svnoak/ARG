@@ -36,11 +36,11 @@ class Dialog
         $reward = $reward_query->fetch_object();
         $reward_response = true;
         if( $reward != null ){
-           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES($userID, $reward) ");
+           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $reward) ");
            return $reward_response;
            exit();
         }
-           $archive_response = mysql_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES($userID, $placeID) ");
+           $archive_response = mysql_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
 
         return $dialog_respone && $reward_response && $archive_response;
     }
