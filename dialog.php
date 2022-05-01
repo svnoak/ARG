@@ -37,13 +37,17 @@ class Dialog
         $rewardID = $rewardQuery->fetch_object()->reward;
         $rewardResponse = true;
         if( $rewardID != null ){
-           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $rewardID) ");
+            $rewardExists_query = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND item = $rewardID ");
+            $rewardExists = $rewardExists_query->fetch_object() != null;
+            if( !$rewardExists ) {
+                $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $rewardID) ");
+            }
         }
         $placeExists_query = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND place = $placeID ");
-        $placeExists = $placeExists_query->fetch_object();
+        $placeExists = $placeExists_query->fetch_object() != null;
 
         $archivePlaceResponse = true;
-        if( $placeExists == null ){
+        if( !$placeExists ){
             $archivePlaceResponse = mysqli_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
         }
         return $dialogRespone && $rewardResponse && $archivePlaceResponse;
