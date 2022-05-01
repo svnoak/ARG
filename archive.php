@@ -32,7 +32,7 @@ class Archive
 
     static function getPlaces($userID){
         global $mysqli;
-        $archivePlaces = mysqli_query($mysqli, "SELECT place FROM UserArchive WHERE user = $userID AND place != NULL");
+        $archivePlaces = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND place != NULL");
         while ($row = $archivePlaces->fetch_object()){
             $archivePlaces_arr[] = $row;
         }
