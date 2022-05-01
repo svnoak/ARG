@@ -2,6 +2,7 @@
 require_once("./config.php");
 include_once("./place.php");
 include_once("./puzzle.php");
+include_once("./npc.php");
 
 class Dialog
 {
@@ -31,16 +32,16 @@ class Dialog
             }            
         }
 
-        $dialog_respone = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID WHERE id = $userID");
-        $reward_query = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
-        $rewardID = $reward_query->fetch_object()->reward;
-        $reward_response = true;
+        $dialogRespone = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID WHERE id = $userID");
+        $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
+        $rewardID = $rewardQuery->fetch_object()->reward;
+        $rewardResponse = true;
         if( $rewardID != null ){
            $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $rewardID) ");
         }
-           $archive_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
+        $archivePlaceResponse = mysqli_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
 
-        return $dialog_respone && $reward_response && $archive_response;
+        return $dialogRespone && $rewardResponse && $archiveResponse;
     }
 /* 
 
