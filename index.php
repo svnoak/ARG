@@ -138,8 +138,7 @@ if (class_exists($class) ){
       if( isset($arg_1) && $arg_1 == 'solution' && isset($arg_2) ){
         $puzzleOrder = $arg_2;
         $answer = $_POST['answer'];
-        sendJSON('order');
-        /* sendJSON( Puzzle::checkAnswerByPuzzleOrder($puzzleOrder, $answer) ); */
+        sendJSON( Puzzle::checkAnswerByPuzzleOrder($puzzleOrder, $answer) );
         exit();
     }
     }
