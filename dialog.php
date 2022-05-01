@@ -35,8 +35,8 @@ class Dialog
         $reward_query = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $reward_query->fetch_object()->id;
         $reward_response = true;
-        if( $reward != null ){
-           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $reward) ");
+        if( $rewardID != null ){
+           $reward_response = mysqli_query($mysqli, "INSERT INTO UserArchive(user, item) VALUES ($userID, $rewardID) ");
         }
            $archive_response = mysql_query($mysqli, "INSERT INTO UserArchive(user, place) VALUES ($userID, $placeID) ");
 
