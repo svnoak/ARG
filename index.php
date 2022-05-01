@@ -16,14 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 header("Access-Control-Allow-Origin: *");
 
-/* 
-$name = 'Kim';
-$password = 1234;
-
-$stmt = $mysqli->prepare("INSERT INTO user (name, password) VALUES(?, ?)");
-$stmt->bind_param("si", $name, $password);
-$stmt->execute(); */
-
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode( '/', $uri );
 

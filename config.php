@@ -6,5 +6,6 @@ $databasePassword = 'q3FMeGyWwfMnHzt4BKW9HEKfTeUAWeFMFcUacxs3SMFqkZwZE4kLHeUvfeA
 $databaseName = 'varg';
 
 // Connect to the database
-$mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName); 
+$mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName);
+
 ?>
