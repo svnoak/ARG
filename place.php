@@ -37,14 +37,32 @@ class Place
         return $dialog_arr;
     }
 
+    static function fetchDialogs($dialogData){
+        $dialogs = [];
+        foreach( $dialogData as $dialog ){
+            $fileName = $dialog->jsonLink;
+            $type = $dialog->type;
+            $path = "./$type/$fileName";
+            $file = json_decode(file_get_contents($path), true);
+
+            if( isset($file->solution) ){
+                $newFile = ["text"=>$file->text, "tips"=>$file->tips];
+                $dialogs[] = $newFile;
+            } else {
+                $dialogs[] = $file;
+            }
+
+        }
+    }
+
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
-        $dialog = self::getDialog($placeID, $userID);
+        $dialogData = self::getDialog($placeID, $userID);
+        $dialogs = fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
 
-        $data = ["npc" =>$npc, "dialog"=>$dialog, "place"=>$place];
-        return $dialog;
-        
+        $data = ["npc" =>$npc, "dialog"=>$dialogs];
+        return $dialogs;
     }
     
 }
