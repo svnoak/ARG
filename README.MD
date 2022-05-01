@@ -9,11 +9,15 @@ If the request method is not correct, the endpoint will return "Bad Request" wit
 
 ### /email
 
+Usage: For getting all the emails in the first playscreen.
+
 Request Method: GET
 Returns: Array with all emails
 Response: 200
 
 ### /user/create
+
+Usage: When creating the user in the first playscreen after they have choosen a username.
 
 Request Method: POST
 Body: username (string), password (6 integers)
@@ -27,6 +31,17 @@ Reason: Username already exists in database.
 Returns: "User already exists"
 Response: 409
 
+### /user/login
+
+Usage: When no userdata is available in localstorage.
+
+Request Method: POST
+Body: username (string), password (6 integers)
+
+**Success**
+Returns: UserID
+Response: 200
+
 ### /user/get
 
 Request Method: POST
@@ -36,56 +51,38 @@ Body: id (int)
 Returns: Userobject (id, username, password, lastDialog)
 Response: 200
 
-### /dialog
+### /place/get/{id}
+
+Usage: When user comes near a place with matching geolocation.
+
+Request Method: GET
+Returns: Place object
+Response: 200
+
+### /place/{id}
+
+Usage: When user comes near a place with matching geolocation.
 
 Request Method: GET
 
 **Success**
-Returns: Array of Objects with all dialog entries
+Returns: NPC, Dialog and Place data for the specific place
 Response: 200
 
-### /dialog/{NPC ID}
+**IMPORTANT!**
+The last dialog is marked with "markDone":true after which a dialog is to be marked as done.
+All dialogs have a key "id" in their last dialog object for posting it to /dialog/done on completion.
 
-Request Method: GET
+### /dialog/done
+
+Usage: When user has finished the last dialog or solved a puzzle.
+
+Request Method: POST
+Body: dialog (dialogID as int), user (userID as int), place (placeID as int), answer (puzzle answer as string)
+IMPORTANT! answer needs always be defined as key, if there is no user answer, just leave it empty.
 
 **Success**
-Returns: Array of Objects with all dialog entries for specific ID
+Returns: true or false
 Response: 200
 
-Returns empty array if no dialogs are found.
-
-### /npc
-
-Request Method: GET
-
-**Success**
-Returns: Array of Objects with all npc entries
-Response: 200
-
-### /npc/{NPC ID}
-
-Request Method: GET
-
-**Success**
-Returns: NPC Object
-Response: 200
-
-Returns empty Object if no NPC found in database.
-
-### /item
-
-Request Method: GET
-
-**Success**
-Returns: Array of Objects with all item entries
-Response: 200
-
-### /item/{Puzzle ID}
-
-Request Method: GET
-
-**Success**
-Returns: Object for the item for the specific puzzle.
-Response: 200
-
-Returns empty Object if no NPC found in database.
+IMPORTANT! dialog/done includes a check for if the given answer for a puzzle is correct and returns false if it is not.

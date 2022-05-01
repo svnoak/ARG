@@ -10,6 +10,7 @@ class Npc
         $npc = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID");
         return $npc->fetch_object();
     }
+
 }
 
 ?>
