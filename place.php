@@ -22,7 +22,7 @@ class Place
 
     static function getNPC($id){
         global $mysqli;
-        $npcID = getPlaceByID($id)->npc;
+        $npcID = self::getPlaceByID($id)->npc;
         $npc_query = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID");
         return $npc_query->fetch_object();
     }
