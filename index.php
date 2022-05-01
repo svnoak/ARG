@@ -128,8 +128,11 @@ if (class_exists($class) ){
       if( isset($arg_2) ){
           sendJSON( Puzzle::checkAnswerByPuzzleOrder($arg_1, $arg_2) );
           exit();
-      } elseif (isset($arg_1)) {
+      } elseif (isset($arg_1) && is_numeric($arg_1)) {
         sendJSON(Puzzle::getPuzzlesByNPCId($arg_1));
+        exit();
+      } elseif (($arg_1 == 'order')) {
+        sendJSON(Puzzle::getByOrder($arg_2));
         exit();
       }
     }

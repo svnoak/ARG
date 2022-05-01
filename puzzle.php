@@ -23,7 +23,7 @@ class Puzzle
         global $mysqli;
         $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE order = $order AND type = 'puzzle'");
         $puzzle = $query->fetch_object();
-        $path = $puzzle.jsonLink;
+        $path = "./$puzzle.type/$puzzle.jsonLink";
         return $path;
         $file = file_get_contents(json_decode("./puzzle/$path", true));
         $solution = $file.solution;
