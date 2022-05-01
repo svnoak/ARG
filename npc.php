@@ -4,6 +4,8 @@ require_once("./place.php");
 
 class Npc
 {
+
+    // NPC is bound by place and therefore never needs to be called by ID directly.
     static function getByPlace($placeID){
         global $mysqli;
         $npcID = Place::getPlaceByID($placeID)->npc;

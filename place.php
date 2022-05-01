@@ -5,6 +5,7 @@ include_once("./dialog.php");
 class Place
 {
 
+    // GETs all places, not really needed
     static function getAll(){
         global $mysqli;
         $places = mysqli_query($mysqli, "SELECT * FROM Place");
@@ -14,12 +15,14 @@ class Place
            return $place_arr;
     }
 
+    // Gets the place
     static function getPlaceByID($id){
         global $mysqli;
         $place_query = mysqli_query($mysqli, "SELECT * FROM Place WHERE id = $id");
         return $place_query->fetch_object();
     }
 
+    // Gets NPC for the specific place
     static function getNPC($id){
         global $mysqli;
         $npcID = self::getPlaceByID($id)->npc;
@@ -27,6 +30,7 @@ class Place
         return $npc_query->fetch_object();
     }
 
+    // Gets relevant dialog that user has not yet gotten.
     static function getDialog($placeID, $userID){
         global $mysqli;
         $lastDialog = Dialog::getLastDialog($userID);
@@ -37,6 +41,7 @@ class Place
         return $dialog_arr;
     }
 
+    // Gets dialogues and puzzles, and removes and adds relevant info for the client to be directly used.
     static function fetchDialogs($dialogData){
         $dialogs = [];
         foreach( $dialogData as $dialog ){
@@ -61,6 +66,7 @@ class Place
         return $dialogs;
     }
 
+    // Packs all data for client to be used for each place.
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
         $dialogData = self::getDialog($placeID, $userID);
