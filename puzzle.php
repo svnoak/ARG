@@ -22,11 +22,10 @@ class Puzzle
     static function checkAnswerByPuzzleOrder($order, $answer){
         global $mysqli;
         $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order` = $order AND `type` = 'puzzle'");
-        return $query;
-        /* $puzzle = $query->fetch_object();
+        $puzzle = $query->fetch_object();
         $path = "./$puzzle.type/$puzzle.jsonLink";
         return $path;
-        $file = file_get_contents(json_decode("./puzzle/$path", true));
+        /* $file = file_get_contents(json_decode("./puzzle/$path", true));
         $solution = $file.solution;
         return $solution; */
     }
