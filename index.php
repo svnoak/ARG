@@ -77,20 +77,22 @@ if (class_exists($class) ){
 
   if( $class == 'Place' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
-      if( isset($arg_1) && $_arg1 == 'get'){
+      if( isset($arg_1) ){
+        if( $_arg1 == 'get'){
         sendJSON( Place::getPlaceByID($arg_2));
         exit();
-      } elseif( isset($arg_1) && is_numeric($arg_1) ) {
+        } elseif( is_numeric($arg_1) ) {
           sendJSON( Place::getData($arg_1, $arg_2) );
           exit();
-      } else {
+        } else {
           sendJSON( "Bad Request", 400 );
           exit();
+        }
       }
-    }
-    else{
-      sendJSON( "WRONG METHOD", 403 );
-      exit();
+      else{
+        sendJSON( "WRONG METHOD", 403 );
+        exit();
+      }
     }
   }
 /* 
