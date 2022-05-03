@@ -23,9 +23,8 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $arg_1 = $uri[3];
 $arg_2;
-if( count($uri) > 3) { 
-  $arg_2 = $uri[4]; 
-}
+sendJSON(isset($uri[4]));
+exit();
 
 
 $class = ucfirst($table);
