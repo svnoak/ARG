@@ -42,7 +42,7 @@ if (class_exists($class) ){
   if( $class == 'User' ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-      $input = file_get_contents("php://input");
+      $input = json_decode(file_get_contents("php://input"), true);
       sendJSON($input);
       exit();
       if( isset($_POST) ){
