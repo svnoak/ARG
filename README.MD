@@ -59,7 +59,7 @@ Request Method: GET
 Returns: Place object
 Response: 200
 
-### /place/{id}
+### /place/{placeID}/{userID}
 
 Usage: When user comes near a place with matching geolocation.
 
