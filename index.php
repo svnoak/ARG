@@ -61,8 +61,8 @@ if (class_exists($class) ){
               sendJSON( "Error creating user", 500 );
             }
 
-        } elseif ( $arg_1 == "get" ) {
-          sendJSON( User::get($id) );
+        } elseif ( $arg_1 == "login" ) {
+          sendJSON( User::login($username, $password) );
           exit();
         }
       }
