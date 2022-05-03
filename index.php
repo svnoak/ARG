@@ -44,25 +44,30 @@ if (class_exists($class) ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_POST = json_decode(file_get_contents("php://input"), true);
       if( isset($_POST) ){
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $id = $_POST['id'];
+        if( isset($_POST['username']) && isset($_POST['password']) ){
+          $username = $_POST['username'];
+          $password = $_POST['password'];
+          $id = $_POST['id'];
 
-        if( $arg_1 == "create" ){
-          if( User::exists($username) ){
-            sendJSON("User already exists", 409);
+          if( $arg_1 == "create" ){
+            if( User::exists($username) ){
+              sendJSON("User already exists", 409);
+              exit();
+            }
+              $response = User::create($username, $password);
+              if( $response ){
+                sendJSON( User::login($username, $password), 201 );
+                exit();
+              } else{
+                sendJSON( "Error creating user", 500 );
+              }
+
+          } elseif ( $arg_1 == "login" ) {
+            sendJSON( User::login($username, $password) );
             exit();
           }
-            $response = User::create($username, $password);
-            if( $response ){
-              sendJSON( User::login($username, $password), 201 );
-              exit();
-            } else{
-              sendJSON( "Error creating user", 500 );
-            }
-
-        } elseif ( $arg_1 == "login" ) {
-          sendJSON( User::login($username, $password) );
+        } else {
+          sendJSON("Wrong username or password", 401);
           exit();
         }
       }
