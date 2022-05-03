@@ -42,8 +42,8 @@ if (class_exists($class) ){
   if( $class == 'User' ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-      $input = json_decode(file_get_contents("php://input"), true);
-      sendJSON($input);
+      $_POST = json_decode(file_get_contents("php://input"), true);
+      sendJSON(isset($_POST));
       exit();
       if( isset($_POST) ){
         $username = $_POST['username'];
