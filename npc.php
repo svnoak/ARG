@@ -9,7 +9,7 @@ class Npc
     static function getByPlace($placeID){
         global $mysqli;
         $npcID = Place::getPlaceByID($placeID)->npc;
-        $npc = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID");
+        $npc = mysqli_query($mysqli, "SELECT * FROM NPC WHERE id = $npcID ORDER BY `id` ASC");
         return $npc->fetch_object();
     }
 

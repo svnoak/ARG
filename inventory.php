@@ -35,7 +35,7 @@ class Inventory
     // Gets places user has been to.
     static function getPlaces($userID){
         global $mysqli;
-        $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place IS NOT NULL");
+        $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place IS NOT NULL ORDER BY `id` ASC");
         while ($row = $inventoryPlaces->fetch_object()){
             $inventoryPlaces_arr[] = $row;
         }
@@ -55,7 +55,7 @@ class Inventory
     // Gets items user has in inventory
     static function getItems($userID){
         global $mysqli;
-        $inventoryItems = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item IS NOT NULL");
+        $inventoryItems = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item IS NOT NULL ORDER BY `id` ASC");
         while ($row = $inventoryItems->fetch_object()){
             $inventoryItems_arr[] = $row;
         }
