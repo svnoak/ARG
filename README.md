@@ -1,1 +1,1 @@
-VARG
+cd VARG
