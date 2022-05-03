@@ -3,20 +3,20 @@ require_once("./config.php");
 include_once("./place.php");
 include_once("./npc.php");
 
-class Archive
+class Inventory
 {
 
     // Takes all Menuoptions that are defined in the DB and renders them as a list.
     static function getMenuOptions(){
         global $mysqli;
-        $options = mysqli_query($mysqli, "SELECT * FROM ArchiveMenu");
+        $options = mysqli_query($mysqli, "SELECT * FROM InventoryMenu");
         while ($row = $options->fetch_object()){
             $option_arr[] = $row;
         }
         return $option_arr;
     }
 
-    // Gets NPCS according to Places in the UserArchiveTable
+    // Gets NPCS according to Places in the UserinventoryTable
     // Each place has one NPC but NPCs can be found in several places.
     static function getNpcs($userID){
         global $mysqli;
@@ -35,14 +35,14 @@ class Archive
     // Gets places user has been to.
     static function getPlaces($userID){
         global $mysqli;
-        $archivePlaces = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND place IS NOT NULL");
-        while ($row = $archivePlaces->fetch_object()){
-            $archivePlaces_arr[] = $row;
+        $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place IS NOT NULL");
+        while ($row = $inventoryPlaces->fetch_object()){
+            $inventoryPlaces_arr[] = $row;
         }
 
         $places_arr = [];
 
-        foreach( $archivePlaces_arr as $place ){
+        foreach( $inventoryPlaces_arr as $place ){
             $id = $place->place;
             $places = mysqli_query($mysqli, "SELECT * FROM Place WHERE id = $id");
             while ($row = $places->fetch_object()){
@@ -55,14 +55,14 @@ class Archive
     // Gets items user has in inventory
     static function getItems($userID){
         global $mysqli;
-        $archiveItems = mysqli_query($mysqli, "SELECT * FROM UserArchive WHERE user = $userID AND item IS NOT NULL");
-        while ($row = $archiveItems->fetch_object()){
-            $archiveItems_arr[] = $row;
+        $inventoryItems = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item IS NOT NULL");
+        while ($row = $inventoryItems->fetch_object()){
+            $inventoryItems_arr[] = $row;
         }
 
         $items_arr = [];
 
-        foreach( $archiveItems_arr as $item ){
+        foreach( $inventoryItems_arr as $item ){
             $id = $item->item;
             $items = mysqli_query($mysqli, "SELECT * FROM Item WHERE id = $id");
             while ($row = $items->fetch_object()){

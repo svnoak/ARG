@@ -7,7 +7,7 @@ include_once("place.php");
 include_once("dialog.php");
 include_once("puzzle.php");
 include_once("npc.php");
-include_once("archive.php");
+include_once("inventory.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
   // Tillåt alla (origins) och alla headers
@@ -147,10 +147,10 @@ if (class_exists($class) ){
       }
     }
 
-  if( $class == 'Archive' ){
+  if( $class == 'Inventory' ){
     if( $arg_1 == 'npc' ){
       if( is_numeric($arg_2) ){
-        sendJSON(Archive::getNpcs($arg_2));
+        sendJSON(Inventory::getNpcs($arg_2));
         exit();
       } else {
           sendJSON( "Bad Request", 400);
@@ -158,7 +158,7 @@ if (class_exists($class) ){
       }
     } elseif( $arg_1 == 'place' ){
         if( is_numeric($arg_2) ){
-          sendJSON(Archive::getPlaces($arg_2));
+          sendJSON(Inventory::getPlaces($arg_2));
           exit();
         } else {
             sendJSON( "Bad Request", 400);
@@ -166,7 +166,7 @@ if (class_exists($class) ){
         }
       } elseif( $arg_1 == 'item' ){
         if( is_numeric($arg_2) ){
-          sendJSON(Archive::getItems($arg_2));
+          sendJSON(Inventory::getItems($arg_2));
           exit();
         } else {
             sendJSON( "Bad Request", 400);
