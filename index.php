@@ -43,8 +43,6 @@ if (class_exists($class) ){
     
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_POST = json_decode(file_get_contents("php://input"), true);
-      sendJSON(isset($_POST));
-      exit();
       if( isset($_POST) ){
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -117,6 +115,7 @@ if (class_exists($class) ){
 
   if( $class == 'Dialog' ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
+      $_POST = json_decode(file_get_contents("php://input"), true);
       $dialogID = $_POST['dialog'];
       $userID = $_POST['user'];
       $placeID = $_POST['place'];
