@@ -78,6 +78,8 @@ if (class_exists($class) ){
   if( $class == 'Place' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
       if( isset($arg_1) ){
+        sendJSON($arg_1);
+        exit();
         if( $_arg1 == 'get'){
         sendJSON( Place::getPlaceByID($arg_2));
         exit();
