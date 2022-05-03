@@ -63,8 +63,15 @@ if (class_exists($class) ){
               }
 
           } elseif ( $arg_1 == "login" ) {
-            sendJSON( User::login($username, $password) );
-            exit();
+            $user = User::login($username, $password);
+            if( $user != null ) {
+              sendJSON( $user );
+              exit();
+            } else{
+                sendJSON("Wrong username or password", 401);
+                exit();
+            }
+            
           }
         } else {
           sendJSON("Wrong username or password", 401);
