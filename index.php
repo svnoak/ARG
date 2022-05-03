@@ -23,9 +23,7 @@ $uri = explode( '/', $uri );
 $table = $uri[2];
 $arg_1 = $uri[3];
 $arg_2;
-sendJSON(isset($uri[4]));
-exit();
-
+if( isset($uri[4]) ) $arg_2 = $uri[4];
 
 $class = ucfirst($table);
 
