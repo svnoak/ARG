@@ -1,3 +1,4 @@
+
 const Camera = () => {
     return ( 
         <h1 className="tjenare">kamera</h1>

@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
-.hello {
-  background-color: white;
+.navWrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: gray;
+}
+
+.navWrapper a{
+height: 50px;
+width: 50;
+
 }
