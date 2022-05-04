@@ -5,7 +5,7 @@ include_once("./dialog.php");
 class Place
 {
 
-    // GETs all places, not really needed
+    // GETs all places
     static function getAll(){
         global $mysqli;
         $places = mysqli_query($mysqli, "SELECT * FROM Place");

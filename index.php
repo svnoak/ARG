@@ -97,11 +97,13 @@ if (class_exists($class) ){
           sendJSON( "Bad Request", 400 );
           exit();
         }
-      }
-      else{
-        sendJSON( "WRONG METHOD", 403 );
+      } else{
+        sendJSON( Place::getAll());
         exit();
       }
+    } else{
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
     }
   }
 /* 
