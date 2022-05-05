@@ -1,6 +1,6 @@
 import './assets/css/camera.css';
 import haversine from 'haversine-distance';
-import React from 'react';
+import React, { createContext, useState } from 'react';
 
 class Camera extends React.Component {
   constructor(props){
@@ -8,11 +8,15 @@ class Camera extends React.Component {
     localStorage.setItem("arg_userID", 1);
     this.state = {
       locations: JSON.parse(localStorage.getItem("locations")),
-      currentPlace: "",
+      place: null,
+      npc: null,
+      dialog: null,
+      lat: "",
+      lon: "",
       userID: localStorage.getItem("arg_userID"),
-      playerAtLocation: false
+      playerIsNearLocation: false
   } 
-  }
+}
 
   async componentDidMount(){
     const waiting = document.querySelector("#waiting");
@@ -24,11 +28,17 @@ class Camera extends React.Component {
 
     const options = {
       enableHighAccuracy: true,
-      timeout: 5000,
+      timeout: 5000, 
       maximumAge: 0
     }
-    navigator.geolocation.watchPosition(this.success.bind(this), this.error, options);
+    
+    this.playerPosition = navigator.geolocation.watchPosition(this.success.bind(this), this.error);
+    
+  }
 
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.playerPosition);
+    console.log("UNMOUNT");
   }
 
   async initializeGameLocations(){
@@ -39,46 +49,58 @@ class Camera extends React.Component {
     this.setState({locations: JSON.parse(localStorage.getItem("locations"))});
   }
 
-  async success(pos){
+  async success(pos, playerPosition){
+    console.log("Getting position");
     let crd = pos.coords;
-    const playerIsNearLocation  = await this.PlayerIsNearLocation(crd);
-    this.setState({playerAtLocation: playerIsNearLocation});
-    console.log(this.state.playerAtLocation);
+    const playerIsNearLocation  = await this.PlayerIsNearLocation(crd, playerPosition);
+    this.setState({
+      playerIsNearLocation: playerIsNearLocation,
+      lat: crd.latitude,
+      lon: crd.longitude
+    });    
   }
 
   async PlayerIsNearLocation(coords){
-    const playerLocation = { latitude: "55.599945", longitude: "13.005303" };
+    const playerLocation = { latitude: "55.605918", longitude: "13.025046" };
     for( let location of this.state.locations ){
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
       if( distance < location.area ){
+        console.log("Setting location data");
         await this.setPlaceState(location.id, this.state.userID);
+        console.log("Location data set");
+        console.log("Clearing Watch");
+        navigator.geolocation.clearWatch(this.playerPosition);
+        console.log("Watch cleared");
+        console.log(this.state.dialog);
         return true;
       }
     } 
     return false
   }
 
-  error(err){
-    console.warn('ERROR(' + err.code + '): ' + err.message);
-  }
-
   async setPlaceState(placeID, userID){
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
     const json = await response.json();
-    this.setState({currentPlace: json});
+    this.setState({
+      place: json.place,
+      npc: json.npc,
+      dialog: json.dialog
+    });
+  }
+
+  error(err){
+    console.warn('ERROR(' + err.code + '): ' + err.message);
   }
 
   render(){
-    const isAtLocation = this.state.playerAtLocation;
+    const isAtLocation = this.state.playerIsNearLocation;
     let ar;
-    const data = this.state.currentPlace;
     if( isAtLocation ){
       ar = <AR
-            place = {data.place}
-            npc = {data.npc}
-            dialog = {data.dialog}
+            place = {this.state.place}
+            npc = {this.state.npc}
           />
     } else{
       ar = "";
@@ -87,7 +109,10 @@ class Camera extends React.Component {
       <div id="cameraScene">
         <Waiting />
         { ar }
-        <DialogBox />
+        <DialogBox
+          npc={this.state.npc}
+          dialog = {this.state.dialog}
+        />
       </div>
     )
   }
@@ -101,11 +126,24 @@ function Waiting(){
   )
 }
 
-function DialogBox(){
+function DialogBox(props){
+  const dialog = props.dialog;
+  const [index, setIndex] = useState(0);
+  let currentDialog = "";
+  if( dialog ) {
+    currentDialog = dialog[index];
+    if( currentDialog.type == "dialog" ){
+      currentDialog.speaker = currentDialog.speaker == "npc" ? props.npc.name : "Kim";
+    }
+  }
+  
   return(
     <div id="dialogBox">
-      <p id="longitude"></p>
-      <p id="latitude"></p>
+      <p>{currentDialog.speaker}</p>
+      <p className={currentDialog.type}>{currentDialog.text}</p>
+      <button onClick={() => setIndex(index + 1)}>
+        Next
+      </button>
     </div>
   )
 }
@@ -118,7 +156,7 @@ class AR extends React.Component {
   render() {
     const AFRAME = window.AFRAME;
     return (
-      <a-scene  vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
+      <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
       <a-assets>
        <img id="image" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
      </a-assets>
