@@ -8,7 +8,7 @@
     {
         "text": "Välkommen människa. Står du och beundrar min skönhet?",
         "type": "dialog",
-        "speaker": "Bäckahästen",
+        "speaker": "npc",
         "audio": "link to audio file"
     },
     {
@@ -19,7 +19,7 @@
     {
         "text": "Jaha! Har du hört historien bakom dessa kvarter?",
         "type": "dialog",
-        "speaker": "Bäckahästen",
+        "speaker": "npc",
         "audio": "link to audio file"
     },
     {
@@ -30,7 +30,7 @@
     {
         "text": "Under de gamla goda dar var detta en mittpunkt för sjömän att samla sig vid. Det var även ett badhus här i närheten… det var så roligt då.",
         "type": "dialog",
-        "speaker": "Bäckahästen",
+        "speaker": "npc",
         "audio": "link to audio file"
     },
     {
@@ -41,7 +41,7 @@
     {
         "text": "Inte som det var förr ska du veta!",
         "type": "dialog",
-        "speaker": "Bäckahästen",
+        "speaker": "npc",
         "audio": "link to audio file"
     },
     {
@@ -52,7 +52,7 @@
     {
         "text": "Om du löser denna gåtan kan du få med dig en del av mitt underbara vatten. Om inte så kan jag visa dig hur vi hade roligt förr i tiden!",
         "type": "dialog",
-        "speaker": "Bäckahästen",
+        "speaker": "npc",
         "audio": "link to audio file",
         "markDone": true
     }
