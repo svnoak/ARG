@@ -3,6 +3,11 @@
     align-items: center;
 }
 
+#ar-scene{
+    position: relative;
+    z-index: -1;
+}
+
 #waiting{
     display: none;
     justify-content: center;

@@ -5,20 +5,23 @@ import React, { createContext, useState } from 'react';
 class Camera extends React.Component {
   constructor(props){
     super(props)
-    localStorage.setItem("arg_userID", 1);
+    localStorage.setItem("arg_user", '{"id":"1", "ussername":"Kim"}');
     this.state = {
       locations: JSON.parse(localStorage.getItem("locations")),
-      place: null,
-      npc: null,
-      dialog: null,
+      place: {},
+      npc: {},
+      dialog: {},
+      index: 0,
       lat: "",
       lon: "",
-      userID: localStorage.getItem("arg_userID"),
+      user: JSON.parse(localStorage.getItem("arg_user")),
       playerIsNearLocation: false
-  } 
+  }
+    this.dialogHandler = this.dialogHanlder.bind(this);
 }
 
   async componentDidMount(){
+    console.log("MOUNTING");
     const waiting = document.querySelector("#waiting");
     if( !localStorage.getItem("locations") ){
       waiting.style.display = "flex";
@@ -66,16 +69,12 @@ class Camera extends React.Component {
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
       if( distance < location.area ){
-        console.log("Setting location data");
-        await this.setPlaceState(location.id, this.state.userID);
-        console.log("Location data set");
-        console.log("Clearing Watch");
+        await this.setPlaceState(location.id, this.state.user.id);
+        console.log("PLAYER IN LOCATION");
         navigator.geolocation.clearWatch(this.playerPosition);
-        console.log("Watch cleared");
-        console.log(this.state.dialog);
         return true;
       }
-    } 
+    }
     return false
   }
 
@@ -94,56 +93,89 @@ class Camera extends React.Component {
     console.warn('ERROR(' + err.code + '): ' + err.message);
   }
 
+  dialogHanlder(){
+    console.log("DIALOG HANDLER");
+    let index = this.state.index;
+    let currentDialog = this.state.dialog[index];
+    let dialogLength = this.state.dialog.length;
+    if( currentDialog.markDone ){
+      if( index < dialogLength){
+        this.setState({index: this.state.index + 1});
+      } else{
+        console.log("DIALOG DONE");
+      }
+      
+    } else if(currentDialog.type == "puzzle"){
+        if( index < dialogLength){
+          this.setState({index: this.state.index + 1});
+        } else {
+          console.log("Puzzle DONE");
+        } 
+    }
+      else{
+      this.setState({index: this.state.index + 1});
+    }
+    
+  }
+
   render(){
     const isAtLocation = this.state.playerIsNearLocation;
-    let ar;
+    let element;
+    let currentDialog = "";
     if( isAtLocation ){
-      ar = <AR
-            place = {this.state.place}
-            npc = {this.state.npc}
-          />
-    } else{
-      ar = "";
+      if( this.state.dialog ) {
+        currentDialog = this.state.dialog[this.state.index];
+        if( !currentDialog ){
+          this.setState({playerIsNearLocation: false});
+        } else {
+          if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
+            currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
+            element = 
+              <>
+                <AR
+                place = {this.state.place}
+                npc = {this.state.npc}
+                />
+                <DialogBox
+                dialog = {currentDialog}
+                />
+              </>
+          } else if( currentDialog.type == "puzzle"){
+            element =
+            <Puzzle 
+              dialog = {currentDialog}
+              />
+          }
+        }
+        
+      }
+      
     }
     return(
       <div id="cameraScene">
         <Waiting />
-        { ar }
-        <DialogBox
-          npc={this.state.npc}
-          dialog = {this.state.dialog}
-        />
+        { element }
+        <button className="dialogButton" onClick={ () => this.dialogHandler() }>Next</button>
       </div>
     )
   }
 }
 
-function Waiting(){
+function DialogBox(props){
+  console.log(props.dialog);
   return(
-    <div id="waiting">
-      Initializing Locations
+    <div id="dialogBox">
+      <p>{props.dialog.speaker}</p>
+      <p className={props.dialog.type}>{props.dialog.text}</p>
     </div>
   )
 }
 
-function DialogBox(props){
-  const dialog = props.dialog;
-  const [index, setIndex] = useState(0);
-  let currentDialog = "";
-  if( dialog ) {
-    currentDialog = dialog[index];
-    if( currentDialog.type == "dialog" ){
-      currentDialog.speaker = currentDialog.speaker == "npc" ? props.npc.name : "Kim";
-    }
-  }
-  
+function Puzzle(props){
   return(
-    <div id="dialogBox">
-      <p>{currentDialog.speaker}</p>
-      <p className={currentDialog.type}>{currentDialog.text}</p>
-      <button onClick={() => setIndex(index + 1)}>
-        Next
-      </button>
+    <div id="puzzleBox">
+      <p className={props.dialog.type}>{props.dialog.text}</p>
+      <input type="text"></input>
     </div>
   )
 }
@@ -156,9 +188,9 @@ class AR extends React.Component {
   render() {
     const AFRAME = window.AFRAME;
     return (
-      <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
+      <a-scene id="ar-scene" vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
       <a-assets>
-       <img id="image" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
+       <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
      </a-assets>
        <a-image clickhandler id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
 
@@ -172,6 +204,14 @@ class AR extends React.Component {
   );
   }
   
+}
+
+function Waiting(){
+  return(
+    <div id="waiting">
+      Initializing Locations
+    </div>
+  )
 }
  
 export default Camera;
