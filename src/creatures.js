@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Inventory = () => {
+const Creatures = () => {
   const [data, setData] = useState([]);
   localStorage.setItem("id", "18");
   let loggedinUser = localStorage.getItem("id");
@@ -25,14 +25,27 @@ const Inventory = () => {
         {data.map(function (prop) {
           return (
             <div key={prop.id} className="buttons">
-              {prop.name}
+              <p>{prop.name}</p>
+              <img
+                src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}
+              />
             </div>
           );
         })}
       </div>
-      <div className="viewpanel"></div>
+      <div className="viewpanel">
+        {data.map(function (prop) {
+          return (
+            <div key={prop.id} className="images">
+              <img
+                src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-export default Inventory;
+export default Creatures;
