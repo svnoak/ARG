@@ -5,7 +5,7 @@ import React, { createContext, useState } from 'react';
 class Camera extends React.Component {
   constructor(props){
     super(props)
-    localStorage.setItem("arg_user", '{"id":"1", "ussername":"Kim"}');
+    localStorage.setItem("arg_user", '{"id":"1", "username":"Kim"}');
     this.state = {
       locations: JSON.parse(localStorage.getItem("locations")),
       place: {},
@@ -41,6 +41,8 @@ class Camera extends React.Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.playerPosition);
+    if( document.querySelector("video") != null )
+      document.querySelector("video").remove();
     console.log("UNMOUNT");
   }
 
@@ -60,7 +62,7 @@ class Camera extends React.Component {
       playerIsNearLocation: playerIsNearLocation,
       lat: crd.latitude,
       lon: crd.longitude
-    });    
+    });
   }
 
   async PlayerIsNearLocation(coords){
@@ -98,19 +100,12 @@ class Camera extends React.Component {
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
+
     if( currentDialog.markDone ){
-      if( index < dialogLength){
-        this.setState({index: this.state.index + 1});
-      } else{
-        console.log("DIALOG DONE");
-      }
+      this.continueDialog(index, dialogLength, currentDialog.type);
       
     } else if(currentDialog.type == "puzzle"){
-        if( index < dialogLength){
-          this.setState({index: this.state.index + 1});
-        } else {
-          console.log("Puzzle DONE");
-        } 
+        this.continueDialog(index, dialogLength, currentDialog.type);
     }
       else{
       this.setState({index: this.state.index + 1});
@@ -118,18 +113,34 @@ class Camera extends React.Component {
     
   }
 
+  continueDialog(index, dialogLength, type, answer){
+    if( index < dialogLength){
+      this.setState({index: this.state.index + 1});
+    } else {
+      this.setState({ playerIsNearLocation: false, index: 0 });
+
+    } 
+  }
+
+  removeVideoBackground(){
+
+  }
+
   render(){
+
+    /*
+      This piece checks what kind of dialog is currently shown.
+      It also sets if it is the dialog box with AR or the puzzle without the AR that should be shown.
+    
+      */
     const isAtLocation = this.state.playerIsNearLocation;
     let element;
     let currentDialog = "";
     if( isAtLocation ){
       if( this.state.dialog ) {
         currentDialog = this.state.dialog[this.state.index];
-        if( !currentDialog ){
-          this.setState({playerIsNearLocation: false});
-        } else {
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
-            currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
+            if( currentDialog.speaker ) currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
             element = 
               <>
                 <AR
@@ -137,12 +148,18 @@ class Camera extends React.Component {
                 npc = {this.state.npc}
                 />
                 <DialogBox
+                handler = {this.dialogHandler}
                 dialog = {currentDialog}
                 />
               </>
           } else if( currentDialog.type == "puzzle"){
+              if( document.querySelector("video") != null ){
+                document.querySelector("video").remove();
+              }
+              
             element =
             <Puzzle 
+              handler = {this.dialogHandler}
               dialog = {currentDialog}
               />
           }
@@ -150,23 +167,28 @@ class Camera extends React.Component {
         
       }
       
-    }
     return(
       <div id="cameraScene">
         <Waiting />
         { element }
-        <button className="dialogButton" onClick={ () => this.dialogHandler() }>Next</button>
       </div>
     )
   }
 }
 
+function DialogButton(props){
+  let text = props.type == "puzzle" ? "Ge svaret" : ">";
+  return(
+      <div className="dialogButton" onClick={ () => props.handler(props.type) }>{text}</div>
+  )
+}
+
 function DialogBox(props){
   console.log(props.dialog);
   return(
-    <div id="dialogBox">
-      <p>{props.dialog.speaker}</p>
-      <p className={props.dialog.type}>{props.dialog.text}</p>
+    <div id="dialogBox" onClick={ () => props.handler(props.type) }>
+      <div>{props.dialog.speaker}</div>
+      <div className={props.dialog.type}>{props.dialog.text}</div>
     </div>
   )
 }
@@ -176,6 +198,7 @@ function Puzzle(props){
     <div id="puzzleBox">
       <p className={props.dialog.type}>{props.dialog.text}</p>
       <input type="text"></input>
+      <button onClick={ () => props.handler(props.type) }>Detta är mitt svar</button>
     </div>
   )
 }
