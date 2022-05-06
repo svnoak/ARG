@@ -15,7 +15,8 @@ class Camera extends React.Component {
       lat: "",
       lon: "",
       user: JSON.parse(localStorage.getItem("arg_user")),
-      playerIsNearLocation: false
+      playerIsNearLocation: false,
+      dialogTriggered: false
   }
     this.dialogHandler = this.dialogHanlder.bind(this);
 }
@@ -101,25 +102,75 @@ class Camera extends React.Component {
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
 
-    if( currentDialog.markDone ){
-      this.continueDialog(index, dialogLength, currentDialog.type);
-      
-    } else if(currentDialog.type == "puzzle"){
-        this.continueDialog(index, dialogLength, currentDialog.type);
-    }
-      else{
-      this.setState({index: this.state.index + 1});
+    if( currentDialog ){
+      if( currentDialog.markDone ){
+        this.setDialog(index, dialogLength, currentDialog);
+        
+      } else if(currentDialog.type == "puzzle"){
+          this.setDialog(index, dialogLength, currentDialog);
+      }
+        else{
+        this.setState({index: this.state.index + 1});
+      }
     }
     
   }
 
-  continueDialog(index, dialogLength, type, answer){
-    if( index < dialogLength){
-      this.setState({index: this.state.index + 1});
-    } else {
-      this.setState({ playerIsNearLocation: false, index: 0 });
+  async setDialog(index, dialogLength, dialog, answer = ""){
+    if( document.querySelector("input") != null ){
+      let userInput = document.querySelector("input").value
+      answer = userInput ? userInput : "Inget svar"; 
+    }
+    
+    let dialogDone = await this.markDialogDone(dialog, answer);
+    console.log(dialogDone);
+      if( dialogDone ){
+        if( index < dialogLength){
+          this.setState({index: this.state.index + 1});
+        } else {
+          this.setState({ playerIsNearLocation: false, index: 0 });
+        }
+      }
+  }
 
-    } 
+  async markDialogDone(dialog, answer){
+     const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
+    const data = {
+        dialog: dialog.id,
+        user: this.state.user.id,
+        place: this.state.place.id,
+        answer: answer
+    }
+
+    let response = await fetch(request ,{
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    let json = await response.json();
+    return json; 
+  }
+
+  emptyPlace(){
+    let npc = { imageLink: "transparent.png" };
+          let dialog = {
+            text: "Det verkar inte finnas något här",
+            type: "placeholder"
+        };
+    let element =
+    <>
+    <AR
+      npc = {npc}
+    />
+    <DialogBox
+      handler = {this.dialogHandler}
+      dialog = {dialog}
+    />
+    </>
+    return element;
   }
 
   removeVideoBackground(){
@@ -139,19 +190,27 @@ class Camera extends React.Component {
     if( isAtLocation ){
       if( this.state.dialog ) {
         currentDialog = this.state.dialog[this.state.index];
+        if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
             if( currentDialog.speaker ) currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
-            element = 
-              <>
+              if( this.state.dialogTriggered ){
+                element = 
+                <>
+                  <AR
+                    npc = {this.state.npc}
+                  />
+                  <DialogBox
+                    handler = {this.dialogHandler}
+                    dialog = {currentDialog}
+                  />
+                </>
+              } else{
+                element = 
                 <AR
-                place = {this.state.place}
-                npc = {this.state.npc}
+                  npc = {this.state.npc}
                 />
-                <DialogBox
-                handler = {this.dialogHandler}
-                dialog = {currentDialog}
-                />
-              </>
+              }
+            
           } else if( currentDialog.type == "puzzle"){
               if( document.querySelector("video") != null ){
                 document.querySelector("video").remove();
@@ -163,9 +222,14 @@ class Camera extends React.Component {
               dialog = {currentDialog}
               />
           }
+        } else {
+          element = this.emptyPlace();          
         }
-        
       }
+    } else{
+      element = this.emptyPlace();
+    }
+
       
     return(
       <div id="cameraScene">
@@ -176,15 +240,7 @@ class Camera extends React.Component {
   }
 }
 
-function DialogButton(props){
-  let text = props.type == "puzzle" ? "Ge svaret" : ">";
-  return(
-      <div className="dialogButton" onClick={ () => props.handler(props.type) }>{text}</div>
-  )
-}
-
 function DialogBox(props){
-  console.log(props.dialog);
   return(
     <div id="dialogBox" onClick={ () => props.handler(props.type) }>
       <div>{props.dialog.speaker}</div>
@@ -208,23 +264,65 @@ class AR extends React.Component {
     super(props)
   }
 
-  render() {
+  componentDidMount(){
     const AFRAME = window.AFRAME;
+    AFRAME.registerComponent('triggerDialog', {
+      init: function () {
+        let el = this.el;
+        el.addEventListener('click', function () {            
+         console.log("found " + el.id);
+        });
+      }
+    });
+  }
+
+  /* triggerDialog(){
+    console.log("Trigger");
+    var targetEl = document.querySelector('#target');
+    targetEl.setAttribute('material', {color: 'red'});
+  }
+     
+
+      AFRAME.registerComponent("clickhandler", {
+      init: function () {
+        let el = this.el;        
+        el.addEventListener('click', function () {            
+         console.log("Clicked");
+        });
+      }
+    })
+  } */
+
+  render() {
+   
     return (
       <a-scene id="ar-scene" vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
-      <a-assets>
-       <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
-     </a-assets>
-       <a-image clickhandler id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
+        <a-assets>
+        <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
+        </a-assets>
+      
+        {/* <a-plane  id="target" color="blue" height="2" width="1" position="0 0 -5" ></a-plane> */}
+        <a-image triggerDialog="" id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
 
-       <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
-           {/* <a-entity geometry="primitive: ring; radiusInner: .5; radiusOuter: 8;" material="color: black; shader: flat;" position="0 0 -1"></a-entity> */}
-           <a-entity cursor="fuse: true;" position="0 0 -1" geometry="primitive: circle; radius: .01" material="color: black; shader: flat; opacity: 0.2" raycaster=""></a-entity>
-       </a-camera>  
-           
- <div className="a-loader-title" style={{display: 'none'}}></div>
- </a-scene>
-  );
+        <a-entity camera>
+          <a-entity 
+            cursor="fuse: true; fuseTimeout: 500"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: black; shader: flat">
+          </a-entity>
+        </a-entity>
+{/*         <a-camera camera look-controls rotation-reader mouse-cursor arjs-look-controls='smoothingFactor: 0.1'>
+          <a-entity cursor="fuse: true; fuseTimeout: 500"
+              position="0 0 -1"
+              geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+              material="color: black; shader: flat">
+            </a-entity>
+        </a-camera>   */}
+            
+         <div className="a-loader-title" style={{display: 'none'}}></div>
+      </a-scene>
+    )
   }
   
 }
