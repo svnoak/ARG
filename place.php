@@ -47,7 +47,7 @@ class Place
         foreach( $dialogData as $dialog ){
             $fileName = $dialog->jsonLink;
             $type = $dialog->type;
-            $path = "./$type/$fileName";
+            $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
             if( $type == 'puzzle' ){
                 unset($file['solution']);

@@ -120,7 +120,8 @@ Response: 201
 
 ```jsx
 {
-"id": "18"
+"id": "18",
+"name": "Foo"
 }
 ```
 </details>
@@ -192,7 +193,8 @@ Response: 200
     
 ```jsx
 {
-"id": "18"
+"id": "18",
+"name": "Foo"
 }
 ```
 
