@@ -22,7 +22,7 @@ html{
 
 #ar-scene{
     position: relative;
-    z-index: -1;
+    z-index: 1;
 }
 
 #waiting{
@@ -45,6 +45,7 @@ html{
     padding: 1em;
     background-color: beige;
     width: 100%;
+    z-index: 2;
 }
 
 .dialogButton {

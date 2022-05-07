@@ -1,0 +1,13 @@
+function Textpuzzle(props){
+    console.log(props);
+    return(
+      <div id="puzzleBox">
+        <p className={props.dialog.type}>{props.dialog.text}</p>
+        <input type="text"></input>
+        { props.answer ? <div className="wrongAnswer">"{props.answer}" är ej rätt svar. Kanske min vän kan hjälpa mig?</div> : <div></div> }
+        <button onClick={ () => props.handler(props.dialog.type) }>Detta är mitt svar</button>
+      </div>
+    )
+  }
+
+export default Textpuzzle;

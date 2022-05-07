@@ -1,6 +1,8 @@
 import './assets/css/camera.css';
 import haversine from 'haversine-distance';
 import React, { createContext, useState } from 'react';
+import Dialog from "./components/Dialog";
+import Textpuzzle from './components/Textpuzzle';
 
 class Camera extends React.Component {
   constructor(props){
@@ -16,9 +18,9 @@ class Camera extends React.Component {
       lon: "",
       user: JSON.parse(localStorage.getItem("arg_user")),
       playerIsNearLocation: false,
-      dialogTriggered: false
+      answer: ""
   }
-    this.dialogHandler = this.dialogHanlder.bind(this);
+    this.dialogHandler = this.dialogHandler.bind(this);
 }
 
   async componentDidMount(){
@@ -42,8 +44,7 @@ class Camera extends React.Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.playerPosition);
-    if( document.querySelector("video") != null )
-      document.querySelector("video").remove();
+    this.removeVideoBackground();
     console.log("UNMOUNT");
   }
 
@@ -96,24 +97,27 @@ class Camera extends React.Component {
     console.warn('ERROR(' + err.code + '): ' + err.message);
   }
 
-  dialogHanlder(){
-    console.log("DIALOG HANDLER");
+
+  /*
+    @param triggerType string
+    Checks if the trigger comes from a puzzle or a dialog
+    and forwards Player accordingly.
+  */
+  dialogHandler(triggerType){
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
-
-    if( currentDialog ){
-      if( currentDialog.markDone ){
-        this.setDialog(index, dialogLength, currentDialog);
-        
-      } else if(currentDialog.type == "puzzle"){
+    if(currentDialog.type == "puzzle"){
+      this.setDialog(index, dialogLength, currentDialog);
+    } else if( index == 0 && triggerType != "trigger" ){
+      } else {
+        if( currentDialog.markDone ){
           this.setDialog(index, dialogLength, currentDialog);
+        } else if( currentDialog ){
+          this.setState({index: this.state.index + 1});
+        }
+        
       }
-        else{
-        this.setState({index: this.state.index + 1});
-      }
-    }
-    
   }
 
   async setDialog(index, dialogLength, dialog, answer = ""){
@@ -121,20 +125,21 @@ class Camera extends React.Component {
       let userInput = document.querySelector("input").value
       answer = userInput ? userInput : "Inget svar"; 
     }
-    
     let dialogDone = await this.markDialogDone(dialog, answer);
-    console.log(dialogDone);
       if( dialogDone ){
         if( index < dialogLength){
+          console.log("Add to index");
           this.setState({index: this.state.index + 1});
         } else {
           this.setState({ playerIsNearLocation: false, index: 0 });
         }
+      } else {
+        this.setState({answer: answer});
       }
   }
 
   async markDialogDone(dialog, answer){
-     const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
+    const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
     const data = {
         dialog: dialog.id,
         user: this.state.user.id,
@@ -161,29 +166,23 @@ class Camera extends React.Component {
             type: "placeholder"
         };
     let element =
-    <>
-    <AR
+    <Dialog
       npc = {npc}
-    />
-    <DialogBox
       handler = {this.dialogHandler}
       dialog = {dialog}
     />
-    </>
     return element;
   }
 
   removeVideoBackground(){
-
+    console.log("REMOVING BACKGROUND");
+    if(document.querySelector("video") != null){
+      document.querySelectorAll("video").forEach(video => video.remove());
+    }
   }
 
-  render(){
-
-    /*
-      This piece checks what kind of dialog is currently shown.
-      It also sets if it is the dialog box with AR or the puzzle without the AR that should be shown.
-    
-      */
+  displayElement(){
+    console.log("RUNNING displayElement()")
     const isAtLocation = this.state.playerIsNearLocation;
     let element;
     let currentDialog = "";
@@ -193,138 +192,43 @@ class Camera extends React.Component {
         if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
             if( currentDialog.speaker ) currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
-              if( this.state.dialogTriggered ){
-                element = 
-                <>
-                  <AR
-                    npc = {this.state.npc}
-                  />
-                  <DialogBox
+                element = <Dialog 
+                npc = {this.state.npc}
+                dialog = {currentDialog}
+                triggerHandler = {this.triggerHandler} 
+                dialogTriggered = {this.state.dialogTriggered} 
+                dialogHandler = {this.dialogHandler}
+                />;
+              }
+              else if( currentDialog.type == "puzzle"){
+                  this.removeVideoBackground();
+    
+                  element =
+                  <Textpuzzle
                     handler = {this.dialogHandler}
+                    answer = {this.state.answer}
                     dialog = {currentDialog}
-                  />
-                </>
-              } else{
-                element = 
-                <AR
-                  npc = {this.state.npc}
-                />
-              }
-            
-          } else if( currentDialog.type == "puzzle"){
-              if( document.querySelector("video") != null ){
-                document.querySelector("video").remove();
-              }
-              
-            element =
-            <Puzzle 
-              handler = {this.dialogHandler}
-              dialog = {currentDialog}
-              />
+                    />
+                }
+          } else {
+            element = this.emptyPlace();
           }
         } else {
           element = this.emptyPlace();          
         }
       }
-    } else{
-      element = this.emptyPlace();
-    }
 
-      
+      return element;
+  }
+
+  render(){
     return(
       <div id="cameraScene">
         <Waiting />
-        { element }
+        { this.displayElement() }
       </div>
     )
   }
-}
-
-function DialogBox(props){
-  return(
-    <div id="dialogBox" onClick={ () => props.handler(props.type) }>
-      <div>{props.dialog.speaker}</div>
-      <div className={props.dialog.type}>{props.dialog.text}</div>
-    </div>
-  )
-}
-
-function Puzzle(props){
-  return(
-    <div id="puzzleBox">
-      <p className={props.dialog.type}>{props.dialog.text}</p>
-      <input type="text"></input>
-      <button onClick={ () => props.handler(props.type) }>Detta är mitt svar</button>
-    </div>
-  )
-}
-
-class AR extends React.Component {
-  constructor(props){
-    super(props)
-  }
-
-  componentDidMount(){
-    const AFRAME = window.AFRAME;
-    AFRAME.registerComponent('triggerDialog', {
-      init: function () {
-        let el = this.el;
-        el.addEventListener('click', function () {            
-         console.log("found " + el.id);
-        });
-      }
-    });
-  }
-
-  /* triggerDialog(){
-    console.log("Trigger");
-    var targetEl = document.querySelector('#target');
-    targetEl.setAttribute('material', {color: 'red'});
-  }
-     
-
-      AFRAME.registerComponent("clickhandler", {
-      init: function () {
-        let el = this.el;        
-        el.addEventListener('click', function () {            
-         console.log("Clicked");
-        });
-      }
-    })
-  } */
-
-  render() {
-   
-    return (
-      <a-scene id="ar-scene" vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
-        <a-assets>
-        <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + this.props.npc.imageLink}></img>
-        </a-assets>
-      
-        {/* <a-plane  id="target" color="blue" height="2" width="1" position="0 0 -5" ></a-plane> */}
-        <a-image triggerDialog="" id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
-
-        <a-entity camera>
-          <a-entity 
-            cursor="fuse: true; fuseTimeout: 500"
-            position="0 0 -1"
-            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-            material="color: black; shader: flat">
-          </a-entity>
-        </a-entity>
-{/*         <a-camera camera look-controls rotation-reader mouse-cursor arjs-look-controls='smoothingFactor: 0.1'>
-          <a-entity cursor="fuse: true; fuseTimeout: 500"
-              position="0 0 -1"
-              geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-              material="color: black; shader: flat">
-            </a-entity>
-        </a-camera>   */}
-            
-         <div className="a-loader-title" style={{display: 'none'}}></div>
-      </a-scene>
-    )
-  }
-  
 }
 
 function Waiting(){
