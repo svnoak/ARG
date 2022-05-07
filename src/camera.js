@@ -141,10 +141,17 @@ class Camera extends React.Component {
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
+
+    // Check what kind of dialog is shown.
     if(currentDialog.type == "puzzle"){
       this.setDialog(index, dialogLength, currentDialog);
-    } else if( index == 0 && triggerType != "trigger" ){
-      } else {
+    }
+    
+    // End if first dialog is shown and player doesn't click on npc.
+    else if( index == 0 && triggerType != "trigger" ) return;
+    
+    // Check if dialog should be marked done or just continue to next
+      else {
         if( currentDialog.markDone ){
           this.setDialog(index, dialogLength, currentDialog);
         } else if( currentDialog ){
@@ -162,16 +169,26 @@ class Camera extends React.Component {
    * @param {string} answer - User submission, can be empty if use is in dialog screen
    */
   async setDialog(index, dialogLength, dialog, answer = ""){
+
+    // If there is an input field, assign answer userInput
     if( document.querySelector("input") != null ){
       let userInput = document.querySelector("input").value
       answer = userInput ? userInput : "Inget svar"; 
     }
+
+    // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
       if( dialogDone ){
+
+        // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
           this.setState({index: this.state.index + 1});
         } else {
-          this.setState({ playerIsNearLocation: false, index: 0 });
+          this.setState({ 
+            playerIsNearLocation: false, 
+            index: 0, place: {}, 
+            dialog:{}, npc:{},
+             answer: "" });
         }
       } else {
         this.setState({answer: answer});
@@ -239,15 +256,20 @@ class Camera extends React.Component {
    * @returns {HTMLElement}
    */
   displayElement(){
-    console.log("RUNNING displayElement()")
     const isAtLocation = this.state.playerIsNearLocation;
     let element;
     let currentDialog = "";
+
+    // Player is at location and there are dialogs in DB
     if( isAtLocation ){
       if( this.state.dialog ) {
         currentDialog = this.state.dialog[this.state.index];
+
+        // If there are dialogs/puzzles at the location, return elements accordingly
         if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
+
+            // If dialog, check who speaks or if it's only an info dialog.
             if( currentDialog.speaker ) currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
                 element = <Dialog 
                 npc = {this.state.npc}
@@ -257,6 +279,8 @@ class Camera extends React.Component {
                 dialogHandler = {this.dialogHandler}
                 />;
               }
+
+              // Set puzzle depending on textbased or AR.
               else if( currentDialog.type == "puzzle"){
                   this.removeVideoBackground();
     
