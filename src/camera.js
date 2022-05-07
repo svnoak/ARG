@@ -26,7 +26,6 @@ class Camera extends React.Component {
   /**
    * Gets userPosition and initializes locations on first startup.
    * Shows waiting element if Locations are still initialized.
-   * 
    */
   async componentDidMount(){
     const waiting = document.querySelector("#waiting");
@@ -62,7 +61,6 @@ class Camera extends React.Component {
   /**
    * Fetches gamelocations from server and puts them in localstorage and state
    */
-
   async initializeGameLocations(){
     const request = new Request(`https://dev.svnoak.net/api/place`);
     const response = await fetch(request);
@@ -75,7 +73,6 @@ class Camera extends React.Component {
    * Checks if player is near any gamelocation and sets state accordingly.
    * @param {object} pos - Object that holds player coordinates
    */
-
   async success(pos){
     console.log("Getting position");
     let crd = pos.coords;
@@ -94,6 +91,8 @@ class Camera extends React.Component {
    */
   async PlayerIsNearLocation(coords){
     const playerLocation = { latitude: "55.605918", longitude: "13.025046" };
+
+    
     for( let location of this.state.locations ){
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
@@ -185,7 +184,6 @@ class Camera extends React.Component {
    * @param {string} answer - usersubmission, if any.
    * @returns {bool}
    */
-
   async markDialogDone(dialog, answer){
     const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
     const data = {
@@ -295,7 +293,6 @@ class Camera extends React.Component {
  * Overlay while fetching locations at initial startup.
  * @returns {HTMLElement}
  */
-
 function Waiting(){
   return(
     <div id="waiting">

@@ -3,7 +3,6 @@
  * @param {object} props - Object from state.dialog and state.answer 
  * @returns 
  */
-
 function Textpuzzle(props){
     console.log(props);
     return(
