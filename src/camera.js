@@ -289,6 +289,8 @@ class Camera extends React.Component {
     )
   }
 }
+
+
 /**
  * Overlay while fetching locations at initial startup.
  * @returns {HTMLElement}

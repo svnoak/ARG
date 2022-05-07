@@ -1,3 +1,9 @@
+/**
+ * Displays Dialog with ARjs
+ * @param {object} props - Object for npc and dialog from state.npc and state.dialog
+ * @returns 
+ */
+
 function Dialog(props) {
     return (
     <>
