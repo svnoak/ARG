@@ -1,0 +1,10 @@
+{
+    "dialog": [
+        {
+            "text": "När du går fram till kvarnen ser du ett tungt hänglås som hänger på dörren. Du hör även tisslande och tasslande inifrån. Hänglåset ser ut att kräva en kombination av 3 siffror.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+    ]
+}

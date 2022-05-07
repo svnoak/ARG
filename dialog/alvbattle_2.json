@@ -1,0 +1,15 @@
+{
+    "dialog": [
+        {
+            "text": "Du får syn på ytterligare två älvor argsint flyger mot dig med fräsande ljud",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Ut ur vår park! Ut härifrån!!",
+            "type": "dialog",
+            "speaker": "npc",
+            "markDone": true
+        }
+    ]
+}

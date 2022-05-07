@@ -1,0 +1,13 @@
+{
+    "type": "puzzle",
+    "interaction": "ar",
+    "text": "",
+    "imageLink": "alva.png",
+    "positon": "0 4 -6",
+    "solution": "",
+    "tips": [
+        "Titta ner på marken så ska du se", 
+        "Håll kameran ner mot marken och klicka på flaskan", 
+        "Se till att den är i mitten, klicka sedan på mitten av flaskan"
+    ]
+}

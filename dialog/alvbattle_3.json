@@ -1,0 +1,15 @@
+{
+    "dialog": [
+        {
+            "text": "Nästan framme måste du ducka för att undvika den djupdykande ilskna varelsen som kacklande river mot dig med sina kloliknande fingrar",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Du ska inte rädda någon alls! Barnen ska vi ta med oss och dansa med föralltid och alltid!",
+            "type": "dialog",
+            "speaker": "npc",
+            "markDone": true
+        }
+    ]
+}

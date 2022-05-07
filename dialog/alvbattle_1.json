@@ -1,0 +1,20 @@
+{
+    "dialog": [
+        {
+            "text": "Du får syn på något som flyger runt vid buskarna och känner igen den lilla varelsen. Det är älvan som du stötte på vid Gamla Stan. Älvan får syn på dig och fnyser.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Stick här ifrån! Du ska inte vara här!",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Älvan flyger ilsket mot dig med krökta klor.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+    ]
+}
