@@ -49,8 +49,8 @@ class Place
             $type = $dialog->type;
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
-            return $file;
-            if( $type == 'puzzle' ){
+            return $dialogs[] = $file;
+            /* if( $type == 'puzzle' ){
                 unset($file['solution']);
                 $file['id'] = $dialog->id;
                 $dialogs[] = $file;
@@ -61,7 +61,7 @@ class Place
                     }
                     $dialogs[] = $dialogObject;
                 }
-            }
+            } */
         }
 
         return $dialogs;
