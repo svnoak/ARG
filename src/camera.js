@@ -23,8 +23,12 @@ class Camera extends React.Component {
     this.dialogHandler = this.dialogHandler.bind(this);
 }
 
+  /**
+   * Gets userPosition and initializes locations on first startup.
+   * Shows waiting element if Locations are still initialized.
+   * 
+   */
   async componentDidMount(){
-    console.log("MOUNTING");
     const waiting = document.querySelector("#waiting");
     if( !localStorage.getItem("locations") ){
       waiting.style.display = "flex";
@@ -38,15 +42,26 @@ class Camera extends React.Component {
       maximumAge: 0
     }
     
+    /**
+     * Gets Playerposition
+     * @param {function} success - Runs the function if position was successfully determined
+     * @param {function} error - Runs the callback for position not being retrieved
+     */
     this.playerPosition = navigator.geolocation.watchPosition(this.success.bind(this), this.error);
     
   }
 
+  /**
+   * Removes the videobackground that ARjs places when moving to different page.
+   */
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.playerPosition);
     this.removeVideoBackground();
-    console.log("UNMOUNT");
   }
+
+  /**
+   * Fetches gamelocations from server and puts them in localstorage and state
+   */
 
   async initializeGameLocations(){
     const request = new Request(`https://dev.svnoak.net/api/place`);
@@ -56,10 +71,15 @@ class Camera extends React.Component {
     this.setState({locations: JSON.parse(localStorage.getItem("locations"))});
   }
 
-  async success(pos, playerPosition){
+  /**
+   * Checks if player is near any gamelocation and sets state accordingly.
+   * @param {object} pos - Object that holds player coordinates
+   */
+
+  async success(pos){
     console.log("Getting position");
     let crd = pos.coords;
-    const playerIsNearLocation  = await this.PlayerIsNearLocation(crd, playerPosition);
+    const playerIsNearLocation  = await this.PlayerIsNearLocation(crd);
     this.setState({
       playerIsNearLocation: playerIsNearLocation,
       lat: crd.latitude,
@@ -67,6 +87,11 @@ class Camera extends React.Component {
     });
   }
 
+  /**
+   * Checks if player geolocation is near any matching gamelocations.
+   * @param {object} coords - Object that holds player coordinates
+   * @returns {bool}
+   */
   async PlayerIsNearLocation(coords){
     const playerLocation = { latitude: "55.605918", longitude: "13.025046" };
     for( let location of this.state.locations ){
@@ -74,7 +99,6 @@ class Camera extends React.Component {
       const distance = haversine(playerLocation, locationCoords);
       if( distance < location.area ){
         await this.setPlaceState(location.id, this.state.user.id);
-        console.log("PLAYER IN LOCATION");
         navigator.geolocation.clearWatch(this.playerPosition);
         return true;
       }
@@ -82,6 +106,13 @@ class Camera extends React.Component {
     return false
   }
 
+
+  /**
+   * Fetches relevant dialogs and npc data from database depending on location
+   * Sets state to be used by other functions.
+   * @param {int} placeID 
+   * @param {int} userID 
+   */
   async setPlaceState(placeID, userID){
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
@@ -93,16 +124,20 @@ class Camera extends React.Component {
     });
   }
 
+  /**
+   * Warns if playerposition couldn't be retrieved
+   * @param {object} err - Errorobject from watchposition function.
+   */
   error(err){
     console.warn('ERROR(' + err.code + '): ' + err.message);
   }
 
 
-  /*
-    @param triggerType string
-    Checks if the trigger comes from a puzzle or a dialog
-    and forwards Player accordingly.
-  */
+  /**
+   * Checks what kind of dialog the player sees.
+   * Triggers setDialog option or continues dialog accordingly
+   * @param {string} triggerType - "puzzle", "trigger" or "dialog"
+   */
   dialogHandler(triggerType){
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
@@ -116,10 +151,17 @@ class Camera extends React.Component {
         } else if( currentDialog ){
           this.setState({index: this.state.index + 1});
         }
-        
       }
   }
-
+  
+  /**
+   * Forwards player in dialog or puzzle accordingly and sets new dialog
+   * Triggers markDone function if end of dialog or puzzleanswer is available
+   * @param {int} index - Current index from state.index
+   * @param {int} dialogLength - length of all dialogs state.dialog
+   * @param {object} dialog - The current dialog depending on index and state.dialog
+   * @param {string} answer - User submission, can be empty if use is in dialog screen
+   */
   async setDialog(index, dialogLength, dialog, answer = ""){
     if( document.querySelector("input") != null ){
       let userInput = document.querySelector("input").value
@@ -128,7 +170,6 @@ class Camera extends React.Component {
     let dialogDone = await this.markDialogDone(dialog, answer);
       if( dialogDone ){
         if( index < dialogLength){
-          console.log("Add to index");
           this.setState({index: this.state.index + 1});
         } else {
           this.setState({ playerIsNearLocation: false, index: 0 });
@@ -137,6 +178,13 @@ class Camera extends React.Component {
         this.setState({answer: answer});
       }
   }
+
+  /**
+   * Marks dialogs and puzzles done in databas
+   * @param {object} dialog - current dialog user is seeing
+   * @param {string} answer - usersubmission, if any.
+   * @returns {bool}
+   */
 
   async markDialogDone(dialog, answer){
     const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
@@ -159,6 +207,11 @@ class Camera extends React.Component {
     return json; 
   }
 
+  /**
+   * Placeholder for when player is not near game location.
+   * Placeholder for when gamelocation has no more dialogs or puzzles.
+   * @returns {HTMLElement}
+   */
   emptyPlace(){
     let npc = { imageLink: "transparent.png" };
           let dialog = {
@@ -174,13 +227,19 @@ class Camera extends React.Component {
     return element;
   }
 
+  /**
+   * Removes videobackground
+   */
   removeVideoBackground(){
-    console.log("REMOVING BACKGROUND");
     if(document.querySelector("video") != null){
       document.querySelectorAll("video").forEach(video => video.remove());
     }
   }
 
+  /**
+   * Conditianlly displays puzzle or dialog to player
+   * @returns {HTMLElement}
+   */
   displayElement(){
     console.log("RUNNING displayElement()")
     const isAtLocation = this.state.playerIsNearLocation;
@@ -230,6 +289,10 @@ class Camera extends React.Component {
     )
   }
 }
+/**
+ * Overlay while fetching locations at initial startup.
+ * @returns {HTMLElement}
+ */
 
 function Waiting(){
   return(
