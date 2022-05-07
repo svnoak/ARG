@@ -49,8 +49,7 @@ class Place
             $type = $dialog->type;
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
-            return $dialogs[] = $file;
-            /* if( $type == 'puzzle' ){
+             if( $type == 'puzzle' ){
                 unset($file['solution']);
                 $file['id'] = $dialog->id;
                 $dialogs[] = $file;
@@ -61,7 +60,7 @@ class Place
                     }
                     $dialogs[] = $dialogObject;
                 }
-            } */
+            }
         }
 
         return $dialogs;
@@ -74,7 +73,7 @@ class Place
         $dialogs = self::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
         $data = ["place"=>$place, "npc" =>$npc, "dialog"=>$dialogs];
-        return $dialogs;
+        return $data;
     }
     
 }
