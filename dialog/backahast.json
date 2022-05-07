@@ -1,23 +1,23 @@
 [
     {
-        "text": "Det kommer fram en häst galopperande med sina hovar. Ju närmare den kommer desto mer ser du hur det droppar om vatten vart den än går.",
+        "text": "Det kommer framgalloperande en vacker häst som verkar ha blad och växter invävt i manen. Ju närmare den kommer desto mer ser du hur det droppar vatten om den vart den än går. Som att den precis har badat.",
         "type": "info",
         "speaker": "",
-        "audio": "link to audio file"
+        "audio": ""
     },
     {
-        "text": "Välkommen människa. Står du och beundrar min skönhet?",
+        "text": "Välkommen människa. Står du och beundrar min skönhet? *hästen stampar och drar med hoven om vartannat*",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
     },
     {
-        "text": "Absolut. På tal om din skönhet, ville jag faktiskt också fråga dig om all vatten som följer efter dig.",
+        "text": "Absolut, du är väldigt vacker. Men det var hemskt vad du har vatten efter dig?",
         "type":"dialog",
         "speaker": "player"
     },
     {
-        "text": "Jaha! Har du hört historien bakom dessa kvarter?",
+        "text": "Såklart har jag det! Bäckahästen är jag och dit jag går så följer vatten efter. Har du inte hört historien bakom dessa kvarter? *stamp drag , drag stamp , drag , stamp drag , stamp drag stamp stamp*",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
@@ -28,29 +28,52 @@
         "speaker": "player"
     },
     {
-        "text": "Under de gamla goda dar var detta en mittpunkt för sjömän att samla sig vid. Det var även ett badhus här i närheten… det var så roligt då.",
+        "text": "Under de gamla goda dar var detta en mittpunkt för sjömän att samla sig vid. Det var även ett badhus här i närheten… det var så roligt då. *stamp drag stamp, stamp stamp, drag stamp, drag drag stamp, stamp drag, stamp drag stamp*",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
     },
     {
-        "text": "Är det inte roligt nu längre?",
+        "text": "Men det inte roligt längre?",
         "type":"dialog",
         "speaker": "player"
     },
     {
-        "text": "Inte som det var förr ska du veta!",
+        "text": "Inte som det var förr ska du veta!  *drag drag, drag drag drag, drag*",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
     },
     {
-        "text": "Skulle jag kunna få med mig lite av ditt vatten?",
+        "text": "..Okej, på tal om förr. Har du sett en liten flicka/pojke som försvann här år 1922? Och ytterligare en för någon vecka sedan?",
         "type":"dialog",
         "speaker": "player"
     },
     {
-        "text": "Om du löser denna gåtan kan du få med dig en del av mitt underbara vatten. Om inte så kan jag visa dig hur vi hade roligt förr i tiden!",
+        "text": "Många barn har jag sett genom mina århundraden och många fler har fått rida på min rygg! *hästen gnäggar av skratt och du ser att munnen är full av sylvassa tänder*",
+        "type": "dialog",
+        "speaker": "npc",
+        "audio": "link to audio file"
+    },
+    {
+        "text": "Men inga har jag tagit på minst två århundraden. Få av oss gör numera. Men jag har mina misstankar om vem du talar om. Mitt vatten kanske kan hjälpa dig. *stamp stamp stamp drag, stamp drag, drag, drag, drag stamp, stamp, drag, stamp stamp drag drag stamp stamp*",
+        "type": "dialog",
+        "speaker": "npc",
+        "audio": "link to audio file"
+    },
+    {
+        "text": "Du tittar på vattnet som glittrar över Bäckahästens mank och tänker på den lilla flaskan du precis hittade.",
+        "type": "info",
+        "speaker": "",
+        "audio": ""
+    },
+    {
+        "text": "Skulle jag kunna få lite av ditt vatten? Jag antar att det inte är vanligt vatten? Det glittrar så vackert.",
+        "type":"dialog",
+        "speaker": "player"
+    },
+    {
+        "text": "Självklart är det inte vanligt vatten! Om du svarar på frågan jag redan har gett dig kan du få med dig en del av mitt underbara vatten. Om inte så kan jag visa dig hur vi hade roligt förr i tiden!",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file",

@@ -1,0 +1,57 @@
+[
+    {
+        "text": "Bra jobbat! Jag har på känn att vi kommer få användning av det vattnet.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    },
+    {
+        "text": "Annars kan jag använda det till mina växter där hemma. Vad tusan var det där för häst? Den talade!",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Det är klart att den talade. Det är Bäckahästen. Jag sa ju att du inte skulle tro mig om du inte såg det själv! Se så, iväg med dig nu till nästa ställe! Här är var nästa glin försvann.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "boulebaren.jpg",
+        "delay": "3"
+    },
+    {
+        "text": "Vem är du och vad vet du om kidnappningarna?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Mitt namn är inte viktigt, du kan kalla mig Anon. Jag är bara här för att hjälpa dig att hjälpa mig. Barnen är i fara och tiden rinner iväg. Vad som har hänt idag har hänt innan. Allt är inte som det ser ut.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    },
+    {
+        "text": "Vad menar du? Har kidnappningarna hänt innan?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Åh vad du frågar! Ja. För exakt 100 år sedan försvann sex andra barn. Alla på samma platser. Man sökte då likt idag men ingen hittades igen. Vi måste börja nu!",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    },
+    {
+        "text": "Vet du vem som har kidnappat barnen? Vet du vart de är?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Jag kan inte ge dig alla svar, du måste se själv förstår du väl. Du kommer inte tro mig annars. Med denna kanal kommer du få prata med vittnen som ingen har kunnat prata med innan. Denna kanal kommer hjälpa dig att se. Se saker ingen annan kan se. Testa att trycka på kameraikonen så ska jag visa dig.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    }
+]

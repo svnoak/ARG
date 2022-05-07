@@ -1,0 +1,15 @@
+{
+    "type": "puzzle",
+    "interaction": "text",
+    "text": "",
+    "imageLink": "",
+    "solution": "7",
+    "tips": [
+        "Bäckahästen stampade följande: *stamp drag , drag stamp , drag , stamp drag , stamp drag stamp stamp* / *stamp drag stamp, stamp stamp, drag stamp, drag drag stamp, stamp drag, stamp drag stamp* / *drag drag, drag drag drag, drag* / *stamp stamp stamp drag, stamp drag, drag, drag, drag stamp, stamp, drag, stamp stamp drag drag stamp stamp*", 
+        "Om vi skriver ner det blir det följande: .- -. - .- .-.. / .-. .. -. --. .- .-. / -- --- - / ...- .- - - -. . - ..--..", 
+        "Det ser du att vara morsekod. Om du översätter det får vi nog rätt fråga!",
+        "Kanske ska du titta omkring?",
+        "Jag tror svaret finns på marken och vilket är det närmaste vattnet?",
+        "Räkna hur många ringar som finns i riktning mot kanalen"
+    ]
+}
