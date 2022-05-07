@@ -1,0 +1,67 @@
+{
+    "dialog": [
+        {
+            "text": "Den anonyma källan som du har chattat med hela tiden står plötsligt framför dig i skinande ljus. Ljuset börjar försvinna och framför dig ser du en ung pojke i gammaldags kläder. Hans leende sträcker sig över hela ansiktet.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Tack så mycket för all din hjälp, {props.username}! Jag har inte kunnat presentera mig för dig, men nu när du har löst mysteriet och räddat barnen så kan jag berätta att jag är Olle!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Olle? Är det du som var med Per… under branden?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "…Ja. Och jag är ledsen att jag undvek dina frågor vid platsen för branden, jag bara gillar inte att vara där..",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Olle? Är det du som var med Per… under branden?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "…Ja. Och jag är ledsen att jag undvek dina frågor vid platsen för branden, jag bara gillar inte att vara där..",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Det är okej, jag förstår dig.",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "..Det var då jag förlorade min bästa vän Per. De var inte vi som tappade ljuset, det vet jag nu. Det var älvorna som välte ljuset och lurade sedan iväg Per med löften om att ingen skulle straffa oss om vi följde med dem. Jag ville inte men Per följde med och ingen trodde på mig när jag berättade sanningen. Därför vågade jag inte bara berätta allt för dig, jag behövde visa dig. Så att du säkert skulle tro mig. ",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Har du varit kvar här hela tiden?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Ja.. jag blev sjuk strax efter branden och när allt var över kunde jag inte hitta någon frid. Jag visste att jag behövde hitta någon som kunde hjälpa mig stoppa älvorna. Du är den första som har lyssnat.",
+            "type":"dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Olle spricker upp i ett leende.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Nu när du har stoppat älvorna från att upprepa historien igen så kan jag äntligen få frid. Tack igen {props.username}!",
+            "type":"dialog",
+            "speaker": "npc"
+        }
+
+        
+    ]
+}

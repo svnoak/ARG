@@ -1,0 +1,44 @@
+{
+    "dialog": [
+        {
+            "text": "Du tittar besegrat på avlkungen",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "...",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Ha…",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Haha… haha… HAHAHA! Jag visste att du bara var en ointelligent ynklig människa som de resterande i världen. Sorgligt för dig, men gråt inte! Tänk positivt, om 100 år kommer du inte vara i liv till att bevittna det.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "...",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Detta var lite festligt! Vet du vad, jag är en benådande konung. Det är inte ditt fel att din sort är så dum. Barnen hittar du i kvarnen. Seså gå och rädda dem nu, {props.username}. Om du kan!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Fnitter uppkommer från alla håll och penetrerar dina öron så att du måste hålla för dem. Älvkungen har det största leendet du någonsin sett och stiger upp till skyn utan att bryta ögonkontakt med dig.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+    ]
+}

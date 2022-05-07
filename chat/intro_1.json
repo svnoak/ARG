@@ -4,6 +4,7 @@
     "type": "chat",
     "speaker": "anon",
     "imageLink": "gamlavaster.jpg",
-    "delay": "10"
+    "delay": "1000",
+    "markDone": true
     }
 ]

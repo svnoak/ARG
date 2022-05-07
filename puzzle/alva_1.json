@@ -2,7 +2,8 @@
     "type": "puzzle",
     "interaction": "ar",
     "text": "",
-    "imageLink": "vigvatten.png",
+    "imageLink": "alva.png",
+    "positon": "0 4 -6",
     "solution": "",
     "tips": [
         "Titta ner på marken så ska du se", 

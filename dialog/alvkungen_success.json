@@ -1,0 +1,50 @@
+{
+    "dialog": [
+        {
+            "text": "Du tittar med ett leende på alvkungen",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "...",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Du...",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Du hade faktiskt rätt. Nej! Detta kan inte vara sant! Hur?! ….En klok människa är väldigt sällsynt för oss älvor att komma i kontakt med. Även om jag avskyr att förlora, har jag kvar min stolthet. Jag gillar det inte men du har vårt löfte.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Det betyder att du inte ska kidnappa några barn igen?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Jag tänker inte upprepa mig igen. Jag har svurit att inga <b>barn</b> kommer tas av oss igen. Gå nu och rädda de vi redan har om du kan!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Okej. Lämna oss ifred nu, tack!",
+            "type": "dialog",
+            "speaker": "player",
+            "audio": ""
+        },
+        {
+            "text": "Älvkungen står med sin läskiga skönhet och kollar ner på dig samtidigt som hans mindre undersåtar fnyser. Med en sista blick vänder de sig om och flyger bort tills de ser ut som glimmer i skyn.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+    ]
+}

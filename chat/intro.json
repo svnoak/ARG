@@ -16,7 +16,7 @@
         "type": "chat",
         "speaker": "anon",
         "imageLink": "",
-        "delay": "0"
+        "delay": "2000"
     },
     {
         "text": "Vem är du och vad vet du om kidnappningarna?",
@@ -28,7 +28,7 @@
         "type": "chat",
         "speaker": "anon",
         "imageLink": "",
-        "delay": "0"
+        "delay": "2000"
     },
     {
         "text": "Vad menar du? Har kidnappningarna hänt innan?",
@@ -40,7 +40,7 @@
         "type": "chat",
         "speaker": "anon",
         "imageLink": "",
-        "delay": "0"
+        "delay": "2000"
     },
     {
         "text": "Vet du vem som har kidnappat barnen? Vet du vart de är?",
@@ -52,6 +52,7 @@
         "type": "chat",
         "speaker": "anon",
         "imageLink": "",
-        "delay": "0"
+        "delay": "3000",
+        "markDone": true
     }
 ]

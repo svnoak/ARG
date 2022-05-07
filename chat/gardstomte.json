@@ -1,0 +1,44 @@
+[
+    {
+        "text": "Han är alltid lika butter.",
+        "type": "chat",
+        "speaker": "anon",
+        "delay": "10000"
+    },
+    {
+        "text": "Det har du rätt i. Hur som helst så fick jag ett klot, men vad kan man göra med den?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Att vara kidnappad är värre! Ett tungt klot är ingenting. Ha med dig den till resterande platser så går det nog bra.",
+        "type": "chat",
+        "speaker": "anon",
+        "delay": "2000"
+    },
+    {
+        "text": "Okej? Vad är nästa plats?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Till nästa plats, var inte där för länge.",
+        "type": "chat",
+        "speaker": "anon",
+        "delay": "10000"
+    },
+    {
+        "text": "Snälla.",
+        "type": "chat",
+        "speaker": "anon",
+        "delay": "1000"
+    },
+    {
+        "text": "",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "baltazargatan.jpg",
+        "delay": "1000",
+        "markDone": true
+    }
+]

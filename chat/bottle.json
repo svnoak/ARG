@@ -4,6 +4,7 @@
     "type": "chat",
     "speaker": "anon",
     "imageLink": "",
-    "delay": "0"
+    "delay": "0",
+    "markDone": true
     }
 ]

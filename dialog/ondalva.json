@@ -1,0 +1,114 @@
+{
+    "dialog": [
+        {
+            "text": "Du kommer fram till gamla stan och ser dig omkring. Du tycker inte att det finns något speciellt utan bara byggnader som resten av Malmö. Dock är det något vagt ljud som surrar runt omkring. *Fnitter fnitter* Det höga tonljudet av fnitter börjar skrämma dig. Du vet inte om du har kommit rätt och bestämmer dig för att skriva till Anon. En stund passerar, men du får inget svar. Märkligt. –*fnitter fnitter*",
+            "type": "info",
+            "speaker": "",
+            "audio": "link to audio file"
+        },
+        {
+            "text": "Men kolla vem vi har här, hela {props.username}",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Hur kan du mitt namn?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Du kan inte se var rösten kommer ifrån förrän du kisar på en figur som är lika stor som en trollslända. Det är en liten varelse, likt människan, med vingar. På ryggen har den ett stort ihoprullat papper.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Oooh människan kan minsann se oss! Du har gjort ett intressant intryck, namn. *fnitter*",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": "link to audio file"
+        },
+        {
+            "text": "Vad är det som är så roligt?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Du, vad annars. *Fnitter*",
+            "type":"dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Är du här för branden?",
+            "type":"dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Vilken brand?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Det är en tragisk historia. Lille Olle och Per som bara ville bygga sin lådbil och sen VIPS– Är inte du en journalist? Är det inte ditt jobb att göra forskning på platsen innan?",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": "link to audio file"
+        },
+        {
+            "text": "Jag är här för vad som har hänt <b>nu</b>. En pojke/flicka försvann här för två nätter sedan? Har du sett något?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "*fnitter* Kanske, kanske inte! Varför ska jag säga det till dig?",
+            "type":"dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "För att jag ska kunna rädda barnen?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Fnitter börjar höras från olika ställen",
+            "type":"info",
+            "speaker": ""
+        },
+        {
+            "text": "Ooh hen ska rädda barnen! Vi förstår! Det blir inte lätt - är du klipsk nog för det när du inte ens kan din historia? Vill du inte stanna och dansa med oss istället?",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Varelsen börjar närma sig med ett leende innan den kraftigt rycker tillbaka och stirrar ilsket mot din ficka.",
+            "type":"info",
+            "speaker": ""
+        },
+        {
+            "text": "Vad har du i fickan som blockerar vår magi?",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Du känner hur bouleklotet vilar tungt i din ficka.",
+            "type":"info",
+            "speaker": ""
+        },
+        {
+            "text": "..Det har du inte med att göra.",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Nåväl, lycka till med det du! Ingen hjälp får du här!",
+            "type":"dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Varelsen försvinner och fnittret avtar, kvar ligger pappret som varelsen hade på ryggen. Det verkar ha ramlat av när den ryggade tillbaka från dig.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "dialog": [
+        {
+            "text": "Efter ett tag hittar du tills slut det sista lilla trollet och vägleder de alla till var trollmor står med ett litet leende.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Sådär ja! Nu har jag hjälpt dig hitta dina små barn. Kan du hjälpa mig vidare nu?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Jag är glad att du tog din tid att hjälpa mig. Sitt ner nr.9! Ursäkta mig, de kan vara lite lekfulla. Jag får binda fast deras svansar så det inte springer iväg igen. Du har varit till god hjälp, {props.username}, sätt dig ner så ska jag berätta en liten historia.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Jag har inte riktigt tid för det…",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Under en tid långt bak från idag var gatorna fyllda med sopor, möss och andra orenheter. Trots de fyllda gatorna och den grymma lukten så sprang det små barn omkring med stora leende på läpparna, inte ett enda bekymmer i världen.",
+            "type": "dialog",
+            "speaker": "npc"
+        },
+        {
+            "text": "Du förlorar lite av ditt tålamod och ställer dig upp.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Vänta… hur ska detta hjälpa–",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Sätt dig ner.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Hon skriker inte, men det finns en viss skarp ton på orden när hon säger dem. Du bestämmer dig för att sitta ner igen.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Var var jag nu…? Juste, bland gatorna bodde det även en trollmor och efter att hon såg hur glada barnen var så ville hon även att hennes egna barn skulle vara lika glada. Så hon bytte plats på dem. Hon tog hand om barnen och människorna om hennes trollungar! Allt var frid och fröjd. Men en dag kom det en ny spelare in på ringen.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Jag antar att du är denna kända trollmor?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Hon ler.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Det var någon gång under 1900-talet han dök upp, väldigt butter och oåtkomlig, och började kidnappningarna. En efter en försvann barnen från olika platser, även från här. Trollmor kunde inte låta bli att tänka på armarna som snurrade runt runt. Ett skickligt gömställe. Varför? Vem vet, trollmor trodde inte att han gjorde det på eget bevåg. Något annat var i görningen. Kanske var det dem som inte kan ljuga? Oj oj så svårt!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "En efter en? Han? Skulle du kunna berätta mer om den som kidnappade barnen?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Jag har redan berättat mer än vad som behövs. Om du har kommit så här långt kan du säkert lista ut det som behövs.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Finns det inget annat som du kan ge mig? ",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Trollmor suckar frustrerat och börjar sedan gräva i en av sina djupa fickor",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Du kan ta den här. Det är ingen vanlig klocka och jag vill inte veta av den. Förtrollad är den och dess klang låter högre än domkyrkan i Lund. Usch och tvi.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Du tar emot den lilla klockan som trollmor sträcker fram och tittar förvirrat på den. Hur kan något så litet låta så högt?",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+
+
+
+    ]
+}

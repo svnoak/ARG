@@ -1,0 +1,66 @@
+[
+    {
+        "text": "Hallå?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Anon? Är du där?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Hur gick det?",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "4000"
+    },
+    {
+        "text": "Jag fick tag på en pappersrulle. På framsidan står det om någon brand som handlar om två små pojkar. Vet du något om det? Är det viktigt?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Branden. Jag vill inte tala om branden. Vad mer hittade du?",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "2000"
+    },
+    {
+        "text": "Jag kollade även baksidan av pappret.  Det var fullt med runor. Vet du vad det är till för?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Runor? Det kan vara användbart till framtiden. Vi kan börja röra oss mot nästa plats nu.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "2000"
+    },
+    {
+        "text": "Anon?",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "?",
+        "type": "chat",
+        "speaker": "anon",
+        "delay": "500"
+    },
+    {
+        "text": "Du har inte gett mig någon information om platsen än…",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Oj! Allt är lite rörigt just nu.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "lugnet.jpg",
+        "delay": "3000"
+    }
+]

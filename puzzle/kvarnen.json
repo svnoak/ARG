@@ -1,0 +1,12 @@
+{
+    "type": "puzzle",
+    "interaction": "text",
+    "text": "",
+    "imageLink": "kodlos.jpg",
+    "solution": "123",
+    "tips": [
+        "Vi har kanske redan samlat på svaret?",
+        "Har du tittat på alla bilder?",
+        "Det finns en siffra på i bakgrunden på alla bilder"
+    ]
+}

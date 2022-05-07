@@ -1,0 +1,109 @@
+{
+    "dialog": [
+        {
+            "text": "När du kommer till Stadsbiblioteket ser du den sura Kvarngubben som du träffade på innan. Han verkar stå och dividera med ett helt gäng av de små älvorna. Mitt i härdan ser du en ny varelse som du inte har mött innan. Den påminner dig om de andra älvorna men den ser mer ståtlig ut med sina skimrande vingar och kronbeklädda huvud. Den nya varelsen vänder sig mot dig och ser först frustrerad ut innan dess ansikte spricker upp i ett flin.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Ah så du hittade hit ändå {props.username}! Tänk att en ynka människa faktiskt kopplade ihop alla trådar. Låt mig introducera mig – det är jag som är Älvakungen och de älvor som du har varit så oförskämd mot är mina undersåtar!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Är det du som sa åt dem att ta barnen?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Såklart det var! Ingenting görs här utan att jag bestämmer det!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Älvakungen ser mycket nöjd ut.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "Men varför? Vad har de gjort er för ont?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Älvakungens ansikte förvrids till en ilsken grimas.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "Varför?! För att ni människor har förgiftat vår fina natur med era hemska maskiner och vidriga industri! Förr var här grönska överallt men ni rev ner det för att göra plats åt era fabriker av järn och stål. Ni tog grönskan från oss så nu tog vi något viktig från er.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Du tittar bort mot den tjuriga kvarngubben.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "Och du då? Varför är du inblandad i detta?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Kvarngubbens ögon blixtrar till och han hytter med näven.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "För att era fördömda fabriker har gjort att ingen använder min kvarn längre! Den står bara ekande tom och jag behövs inte längre! Det är inte rättvist! Så jag hjälpte älvorna att ta de barnen från områdena de inte ville gå in i – och jag hade gjort det igen!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Men nu är det över. Jag är här för att stoppa er.",
+            "type": "dialog",
+            "speaker": "player",
+            "audio": ""
+        },
+        {
+            "text": " Älvakungen flinar stort.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "Stoppa oss? Men vem säger att vi inte kan göra det igen? Vad stoppar oss från att vänta ett århundrade till när du inte finns mer? Men vet du vad, du har imponerat mig genom att komma ända hit. Om du kan lösa mitt sista test så ska jag tala om för dig var barnen är gömda.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Om jag löser ditt test måste du lova att berätta OCH ej ta någon igen. Jag vet att du inte kan ljuga och om du inte lovar så kommer jag även lämna detta klot här och fler därtill som ni verkar ogilla så hemskt mycket. Hela parken kommer jag fylla med dem.",
+            "type": "dialog",
+            "speaker": "player",
+            "audio": ""
+        },
+        {
+            "text": "Du tar fram och håller upp bouleklotet mot älvakungen som tappar sitt flin och väser åt dig.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Fördömande stålklot. Nåja om du löser det så lovar jag att du får veta var de är och att vi ej ska ta några barn igen. Få se nu!",
+            "type": "dialog",
+            "speaker": "npc",
+            "markDone": true
+        }
+
+
+    ]
+}

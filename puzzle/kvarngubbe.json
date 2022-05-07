@@ -1,0 +1,12 @@
+{
+    "type": "puzzle",
+    "interaction": "text",
+    "text": "",
+    "imageLink": "runor_kvarngubbe.jpg",
+    "solution": "Stadsbiblioteket",
+    "tips": [
+        "Det ser ut som runor. Har du något som kan översätta det?", 
+        "Historier kan man även kalla böcker", 
+        "Det ser ut att vara ett bibliotek"
+    ]
+}

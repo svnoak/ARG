@@ -1,0 +1,26 @@
+{
+    "dialog": [
+        {
+            "text": "Du kollar på den stora byggnaden som numera är Coop Forum. Under tiden du står och beundrar de fina detaljerna kan du se från hörnet av ditt öga något som springer fram och tillbaka med en käpp. När du vänder dig om, kollar dem rakt in i dina ögon och ler.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Men se här, har vi en liten människa på besök?",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Ursäkta att jag stör men jag letar efter en liten flicka/pojke? Har du sett någon som blivit tagen?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Ett människobarn? Inte har vi tagit något människobarn. Men trollungar har jag gott om! Hjälp mig att hitta mina resterande 11 små troll och sedan kan jag se om jag kan hjälpa dig.",
+            "type": "dialog",
+            "speaker": "npc",
+            "markDone": true
+        }
+    ]
+}

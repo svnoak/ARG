@@ -1,0 +1,34 @@
+[
+    {
+        "text": "Jag är inte så förtjust i trollmor. Men hon har åtminstonen förändrats efter alla år.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    },
+    {
+        "text": "Hon var väl rätt trevlig. Väldigt pratglad dock. Jag fick även en klocka som gör allt för mycket ljud.",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Det är inte många som gillar det höga ljudet! Vi börjar närma oss slutet, men nästa vittne är inte den snällaste…",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "2000"
+    },
+    {
+        "text": "Inget jag inte kan hantera!",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "davidshall.jpg",
+        "delay": "2000",
+        "markDone": true
+    }
+]

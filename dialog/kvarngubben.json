@@ -1,0 +1,68 @@
+{
+    "dialog": [
+        {
+            "text": "Du hittar äntligen vad du söker och det kommer i en form av en liten gubbe som inte ser så särskilt snäll ut. Han smyger runt och ser sig omkring efter något, det verkar inte som han har märkt av dig ännu.",
+            "type": "info",
+            "speaker": ""
+        },
+        {
+            "text": "Ursäkta mig herr Gårdstomte! Skulle jag kunna ställa några frågor?",
+            "type":"dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Vid Tors Hammare–vem tror du att du är som smyger upp på någon sådär. Vem kallar du Gårdstomte?! <b>Kvarngubben</b> är jag och kan du inte se att jag är upptagen, sjas!",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Och vad exakt är du så upptagen med? Här finns väl då ingen kvarn?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Tror inte att du kan snacka med m–– Vänta, är det du som är {props.usernname}?",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Det spelar ingen roll. Har du sett några vilsna barn här?",
+            "type": "dialog",
+            "speaker": "player"
+        },
+        {
+            "text": "Må ragnarök komma... Flytta på dig innan jag biter dig i ankeln.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "Han skyndar sig mot dig, men du flyttar dig inte från vägen. Han verkar inte bry sig och knuffar dig utan ånger. En pappersbit faller från hans ficka och du rycker upp den innan gubben märker något. Han stannar upp, vänder sig om och kollar upp och ner på dig.",
+            "type": "info",
+            "speaker": "",
+            "audio": ""
+        },
+        {
+            "text": "*vinkar* Fortsätt gå då.",
+            "type": "dialog",
+            "speaker": "player",
+            "audio": ""
+        },
+        {
+            "text": "Hmpf.",
+            "type": "dialog",
+            "speaker": "npc",
+            "audio": ""
+        },
+        {
+            "text": "När han stampar långt bort nog och är inte längre vid min närhet, öppnar du det gulnade pappret.",
+            "type": "info",
+            "speaker": "",
+            "markDone": true
+        }
+
+
+    ]
+}
