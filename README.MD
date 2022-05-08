@@ -461,6 +461,101 @@ fetch(request ,{
 
 ***<span style="color: green">Success</span>***
 
+Returns: Array of objects
+
+Response: 200
+
+<details>
+<summary>Example response</summary>
+    
+```jsx
+[
+	{
+		"id": "1",
+		"jsonLink": "intro.json",
+		"reward": null,
+		"order": "1",
+		"type": "chat",
+		"place": null,
+		"tips": "0"
+	},
+	{
+		"id": "3",
+		"jsonLink": "intro_1.json",
+		"reward": "2",
+		"order": "3",
+		"type": "chat",
+		"place": null,
+		"tips": "0"
+	},
+	{
+		"id": "6",
+		"jsonLink": "backahast.json",
+		"reward": "4",
+		"order": "6",
+		"type": "chat",
+		"place": "1",
+		"tips": "0"
+	},
+	{
+		"id": "8",
+		"jsonLink": "gardstomte.json",
+		"reward": "6",
+		"order": "8",
+		"type": "chat",
+		"place": "2",
+		"tips": "0"
+	}
+]
+```
+    
+</details>
+
+___
+
+```
+/dialog/done
+```
+
+Usage: When user has finished the last dialog or solved a puzzle.
+
+Request Method: POST
+
+Body: dialog (dialogID), user (userID), place (placeID), answer (puzzle answer)
+
+<aside>
+💡 The answer attribute needs always be defined as key, if there is no user answer, just leave it empty.
+
+</aside>
+
+<details>
+<summary>Example request</summary>
+    
+    
+```jsx
+const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
+const data = {
+    dialog: 1,
+    user: 18,
+    place: 1,
+    answer: ""
+}
+
+fetch(request ,{
+    method: 'POST',
+    headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+```
+
+</details>
+    
+
+***<span style="color: green">Success</span>***
+
 Returns: true or false
 
 Response: 200

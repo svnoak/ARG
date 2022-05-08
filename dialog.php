@@ -60,7 +60,20 @@ class Dialog
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
         }
-       return $message_arr;
+        $messages = [];
+        foreach( $message_arr as $message ){
+            $fileName = $dialog->jsonLink;
+            $type = $dialog->type;
+            $path = "../assets/$type/$fileName";
+            $file = json_decode(file_get_contents($path), true);
+                foreach( $file as $messageObject ){
+                    if( $messageObject['markDone'] ){
+                        $messageObject['id'] = $message->id;
+                    }
+                    $messages[] = $messageObject;
+                }
+            }
+        return $messages;
     }
     
 }
