@@ -3,6 +3,7 @@ import haversine from 'haversine-distance';
 import React, { createContext, useState } from 'react';
 import Dialog from "./components/Dialog";
 import Textpuzzle from './components/Textpuzzle';
+import ARpuzzle from './components/ARpuzzle';
 
 class Camera extends React.Component {
   constructor(props){
@@ -18,7 +19,8 @@ class Camera extends React.Component {
       lon: "",
       user: JSON.parse(localStorage.getItem("arg_user")),
       playerIsNearLocation: false,
-      answer: ""
+      answer: "",
+      initialLocation: true
   }
     this.dialogHandler = this.dialogHandler.bind(this);
 }
@@ -93,7 +95,11 @@ class Camera extends React.Component {
   async PlayerIsNearLocation(coords){
     const playerLocation = { latitude: coords.latitude, longitude: coords.longitude };
 
-    
+    if( this.state.initialLocation ){
+      await this.setPlaceState(10, this.state.user.id);
+      navigator.geolocation.clearWatch(this.playerPosition);
+      return true;
+    }
     for( let location of this.state.locations ){
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
@@ -285,6 +291,7 @@ class Camera extends React.Component {
 
               // Set puzzle depending on textbased or AR.
               else if( currentDialog.type == "puzzle"){
+                if( currentDialog.interaction == "text" ){
                   this.removeVideoBackground();
     
                   element =
@@ -293,6 +300,16 @@ class Camera extends React.Component {
                     answer = {this.state.answer}
                     dialog = {currentDialog}
                     />
+                } else {
+                  let info = {
+                    text: "TEXT",
+                    sender: ""
+                  };
+                  <ARpuzzle
+                  dialog={info} 
+                  />
+                }
+                  
                 }
 
               // Create some sort of notification and save newly income chat in localStorage
