@@ -298,7 +298,7 @@ class Camera extends React.Component {
                 let chatMessages = this.state.dialog.filter( dialog => dialog.type == "chat" );
                 let stringifiedChat = JSON.stringify(chatMessages);
                 localStorage.setItem("arg_dialog", stringifiedChat);
-                console.log(JSON.parse(localStorage.getItem("arg_dialog")));
+                localStorage.setItem("arg_place", this.state.place.id);
               }
           } else {
             element = this.emptyPlace();

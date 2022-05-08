@@ -1,0 +1,44 @@
+#chat{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.messageList{
+    height: 95vh;
+    background-color: grey;
+    overflow-y: scroll;
+}
+
+.message{
+    width: 90vw;
+    background: snow;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.userInputBox{
+    height: 5vh;
+    display: flex;
+    align-items: center;
+}
+
+.userInput{
+    margin: 1em;
+    width: 90vw;
+}
+
+.sendButton{
+    cursor: pointer;
+}
+
+
+.anon{
+
+}
+
+.player{
+
+}

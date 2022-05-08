@@ -1,0 +1,42 @@
+.loader {
+  width: 55px;
+  height: 18px;
+  background-color: #f1f0f0;
+  border-radius: 15px;
+  padding: 0 10px 8px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end; 
+}
+
+.loader .dot {
+  display: inline-block;
+  background-color: #90949c;
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  animation: jump 1.5s linear infinite; 
+}
+
+.loader .dot:nth-of-type(2) {
+  animation-delay: .1s; 
+}
+
+.loader .dot:nth-of-type(3) {
+  animation-delay: .2s; 
+}
+  
+  @keyframes jump {
+    0% {
+      transform: translateY(0);
+      background-color: #90949c;
+    }
+    18% {
+      transform: translateY(-7px);
+      background-color: #babec9;
+    }
+    36%, 100% {
+      transform: translateY(0px);
+      background-color: #90949c;
+    } 
+    }
