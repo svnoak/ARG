@@ -68,21 +68,17 @@ class Dialog
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
                 foreach( $file as $messageObject ){
-                    if( $type == "chat" ){
-                        if( $messageObject['markDone'] ){
-                            $messageObject['id'] = $message->id;
-                        }
-                    } elseif( $type == "puzzle" ){
+                    if( $type == "puzzle" ){
                         $num = $message->$tips;
                         $tipsText = array_slice($messageObject["tips"], 0, $num);
                         $messageObject = $tipsText;
                     }
                     $messages[] = $messageObject;
                 }
-            }
+        }
         return $messages;
     }
-    
+       
 }
 
 ?>
