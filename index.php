@@ -135,9 +135,10 @@ if (class_exists($class) ){
       $userID = $_POST['user'];
       $placeID = $_POST['place'];
       $answer = $_POST['answer'];
+      $tipIndex = $_POST['tipIndex'];
       if( isset($arg_1) ){
         if( $arg_1 == 'done' ) {
-          sendJSON( Dialog::markDone($dialogID, $userID, $placeID, $answer) );
+          sendJSON( Dialog::markDone($dialogID, $userID, $placeID, $answer, $tipIndex) );
           exit();
         }
       } else {

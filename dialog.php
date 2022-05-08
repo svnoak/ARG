@@ -23,7 +23,7 @@ class Dialog
        return $dialog_arr;
     }
 
-    static function markDone($dialogID, $userID, $placeID, $answer){
+    static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex){
         global $mysqli;
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
@@ -43,6 +43,9 @@ class Dialog
                 $reward_response = mysqli_query($mysqli, "INSERT INTO UserInventory(user, item) VALUES ($userID, $rewardID) ");
             }
         }
+
+        $tipIndexQuery = mysqli_query($mysqli, "UPDATE Dialog SET tips = $tipIndex WHERE id = $dialogID");
+
         $placeExists_query = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place = $placeID ");
         $placeExists = $placeExists_query->fetch_object() != null;
 
@@ -50,6 +53,7 @@ class Dialog
         if( !$placeExists ){
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
+
         return $dialogRespone && $rewardResponse && $inventoryPlaceResponse;
     }
 
