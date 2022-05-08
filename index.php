@@ -131,13 +131,11 @@ if (class_exists($class) ){
   if( $class == 'Dialog' ){
     if($_SERVER['REQUEST_METHOD'] == "POST"){
       $_POST = json_decode(file_get_contents("php://input"), true);
-      sendJSON($_POST);
-      exit();
       $dialogID = $_POST['dialog'];
       $userID = $_POST['user'];
       $placeID = $_POST['place'];
       $answer = $_POST['answer'];
-      $tipIndex = $_POST['tipIndex'];
+      $tipIndex = $_POST['tips'];
       if( isset($arg_1) ){
         if( $arg_1 == 'done' ) {
           sendJSON( Dialog::markDone($dialogID, $userID, $placeID, $answer, $tipIndex) );
