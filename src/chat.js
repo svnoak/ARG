@@ -5,7 +5,6 @@ import Loading from "./components/Loading";
 class Chat extends React.Component {
     constructor(){
         super()
-        let localDialog = localStorage.getItem("arg_dialog");
         this.state = {
             oldMessages: null,
             newMessages: [],
@@ -26,10 +25,17 @@ class Chat extends React.Component {
         this.scrollDown();
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    /**
+     * Used to scroll down when new message arrives.
+     */
+    componentDidUpdate() {
         this.scrollDown();
       }
 
+      /**
+       * Sets messages according to initial start, puzzle or chat.
+       * Triggers first message if npc writes, then scrolls down.
+       */
     async initializeMessages(){
         let oldMessages = await this.setOldMessages();
         await this.setNewMessages(oldMessages);
@@ -37,6 +43,10 @@ class Chat extends React.Component {
         this.scrollDown();
     }
 
+    /**
+     * Fetches all chatmessages Player should has gotten so far
+     * @returns {array}
+     */
     async setOldMessages(){
         const userID = 1;
         const request = new Request(`https://dev.svnoak.net/api/dialog/chat/${userID}`);
@@ -47,16 +57,27 @@ class Chat extends React.Component {
         return json;
     }
 
+    /**
+     * Sets new messages accordingly if it's tips during a puzzle or a dialog after meeting a npc.
+     * @param {array} oldMessages - The fetched oldMessages to check  if there are any.
+     */
     async setNewMessages(oldMessages){
         let newMessages;
+        // Both items are set by camera component after dialog or during puzzle.
+        // Puzzlecomponent resets puzzletips, but chat component resets dialog.
         let localDialog = JSON.parse(localStorage.getItem("arg_dialog"));
         let puzzleTips = JSON.parse(localStorage.getItem("arg_puzzleTips"));
+
+        // Check if any dialog
         if( localDialog.length > 0){
             newMessages = localDialog;
+
+        // Check if any puzzle
         } else if( puzzleTips.length > 0 ){
             let puzzleMessages = this.createPuzzleMessages(puzzleTips);
             let index = this.state.tipIndex;
 
+            // Get amount of tips already used and render accordingly
             if( index > 0 ){
                 let oldPuzzles = puzzleMessages.splice(0, index);
 
@@ -67,12 +88,21 @@ class Chat extends React.Component {
                 }
             }
             newMessages = puzzleMessages;
+
+            // Checks if any oldMessages are available
         } else if( oldMessages.length == 0) {
             newMessages = await this.fetchInitialMessages();
         }
+
+        // Sets the state for all new Messages.
         this.setState({newMessages: newMessages});
     }
 
+    /**
+     * Creates puzzle dialog objects for the chat.
+     * @param {array} messages - Array of Strings, each string one tip.
+     * @returns {array} - Array of objects in the same format as the other dialogs
+     */
     createPuzzleMessages(messages){
         let tipsArr = [];
         let userMessage = {
@@ -92,10 +122,12 @@ class Chat extends React.Component {
         return tipsArr;
     }
 
+    /**
+     * Gets the inital messages, if player hasn't had any messages before.
+     * @returns {array} Array of objects with messages
+     */
     async fetchInitialMessages(){
-        console.log("FETCH");
         const userID = this.state.userID;
-        console.log(userID);
         const request = new Request(`https://dev.svnoak.net/api/dialog/initial/${userID}`);
         const response = await fetch(request);
         const json = await response.json();
@@ -103,6 +135,10 @@ class Chat extends React.Component {
         return json;
     }
 
+    /**
+     * Renders all messages from oldMessages array.
+     * @returns {HTMLElement}
+     */
     renderList(){
         let oldMessages = this.state.oldMessages;
         let list = (
@@ -131,6 +167,9 @@ class Chat extends React.Component {
         return list;
     }
 
+    /**
+     * Checks if first message is from npc and sends it to user
+     */
     sendFirstMessage(){
         const index = this.state.index;
         if( this.state.newMessages ){
@@ -149,9 +188,12 @@ class Chat extends React.Component {
                 }
             }
         }
-        
     }
 
+    /**
+     * Is used as clickevent Handler and sends responses to player.
+     * @param {string} sender - Only player triggers another message
+     */
     async chatHandler(sender){
         const index = this.state.index;
         const newMessages = this.state.newMessages;
@@ -166,15 +208,22 @@ class Chat extends React.Component {
                 this.sendMessage(nextMessage);
             }
         }
-        console.log("LocalStorage: " + localStorage.getItem("arg_tipIndex"));
     }
 
+    /**
+     * Scrolls down to latest message
+     */
     scrollDown(){
         if( document.querySelector(".messageList") ){
             document.querySelector(".messageList").scrollTop = document.querySelector(".messageList").scrollHeight;
         }
     }
 
+
+    /**
+     * Used to mark a dialog finished, will then come up as oldMessage in the future
+     * @param {int} dialogID - ID of dialog that was finished
+     */
     markDone(dialogID){
         const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
         const data = {
@@ -197,6 +246,11 @@ class Chat extends React.Component {
 
     }
 
+    /**
+     * Renders message in the list above the userInput
+     * @param {object} message - messageObject in the format delivered by the API
+     * @returns {bool}
+     */
     sendMessage(message){
         let delay;
         message.delay ? delay = message.delay : delay = 0;
@@ -221,7 +275,11 @@ class Chat extends React.Component {
         return sentMessage;
     }
 
-
+    /**
+     * Checks if any messages need to be displayed in userInput.
+     * Renders Chat component.
+     * @returns {HTML Element}
+     */
     render(){
         let userInput;
         if( this.state.newMessages ){
@@ -243,6 +301,11 @@ class Chat extends React.Component {
     }
 }
 
+/**
+ * userInput prefilled with value to be sent
+ * @param {object} props - message Object 
+ * @returns {HTML Element}
+ */
 function UserInput(props){;
     return(
         <div className="userInputBox">
@@ -253,6 +316,11 @@ function UserInput(props){;
     
 }
 
+/**
+ * Returns every individual message and puts appropriate images or classes depending on object.
+ * @param {object} props - message Object 
+ * @returns {HTML Element}
+ */
 function Message(props){
     let sender = props.sender == "player" ? props.user : "Anonymous";
     return(
