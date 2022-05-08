@@ -34,13 +34,25 @@ class Chat extends React.Component {
         this.setState({oldMessages: json});
     }
 
-    renderList(){      
+    renderList(){
+        let oldMessages = this.state.oldMessages;
         let list = (
         <div className="messageList">
         { 
-            this.state.oldMessages && this.state.oldMessages.map( (oldMessage, index) => {
-                let sender = oldMessage.speaker == "player" ? this.state.username : "Anonymous";
-                return <Message key={index} sender={sender} text={oldMessage.text} imageLink={oldMessage.imageLink}/> 
+            oldMessages && oldMessages.map( (oldMessage, index) => {
+                oldMessage.class = oldMessage.speaker;
+                if( oldMessages[index-1] && oldMessages[index-1].speaker == oldMessage.speaker ) oldMessage.speaker = "";
+                if( oldMessages[index+1] && oldMessages[index+1].speaker == oldMessage.speaker ) oldMessage.class = "before";
+                return (
+                <Message 
+                key={index} 
+                sender={oldMessage.speaker} 
+                text={oldMessage.text} 
+                imageLink={oldMessage.imageLink} 
+                user={this.state.username}
+                class={oldMessage.class}                
+                />
+                )
             })
         }
         { this.state.sendingMessage && <Loading /> }
@@ -147,20 +159,6 @@ class Chat extends React.Component {
     }
 }
 
- function Message(props){
-    return(
-        <div className={"message " + props.sender}>
-            <div className="sender">
-                { props.sender }
-            </div>
-            { props.imageLink && <img src={"https://dev.svnoak.net/assets/images/" + props.imageLink}></img> }
-            <div className="messageText">
-                { props.text }
-            </div>
-        </div>
-    )
-}
-
 function UserInput(props){;
     return(
         <div className="userInputBox">
@@ -171,6 +169,24 @@ function UserInput(props){;
     
 }
 
+function Message(props){
+    let sender = props.sender == "player" ? props.user : "Anonymous";
+    return(
+        <div className={props.class}>
+            {props.sender && 
+            <div className="messageHeader">
+                <div className="sender"> 
+                    { sender }
+                </div>
+            </div>
+            }
+            { props.imageLink && <img src={"https://dev.svnoak.net/assets/images/" + props.imageLink}></img> }
+            <div className="messageText">
+                { props.text }
+            </div>
+        </div>
+    )
+}
 
  
 export default Chat;
