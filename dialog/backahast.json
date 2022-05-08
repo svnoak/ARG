@@ -6,10 +6,15 @@
         "audio": ""
     },
     {
-        "text": "Välkommen människa. Står du och beundrar min skönhet? *hästen stampar och drar med hoven om vartannat*",
+        "text": "Välkommen människa. Står du och beundrar min skönhet?",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
+    },
+    {
+        "text": "Hästen stampar och drar med hoven om vartannat",
+        "type": "info",
+        "speaker": ""
     },
     {
         "text": "Absolut, du är väldigt vacker. Men det var hemskt vad du har vatten efter dig?",
@@ -17,10 +22,15 @@
         "speaker": "player"
     },
     {
-        "text": "Såklart har jag det! Bäckahästen är jag och dit jag går så följer vatten efter. Har du inte hört historien bakom dessa kvarter? *stamp drag , drag stamp , drag , stamp drag , stamp drag stamp stamp*",
+        "text": "Såklart har jag det! Bäckahästen är jag och dit jag går så följer vatten efter. Har du inte hört historien bakom dessa kvarter?",
         "type": "dialog",
-        "speaker": "npc",
-        "audio": "link to audio file"
+        "speaker": "npc"
+    },
+    {
+        "text": "Stamp drag , drag stamp , drag , stamp drag , stamp drag stamp stamp",
+        "type": "info",
+        "speaker": "",
+        "audio": ""
     },
     {
         "text": "Inte riktigt.",
@@ -28,10 +38,15 @@
         "speaker": "player"
     },
     {
-        "text": "Under de gamla goda dar var detta en mittpunkt för sjömän att samla sig vid. Det var även ett badhus här i närheten… det var så roligt då. *stamp drag stamp, stamp stamp, drag stamp, drag drag stamp, stamp drag, stamp drag stamp*",
+        "text": "Under de gamla goda dar var detta en mittpunkt för sjömän att samla sig vid. Det var även ett badhus här i närheten… det var så roligt då.",
         "type": "dialog",
-        "speaker": "npc",
-        "audio": "link to audio file"
+        "speaker": "npc"
+    },
+    {
+        "text": "Stamp drag stamp, stamp stamp, drag stamp, drag drag stamp, stamp drag, stamp drag stamp",
+        "type": "info",
+        "speaker": "",
+        "audio": ""
     },
     {
         "text": "Men det inte roligt längre?",
@@ -39,9 +54,14 @@
         "speaker": "player"
     },
     {
-        "text": "Inte som det var förr ska du veta!  *drag drag, drag drag drag, drag*",
+        "text": "Inte som det var förr ska du veta!",
         "type": "dialog",
-        "speaker": "npc",
+        "speaker": "npc"
+    },
+    {
+        "text": "Drag drag, drag drag drag, drag",
+        "type": "info",
+        "speaker": "",
         "audio": "link to audio file"
     },
     {
@@ -50,15 +70,27 @@
         "speaker": "player"
     },
     {
-        "text": "Många barn har jag sett genom mina århundraden och många fler har fått rida på min rygg! *hästen gnäggar av skratt och du ser att munnen är full av sylvassa tänder*",
+        "text": "Många barn har jag sett genom mina århundraden och många fler har fått rida på min rygg!",
         "type": "dialog",
         "speaker": "npc",
         "audio": "link to audio file"
     },
     {
-        "text": "Men inga har jag tagit på minst två århundraden. Få av oss gör numera. Men jag har mina misstankar om vem du talar om. Mitt vatten kanske kan hjälpa dig. *stamp stamp stamp drag, stamp drag, drag, drag, drag stamp, stamp, drag, stamp stamp drag drag stamp stamp*",
+        "text": "Hästen gnäggar av skratt och du ser att munnen är full av sylvassa tänder",
+        "type": "info",
+        "speaker": "",
+        "audio": "link to audio file"
+    },
+    {
+        "text": "Men inga har jag tagit på minst två århundraden. Få av oss gör numera. Men jag har mina misstankar om vem du talar om. Mitt vatten kanske kan hjälpa dig.",
         "type": "dialog",
         "speaker": "npc",
+        "audio": "link to audio file"
+    },
+    {
+        "text": "Stamp stamp stamp drag, stamp drag, drag, drag, drag stamp, stamp, drag, stamp stamp drag drag stamp stamp",
+        "type": "info",
+        "speaker": "",
         "audio": "link to audio file"
     },
     {
