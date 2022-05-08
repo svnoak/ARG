@@ -419,40 +419,23 @@ Puzzles don’t contain the answers. Use the /dialog/done endpoint to check the 
 ---
 
 ```
-/dialog/done
+/dialog/chat/${userID}
 ```
 
-Usage: When user has finished the last dialog or solved a puzzle.
+Usage: When user opens chat page, fetches all messages user has seen.
 
-Request Method: POST
-
-Body: dialog (dialogID), user (userID), place (placeID), answer (puzzle answer)
-
-<aside>
-💡 The answer attribute needs always be defined as key, if there is no user answer, just leave it empty.
-
-</aside>
+Request Method: GET
 
 <details>
 <summary>Example request</summary>
     
     
 ```jsx
-const request = new Request(`https://dev.svnoak.net/api/dialog/done`);
-const data = {
-    dialog: 1,
-    user: 18,
-    place: 1,
-    answer: ""
-}
+const userID = 18;
+const request = new Request(`https://dev.svnoak.net/api/dialog/chat/${userID}`);
 
 fetch(request ,{
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+    method: 'GET',
 })
 ```
 
@@ -465,47 +448,37 @@ Returns: Array of objects
 
 Response: 200
 
+<aside>
+💡 The tips attribute for the puzzle objects shows how many tips the user has used in a puzzle, display accordingly on front-end.
+
+</aside>
+
 <details>
 <summary>Example response</summary>
     
 ```jsx
 [
-	{
-		"id": "1",
-		"jsonLink": "intro.json",
-		"reward": null,
-		"order": "1",
-		"type": "chat",
-		"place": null,
-		"tips": "0"
-	},
-	{
-		"id": "3",
-		"jsonLink": "intro_1.json",
-		"reward": "2",
-		"order": "3",
-		"type": "chat",
-		"place": null,
-		"tips": "0"
-	},
-	{
-		"id": "6",
-		"jsonLink": "backahast.json",
-		"reward": "4",
-		"order": "6",
-		"type": "chat",
-		"place": "1",
-		"tips": "0"
-	},
-	{
-		"id": "8",
-		"jsonLink": "gardstomte.json",
-		"reward": "6",
-		"order": "8",
-		"type": "chat",
-		"place": "2",
-		"tips": "0"
-	}
+    {
+        "text": "Bra jobbat! Jag har på känn att vi kommer få användning av det vattnet.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "",
+        "delay": "0"
+    },
+    {
+        "text": "Annars kan jag använda det till mina växter där hemma. Vad tusan var det där för häst? Den talade!",
+        "type": "chat",
+        "speaker": "player"
+    },
+    {
+        "text": "Det är klart att den talade. Det är Bäckahästen. Jag sa ju att du inte skulle tro mig om du inte såg det själv! Se så, iväg med dig nu till nästa ställe! Här är var nästa glin försvann.",
+        "type": "chat",
+        "speaker": "anon",
+        "imageLink": "boulebaren.jpg",
+        "delay": "3000",
+        "markDone": true,
+        "id": "6"
+    }
 ]
 ```
     
