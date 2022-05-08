@@ -16,7 +16,7 @@ class Dialog
     static function getByPlace($placeID, $userID){
         global $mysqli;
         $lastDialog = getLastDialog($userID);
-        $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place = $placeID AND order  > $lastDialog AND type NOT 'chat'");
+        $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place=$placeID AND `order`>$lastDialog AND NOT `type` = 'chat'");
         while ($row = $dialog->fetch_object()){
             $dialog_arr[] = $row;
         }
@@ -53,11 +53,10 @@ class Dialog
         return $dialogRespone && $rewardResponse && $inventoryPlaceResponse;
     }
 
-    static function getChatMessages(){
+    static function getChatMessages($userID){
         global $mysqli;
-        $currentDialogQuery = mysqli_query($mysqli, "SELECT lastDialog FROM User WHERE id = $userID");
-        $last->fetch_object()->lastDialog;
-        $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE type = 'chat' AND order > $lastDialog ");
+        $lastDialog = getLastDialog($userID);
+        $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`>$lastDialog AND `type` = 'chat'");
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
         }

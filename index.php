@@ -106,6 +106,21 @@ if (class_exists($class) ){
       exit();
     }
   }
+
+  if( $class == 'Dialog' ){
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+      if( isset($arg_1) && $arg_1 == 'chat' && is_numeric($arg_2) ){
+        sendJSON( Dialog::getChatMessages($arg_2) );
+        exit();
+    } else{
+      sendJSON( "Bad Request", 400 );
+      exit();
+    }
+  } else{
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
+  }
+
 /* 
   if( $class == 'Npc' ){
     if($_SERVER['REQUEST_METHOD'] == "GET"){
