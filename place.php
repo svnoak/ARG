@@ -57,6 +57,7 @@ class Place
                 foreach( $file as $dialogObject ){
                     if( $dialogObject['markDone'] ){
                         $dialogObject['id'] = $dialog->id;
+                        $dialogObject['place'] = $dialog->place;
                     }
                     $dialogs[] = $dialogObject;
                 }
