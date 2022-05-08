@@ -91,7 +91,7 @@ class Dialog
 
     static function getInitialMessages(){
         global $mysqli;
-        $messages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `place`IS NULL");
+        $messages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `place`=10");
         while ($row = $messages->fetch_object()){
             $message_arr[] = $row;
         }
