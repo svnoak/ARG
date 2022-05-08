@@ -62,8 +62,8 @@ class Dialog
         }
         $messages = [];
         foreach( $message_arr as $message ){
-            $fileName = $dialog->jsonLink;
-            $type = $dialog->type;
+            $fileName = $message->jsonLink;
+            $type = $message->type;
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
                 foreach( $file as $messageObject ){
