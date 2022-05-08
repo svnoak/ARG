@@ -68,8 +68,7 @@ class Dialog
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
             if( $type == "puzzle" ){
-                $num = $message->$tips;
-                return $message;
+                $num = $message->tips;
                 $tipsText = array_slice($file["tips"], 0, $num);
                 foreach( $tipsText as $index=>$tip ){
                     $userRequest = ["speaker"=>"player", "text"=>"Jag kommer inte vidare, har du något tips?"];
