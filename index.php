@@ -146,7 +146,7 @@ if (class_exists($class) ){
         }
     } elseif($_SERVER['REQUEST_METHOD'] == "GET"){
         if( isset($arg_1) && $arg_1 == 'chat' && is_numeric($arg_2) ){
-          sendJSON( Dialog::getChatMessages($arg_2) );
+          sendJSON( Dialog::getSentMessages($arg_2) );
           exit();
       } else{
         sendJSON( "Bad Request", 400 );
