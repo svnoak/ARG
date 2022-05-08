@@ -149,14 +149,17 @@ if (class_exists($class) ){
         if( isset($arg_1) && $arg_1 == 'chat' && is_numeric($arg_2) ){
           sendJSON( Dialog::getSentMessages($arg_2) );
           exit();
-      } else{
-        sendJSON( "Bad Request", 400 );
-        exit();
-        }
+      } else if(isset($arg_1) && $arg_1 == 'initial' && is_numeric($arg_2)){
+          sendJSON( Dialog::getInitialMessages($arg_2) );
+          exit();
+        } else{
+            sendJSON( "Bad Request", 400 );
+            exit();
+          }
       } else {
-        sendJSON( "Wrong Method", 403 );
-        exit();
-      }
+          sendJSON( "Wrong Method", 403 );
+          exit();
+        }
   }
 
   if( $class == 'Inventory' ){

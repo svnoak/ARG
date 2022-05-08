@@ -88,6 +88,16 @@ class Dialog
         }
         return $messages;
     }
+
+    static function getInitialMessages(){
+        global $mysqli;
+        $messages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `place`IS NULL");
+        $message_arr = [];
+        while ($row = $chatMessages->fetch_object()){
+            $message_arr[] = $row;
+        }
+        return $message_arr;
+    }
        
 }
 
