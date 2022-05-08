@@ -56,7 +56,7 @@ class Dialog
     static function getSentMessages($userID){
         global $mysqli;
         $lastDialog = self::getLastDialog($userID);
-        $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`<=$lastDialog AND `type` = 'chat'");
+        $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`<=$lastDialog AND `type` = 'chat' AND `type`='puzzle'");
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
         }
@@ -67,8 +67,14 @@ class Dialog
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
                 foreach( $file as $messageObject ){
-                    if( $messageObject['markDone'] ){
-                        $messageObject['id'] = $message->id;
+                    if( $type == "chat" ){
+                        if( $messageObject['markDone'] ){
+                            $messageObject['id'] = $message->id;
+                        }
+                    } elseif( $type == "puzzle" ){
+                        $num = $message->$tips;
+                        $tipsText = array_slice($messageObject["tips"], 0, $num);
+                        $messageObject = $tipsText;
                     }
                     $messages[] = $messageObject;
                 }
