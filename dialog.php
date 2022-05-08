@@ -95,8 +95,35 @@ class Dialog
         while ($row = $messages->fetch_object()){
             $message_arr[] = $row;
         }
-        return $message_arr;
+        return self::fetchDialogs($message_arr);
     }
+
+    // Gets dialogues and puzzles, and removes and adds relevant info for the client to be directly used.
+    static function fetchDialogs($dialogData){
+        $dialogs = [];
+        foreach( $dialogData as $dialog ){
+            $fileName = $dialog->jsonLink;
+            $type = $dialog->type;
+            $path = "../assets/$type/$fileName";
+            $file = json_decode(file_get_contents($path), true);
+             if( $type == 'puzzle' ){
+                unset($file['solution']);
+                $file['id'] = $dialog->id;
+                $dialogs[] = $file;
+            } else {
+                foreach( $file as $dialogObject ){
+                    if( $dialogObject['markDone'] ){
+                        $dialogObject['id'] = $dialog->id;
+                        $dialogObject['place'] = $dialog->place;
+                    }
+                    $dialogs[] = $dialogObject;
+                }
+            }
+        }
+
+        return $dialogs;
+    }
+
        
 }
 

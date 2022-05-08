@@ -41,37 +41,12 @@ class Place
         return $dialog_arr;
     }
 
-    // Gets dialogues and puzzles, and removes and adds relevant info for the client to be directly used.
-    static function fetchDialogs($dialogData){
-        $dialogs = [];
-        foreach( $dialogData as $dialog ){
-            $fileName = $dialog->jsonLink;
-            $type = $dialog->type;
-            $path = "../assets/$type/$fileName";
-            $file = json_decode(file_get_contents($path), true);
-             if( $type == 'puzzle' ){
-                unset($file['solution']);
-                $file['id'] = $dialog->id;
-                $dialogs[] = $file;
-            } else {
-                foreach( $file as $dialogObject ){
-                    if( $dialogObject['markDone'] ){
-                        $dialogObject['id'] = $dialog->id;
-                        $dialogObject['place'] = $dialog->place;
-                    }
-                    $dialogs[] = $dialogObject;
-                }
-            }
-        }
-
-        return $dialogs;
-    }
-
+    
     // Packs all data for client to be used for each place.
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
         $dialogData = self::getDialog($placeID, $userID);
-        $dialogs = self::fetchDialogs($dialogData);
+        $dialogs = Dialog::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
         $data = ["place"=>$place, "npc" =>$npc, "dialog"=>$dialogs];
         return $data;
