@@ -15,13 +15,14 @@ import NavBar from "./navBar.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 <BrowserRouter>
-
+<React.StrictMode>
     <Routes>
       <Route path="/" element={<Chat />} />
       <Route path="/inventory" element={<Inventory />} />
       <Route path="/camera" element={<Camera />} />
     </Routes>
  <NavBar /> 
+ </React.StrictMode>
   </BrowserRouter>
 );
 

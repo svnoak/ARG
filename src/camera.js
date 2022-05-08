@@ -51,22 +51,22 @@ class Camera extends React.Component {
   }
 
   /**
-   * Removes the videobackground that ARjs places when moving to different page.
-   */
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.playerPosition);
-    this.removeVideoBackground();
-  }
-
-  /**
    * Fetches gamelocations from server and puts them in localstorage and state
    */
-  async initializeGameLocations(){
+   async initializeGameLocations(){
     const request = new Request(`https://dev.svnoak.net/api/place`);
     const response = await fetch(request);
     const json = await response.json();
     localStorage.setItem("locations", JSON.stringify(json));
     this.setState({locations: JSON.parse(localStorage.getItem("locations"))});
+  }
+
+  /**
+   * Removes the videobackground that ARjs places when moving to different page.
+   */
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.playerPosition);
+    this.removeVideoBackground();
   }
 
   /**
@@ -268,13 +268,13 @@ class Camera extends React.Component {
         // If there are dialogs/puzzles at the location, return elements accordingly
         if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
-
             // If dialog, check who speaks or if it's only an info dialog.
-            if( currentDialog.speaker ) currentDialog.speaker = currentDialog.speaker == "npc" ? this.state.npc.name : this.state.user.username;
+            console.log(currentDialog.speaker);
                 element = <Dialog 
                 npc = {this.state.npc}
+                user = {this.state.user}
                 dialog = {currentDialog}
-                triggerHandler = {this.triggerHandler} 
+                triggerHandler = {this.triggerHandler}
                 dialogTriggered = {this.state.dialogTriggered} 
                 dialogHandler = {this.dialogHandler}
                 />;
@@ -291,6 +291,15 @@ class Camera extends React.Component {
                     dialog = {currentDialog}
                     />
                 }
+
+              // Create some sort of notification and save newly income chat in localStorage
+              else if( currentDialog.type == "chat" ){
+                document.querySelector("nav > a:first-child").classList.add("notification");
+                let chatMessages = this.state.dialog.filter( dialog => dialog.type == "chat" );
+                let stringifiedChat = JSON.stringify(chatMessages);
+                localStorage.setItem("arg_dialog", stringifiedChat);
+                console.log(JSON.parse(localStorage.getItem("arg_dialog")));
+              }
           } else {
             element = this.emptyPlace();
           }

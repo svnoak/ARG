@@ -4,6 +4,8 @@
  * @returns 
  */
 function Dialog(props) {
+  let speaker;
+  if( props.dialog.speaker ) speaker = props.dialog.speaker == "npc" ? props.npc.name : props.user.username;
     return (
     <>
       <a-scene id="ar-scene" vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
@@ -27,7 +29,7 @@ function Dialog(props) {
     {
     props.dialog ? 
     <div id="dialogBox" onClick={ () => props.dialogHandler(props.dialog.types) }>
-        <div>{props.dialog.speaker}</div>
+        <div className="speaker">{speaker}</div>
         <div className={props.dialog.type}>{props.dialog.text}</div>
     </div>
     : <div></div> 

@@ -43,7 +43,8 @@ html{
     bottom: 10vh;
     left: 0;
     padding: 1em;
-    background-color: beige;
+    background-color: rgba(0,0,0,.9);
+    color: white;
     width: 100%;
     z-index: 2;
 }
@@ -57,6 +58,16 @@ html{
 .info,
 .dialog{
     width: 95%;
+}
+
+.speaker{
+    font-weight: bold;
+    padding-bottom: 1em;
+}
+
+.info{
+    text-align: center;
+    font-style: italic;
 }
 
 #puzzleBox{
@@ -82,4 +93,8 @@ input{
 	height: 30px;
 	left: 0;
 	top: 0;
+}
+
+.notification{
+    color: red;
 }
