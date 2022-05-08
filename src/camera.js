@@ -28,6 +28,7 @@ class Camera extends React.Component {
    * Shows waiting element if Locations are still initialized.
    */
   async componentDidMount(){
+    localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
     const waiting = document.querySelector("#waiting");
     if( !localStorage.getItem("locations") ){
       waiting.style.display = "flex";
@@ -90,7 +91,7 @@ class Camera extends React.Component {
    * @returns {bool}
    */
   async PlayerIsNearLocation(coords){
-    const playerLocation = { latitude: "55.605918", longitude: "13.025046" };
+    const playerLocation = { latitude: coords.latitude, longitude: coords.longitude };
 
     
     for( let location of this.state.locations ){
@@ -188,8 +189,9 @@ class Camera extends React.Component {
             playerIsNearLocation: false, 
             index: 0, place: {}, 
             dialog:{}, npc:{},
-             answer: "" });
+            answer: "" });
         }
+        localStorage.setItem("arg_tipIndex", 0);
       } else {
         this.setState({answer: answer});
       }
@@ -207,6 +209,7 @@ class Camera extends React.Component {
         dialog: dialog.id,
         user: this.state.user.id,
         place: this.state.place.id,
+        tips: localStorage.getItem("arg_tipIndex"),
         answer: answer
     }
 
@@ -316,6 +319,7 @@ class Camera extends React.Component {
       <div id="cameraScene">
         <Waiting />
         { this.displayElement() }
+        { !this.state.playerIsNearLocation && this.emptyPlace() }
       </div>
     )
   }

@@ -4,7 +4,8 @@
  * @returns 
  */
 function Textpuzzle(props){
-    console.log(props);
+    let puzzleTips = JSON.stringify(props.dialog.tips);
+    localStorage.setItem("arg_puzzleTips", puzzleTips);
     return(
       <div id="puzzleBox">
         <p className={props.dialog.type}>{props.dialog.text}</p>
