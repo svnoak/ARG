@@ -76,6 +76,7 @@ class Dialog
                         $num = $message->$tips;
                         $tipsText = array_slice($messageObject["tips"], 0, $num);
                         $messageObject = $tipsText;
+                        return $messageObject;
                     }
                     $messages[] = $messageObject;
                 }
