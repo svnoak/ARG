@@ -36,14 +36,15 @@ code {
   display: grid;
   width: 70vw;
   height: 50vh;
+  display: flex;
+  flex-direction: row;
 }
 
 .buttons {
   height: 100px;
   width: 100px;
   background-color: red;
-  display: flex;
-  flex-direction: row;
+
 }
 
 .viewpanel {
