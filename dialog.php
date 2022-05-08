@@ -71,11 +71,11 @@ class Dialog
                 $num = $message->$tips;
                 $tipsText = array_slice($file["tips"], 0, $num);
                 foreach( $tipsText as $index=>$tip ){
-                    $userRequest = ["text"=>"Jag kommer inte vidare, har du något tips?", "speaker"=>"player"];
-                    $tipsText["speaker"] = "anon";
-                    array_splice($tipsText, $index-1, 0, $userRequest);
+                    $userRequest = ["speaker"=>"player", "text"=>"Jag kommer inte vidare, har du något tips?"];
+                    $tipsMessage = ["text"=>$tip, "speaker"=>"anon"];
+                    $messages[] = $userRequest;
+                    $messages[] = $tipsMessage;
                 }
-                $messages[] = $tipsText;
             } else {
                 foreach( $file as $messageObject ){
                     $messages[] = $messageObject;
