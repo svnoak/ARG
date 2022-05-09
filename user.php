@@ -32,6 +32,7 @@ class User
         $lastDialog = $user->fetch_object();
         $initialDialogQuery = mysqli_query($mysqli, "SELECT MAX(`order`) FROM Dialog WHERE place=10");
         $initialDialog = $initialDialogQuery->fetch_object();
+        echo $lastDialog;
         return $lastDialog;
     }
 
