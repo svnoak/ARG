@@ -2,8 +2,12 @@ import './assets/css/camera.css';
 import haversine from 'haversine-distance';
 import React, { createContext, useState } from 'react';
 import Dialog from "./components/Dialog";
-import Textpuzzle from './components/Textpuzzle';
-import ARpuzzle from './components/ARpuzzle';
+import PuzzleBottle from './components/puzzles/Bottle';
+import PuzzleRings from './components/puzzles/Rings';
+import PuzzleTrolls from './components/puzzles/Trolls';
+import RuneTranslation from './components/puzzles/RuneTranslation';
+import Alvkungen from './components/Alvkungen';
+import AlvkungenRunes from './components/puzzles/AlvkungenRunes';
 
 class Camera extends React.Component {
   constructor(props){
@@ -20,7 +24,8 @@ class Camera extends React.Component {
       user: JSON.parse(localStorage.getItem("arg_user")),
       playerIsNearLocation: false,
       answer: "",
-      initialLocation: true
+      initialLocation: false,
+      usingCamera: false
   }
     this.debug = true;
     this.dialogHandler = this.dialogHandler.bind(this);
@@ -40,19 +45,33 @@ class Camera extends React.Component {
       waiting.style.display = "none"
     }
 
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000, 
-      maximumAge: 0
-    }
+    await this.setInitialLocation();
     
     /**
      * Gets Playerposition
      * @param {function} success - Runs the function if position was successfully determined
      * @param {function} error - Runs the callback for position not being retrieved
      */
-    this.playerPosition = navigator.geolocation.watchPosition(this.success.bind(this), this.error);
+    }
+
+   startTracking(){
+      console.log("Start tracking");
+
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000, 
+        maximumAge: 0
+      }
+      navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error, options);
+      this.setState({usingCamera: true});
+    }
     
+
+  async setInitialLocation(){
+    const request = new Request(`https://dev.svnoak.net/api/user/initial/${this.state.user.id}`);
+    const response = await fetch(request);
+    const json = await response.json();
+    this.setState({initialLocation: json});
   }
 
   /**
@@ -70,7 +89,7 @@ class Camera extends React.Component {
    * Removes the videobackground that ARjs places when moving to different page.
    */
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.playerPosition);
+    console.log("UNMOUNT");
     this.removeVideoBackground();
   }
 
@@ -80,12 +99,23 @@ class Camera extends React.Component {
    */
   async success(pos){
     console.log("Getting position");
-    let crd = pos.coords;
-    const playerIsNearLocation  = await this.PlayerIsNearLocation(crd);
+    let playerLat = pos.coords.latitude;
+    let playerLon = pos.coords.longitude;
+    if( this.debug ){
+      let locationID = document.querySelector("#location").value;
+      let loc = this.locationHandler(locationID);
+      let locLat = loc.latitude;
+      let locLon = loc.longitude;
+
+      playerLat = locLat;
+      playerLon = locLon;
+    }
+    console.log("Checking location");
+    const playerIsNearLocation  = await this.PlayerIsNearLocation(playerLat, playerLon);
     this.setState({
       playerIsNearLocation: playerIsNearLocation,
-      lat: crd.latitude,
-      lon: crd.longitude
+      lat: playerLat,
+      lon: playerLon
     });
   }
 
@@ -94,26 +124,19 @@ class Camera extends React.Component {
    * @param {object} coords - Object that holds player coordinates
    * @returns {bool}
    */
-  async PlayerIsNearLocation(coords){
-    let playerLat = coords.latitude;
-    let playerLon = coords.longitude
-    if( this.debug ){
-      playerLat = this.state.lat;
-      playerLon = this.state.lon;
-    }
+  async PlayerIsNearLocation(playerLat, playerLon){
     const playerLocation = { latitude: playerLat, longitude: playerLon };
 
     if( this.state.initialLocation ){
-      await this.setPlaceState(10, this.state.user.id);
-      navigator.geolocation.clearWatch(this.playerPosition);
+      await this.setPlaceState(10, this.state.user.id);    
       return true;
     }
     for( let location of this.state.locations ){
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
       if( distance < location.area ){
+        console.log("Location found");
         await this.setPlaceState(location.id, this.state.user.id);
-        navigator.geolocation.clearWatch(this.playerPosition);
         return true;
       }
     }
@@ -128,14 +151,21 @@ class Camera extends React.Component {
    * @param {int} userID 
    */
   async setPlaceState(placeID, userID){
+    console.log("Setting data");
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
     const json = await response.json();
+      if( placeID == "6" ){
+        let allNPCs = await this.fetchNPCS();
+        allNPCs.push(json.npc);
+        json.npc = allNPCs;
+      }
+
     this.setState({
       place: json.place,
       npc: json.npc,
       dialog: json.dialog
-    });
+    }, () => console.log(this.state));
   }
 
   /**
@@ -157,15 +187,18 @@ class Camera extends React.Component {
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
 
-    // Check what kind of dialog is shown.
-    if(currentDialog.type == "puzzle"){
-      this.setDialog(index, dialogLength, currentDialog);
-    }
+    if( currentDialog ){
     
-    // End if first dialog is shown and player doesn't click on npc.
-    else if( index == 0 && triggerType != "trigger" ) return;
-    
-    // Check if dialog should be marked done or just continue to next
+        // Check what kind of dialog is shown.
+      if(currentDialog.type == "puzzle"){
+        if( currentDialog.initial ) this.setState({initialLocation: false});
+        this.setDialog(index, dialogLength, currentDialog);
+      }
+      
+      // End if first dialog is shown and player doesn't click on npc.
+      else if( index == 0 && triggerType != "trigger" ) return;
+      
+      // Check if dialog should be marked done or just continue to next
       else {
         if( currentDialog.markDone ){
           this.setDialog(index, dialogLength, currentDialog);
@@ -173,6 +206,7 @@ class Camera extends React.Component {
           this.setState({index: this.state.index + 1});
         }
       }
+    }
   }
   
   /**
@@ -193,13 +227,25 @@ class Camera extends React.Component {
 
     // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
-      if( dialogDone ){
 
+      if( dialog.id == "19" && !dialogDone ){
+        await this.markDialogDone(dialog, "Kvarn");
+        localStorage.setItem("arg_ending", "fail");
+      }
+
+      if( (dialog.id == "19" && !dialogDone) || dialogDone ){
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
+          if( dialog.id == "19" && localStorage.getItem("arg_ending") != "fail") localStorage.setItem("arg_ending", "success");
+          let userEnding = localStorage.getItem("arg_ending");
+          if( userEnding ){
+            console.log(userEnding);
+            this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding) }, this.setState({index: this.state.index + 1}));
+            return
+          }
           this.setState({index: this.state.index + 1});
         } else {
-          this.setState({ 
+          this.setState({
             playerIsNearLocation: false, 
             index: 0, place: {}, 
             dialog:{}, npc:{},
@@ -236,7 +282,7 @@ class Camera extends React.Component {
         body: JSON.stringify(data)
     })
     let json = await response.json();
-    return json; 
+    return json;
   }
 
   /**
@@ -268,11 +314,68 @@ class Camera extends React.Component {
     }
   }
 
-  locationHandler(){
-    let locationID = document.querySelector("#location").value;
+  locationHandler(locationID){
     let locations = this.state.locations;
     let choosenLocation = locations.find( location => location.id == locationID );
-    this.setState({lat: choosenLocation.latitude, lon: choosenLocation.longitude});
+    return choosenLocation;
+  }
+
+  puzzleHandler(puzzle){
+    console.log(puzzle.id);
+    let puzzleElement;
+    switch (puzzle.id) {
+      case "2":
+        puzzleElement = <PuzzleBottle 
+        image={puzzle.imageLink} 
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
+    
+      case "5":
+        puzzleElement = <PuzzleRings 
+        image={puzzle.imageLink}
+        text={puzzle.text}
+        answer={this.state.answer}
+        handler={this.dialogHandler}
+        />
+        break;
+
+      case "12":
+        puzzleElement = <PuzzleTrolls 
+        image={puzzle.imageLink}
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
+
+      case "16":
+        puzzleElement = <RuneTranslation
+        image={puzzle.image}
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
+      
+      case "19":
+        puzzleElement = <AlvkungenRunes
+        image={puzzle.image}
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
+
+      default:
+        break;
+    }
+    return puzzleElement;
+  }
+
+  async fetchNPCS(){
+    const userID = this.state.user.id;
+    const request = new Request(`https://dev.svnoak.net/api/inventory/npc/${userID}`);
+    const response = await fetch(request);
+    return await response.json();
   }
 
   /**
@@ -292,8 +395,19 @@ class Camera extends React.Component {
         // If there are dialogs/puzzles at the location, return elements accordingly
         if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
+
             // If dialog, check who speaks or if it's only an info dialog.
-            console.log(currentDialog.speaker);
+              if( this.state.place.id == "6" ){
+                console.log(this.state.npc);
+                element = <Alvkungen
+                    npc = {this.state.npc}
+                    user = {this.state.user}
+                    dialog = {currentDialog}
+                    triggerHandler = {this.triggerHandler}
+                    dialogTriggered = {this.state.dialogTriggered} 
+                    dialogHandler = {this.dialogHandler}
+                  />
+              } else {
                 element = <Dialog 
                 npc = {this.state.npc}
                 user = {this.state.user}
@@ -303,12 +417,16 @@ class Camera extends React.Component {
                 dialogHandler = {this.dialogHandler}
                 />;
               }
+                
+              }
 
               // Set puzzle depending on textbased or AR.
               else if( currentDialog.type == "puzzle"){
-                if( currentDialog.interaction == "text" ){
+                this.removeVideoBackground();
+                element = this.puzzleHandler(currentDialog);
+                /* if( currentDialog.interaction == "text" ){
                   this.removeVideoBackground();
-    
+
                   element =
                   <Textpuzzle
                     handler = {this.dialogHandler}
@@ -316,14 +434,13 @@ class Camera extends React.Component {
                     dialog = {currentDialog}
                     />
                 } else {
-                  let info = {
-                    text: "TEXT",
-                    sender: ""
-                  };
+                  console.log("PUZZLE TIME!");
+                  element = 
                   <ARpuzzle
-                  dialog={info} 
+                  dialog={currentDialog} 
+                  handler = {this.dialogHandler}
                   />
-                }
+                } */
                   
                 }
 
@@ -349,10 +466,11 @@ class Camera extends React.Component {
   render(){
     return(
       <div id="cameraScene">
-        { this.debug && <LocationList handler={this.locationHandler}/> }
         <Waiting />
-        { this.displayElement() }
-        { !this.state.playerIsNearLocation && this.emptyPlace() }
+        { !this.state.usingCamera && <CameraPrompt track={this.startTracking.bind(this)}/>}
+        { !this.state.playerIsNearLocation && this.state.usingCamera && this.emptyPlace() }
+        {  this.state.playerIsNearLocation && this.state.usingCamera && this.displayElement() }
+        { this.debug && <LocationList handler={this.locationHandler}/> }
       </div>
     )
   }
@@ -373,17 +491,28 @@ function Waiting(){
 
 function LocationList(props){
   return(
-    <select name="locations" id="location" onChange={() => props.handler()}>
-      <option value="1">Gamla Väster</option>
-      <option value="2">Boulebaren</option>
-      <option value="3">Baltazargatan</option>
-      <option value="4">Lugnet</option>
-      <option value="5">Davidshall</option>
-      <option value="6">Stadsbiblioteket</option>
-      <option value="7">Lilla Dammen</option>
-      <option value="8">Stora Dammen</option>
-      <option value="9">Slottsmöllan</option>
-    </select> 
+    <div id="locationChanger">
+      <select name="locations" id="location">
+        <option value="1">Gamla Väster</option>
+        <option value="2">Boulebaren</option>
+        <option value="3">Baltazargatan</option>
+        <option value="4">Lugnet</option>
+        <option value="5">Davidshall</option>
+        <option value="6">Stadsbiblioteket</option>
+        <option value="7">Lilla Dammen</option>
+        <option value="8">Stora Dammen</option>
+        <option value="9">Slottsmöllan</option>
+      </select>
+      <button onClick={() => props.handler()}>Set location</button>
+    </div>
+  )
+}
+
+function CameraPrompt(props){
+  return(
+    <div onClick={() => props.track()}>
+      Aktivera kamera
+    </div>
   )
 }
  

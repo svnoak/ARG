@@ -30,6 +30,11 @@ body{
     line-height: 20px;
 }
 
+.message img {
+	width: 100%;
+	border-radius: 15px 15px 4px 4px;
+}
+
 .messageList > div.player{
     background-color: rgb(0, 132, 255);
     color: white;
@@ -43,6 +48,10 @@ body{
 
 .messageList > div.before + div{
     border-radius: 5px 5px 15px 15px;
+}
+
+.messageList > div.before + div img{
+    border-radius: 5px 5px 4px 4px;
 }
 
 .userInputBox{

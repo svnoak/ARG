@@ -4,6 +4,8 @@ import Loading from "./components/Loading";
 
 class Chat extends React.Component {
     constructor(){
+        localStorage.setItem("arg_user", '{"id":"1", "username":"Kim"}');
+       /*  document.querySelector("nav > a:first-child").classList.remove("notification"); */
         super()
         this.state = {
             oldMessages: null,
@@ -11,7 +13,7 @@ class Chat extends React.Component {
             username: JSON.parse(localStorage.getItem("arg_user"))["username"],
             userID: JSON.parse(localStorage.getItem("arg_user"))["id"],
             index: 0,
-            place: localStorage.getItem("arg_place"),
+            place: localStorage.getItem("arg_place") ?? 10,
             sendingMessage: false,
             tipIndex: parseInt(localStorage.getItem("arg_tipIndex"))
         }
@@ -37,9 +39,7 @@ class Chat extends React.Component {
        * Triggers first message if npc writes, then scrolls down.
        */
     async initializeMessages(){
-        let oldMessages = await this.setOldMessages();
-        await this.setNewMessages(oldMessages);
-        this.sendFirstMessage();
+        this.setOldMessages();
         this.scrollDown();
     }
 
@@ -48,13 +48,26 @@ class Chat extends React.Component {
      * @returns {array}
      */
     async setOldMessages(){
-        const userID = 1;
-        const request = new Request(`https://dev.svnoak.net/api/dialog/chat/${userID}`);
-
-        const response = await fetch(request);
-        let json = await response.json();
-        this.setState({oldMessages: json});
-        return json;
+        let messages;
+        console.log(this.state.oldMessages);
+        console.log(this.state.newMessages);
+        if( !this.state.oldMessages && this.state.index == 0 ){
+            const userID = 1;
+            const request = new Request(`https://dev.svnoak.net/api/dialog/chat/${userID}`);
+    
+            const response = await fetch(request);
+            messages = await response.json();
+            console.log("fetching old messages");
+            this.setState({oldMessages: messages}, () => {
+                this.setNewMessages(this.state.oldMessages)
+                this.sendFirstMessage();
+            });
+        } else {
+            messages = this.state.oldMessages;
+            console.log("Has already old messages");
+            this.setNewMessages(messages);
+        }
+        
     }
 
     /**
@@ -62,6 +75,7 @@ class Chat extends React.Component {
      * @param {array} oldMessages - The fetched oldMessages to check  if there are any.
      */
     async setNewMessages(oldMessages){
+        console.log(oldMessages);
         let newMessages;
         // Both items are set by camera component after dialog or during puzzle.
         // Puzzlecomponent resets puzzletips, but chat component resets dialog.
@@ -69,33 +83,35 @@ class Chat extends React.Component {
         let puzzleTips = JSON.parse(localStorage.getItem("arg_puzzleTips"));
 
         // Check if any dialog
-        if( localDialog.length > 0){
+        if( localDialog && localDialog.length > 0){
+            console.log("local!");
             newMessages = localDialog;
 
         // Check if any puzzle
-        } else if( puzzleTips.length > 0 ){
+        } else if( puzzleTips && puzzleTips.length > 0 ){
             let puzzleMessages = this.createPuzzleMessages(puzzleTips);
             let index = this.state.tipIndex;
 
             // Get amount of tips already used and render accordingly
             if( index > 0 ){
-                let oldPuzzles = puzzleMessages.splice(0, index);
-
+                puzzleMessages.splice(0, index);
+/* 
                 if( this.state.oldMessages ){
                     let newArr = this.state.oldMessages;
                     oldPuzzles.forEach( puzzle => newArr.push(puzzle) );
                     this.setState({oldMessages: newArr});
-                }
+                } */
             }
             newMessages = puzzleMessages;
 
             // Checks if any oldMessages are available
         } else if( oldMessages.length == 0) {
             newMessages = await this.fetchInitialMessages();
+            return;
         }
 
         // Sets the state for all new Messages.
-        this.setState({newMessages: newMessages});
+        this.setState({newMessages: newMessages}, console.log(this.state));
     }
 
     /**
@@ -131,8 +147,7 @@ class Chat extends React.Component {
         const request = new Request(`https://dev.svnoak.net/api/dialog/initial/${userID}`);
         const response = await fetch(request);
         const json = await response.json();
-        console.log(json);
-        return json;
+        this.setState({newMessages: await json}, () => this.sendFirstMessage());
     }
 
     /**
@@ -149,13 +164,13 @@ class Chat extends React.Component {
                 if( oldMessages[index-1] && oldMessages[index-1].speaker == oldMessage.speaker ) oldMessage.speaker = "";
                 if( oldMessages[index+1] && oldMessages[index+1].speaker == oldMessage.speaker ) oldMessage.class = "before";
                 return (
-                <Message 
-                key={index} 
-                sender={oldMessage.speaker} 
-                text={oldMessage.text} 
-                imageLink={oldMessage.imageLink} 
+                <Message
+                key={index}
+                sender={oldMessage.speaker}
+                text={oldMessage.text}
+                imageLink={oldMessage.imageLink}
                 user={this.state.username}
-                class={oldMessage.class}                
+                class={oldMessage.class}
                 />
                 )
             })
@@ -168,29 +183,6 @@ class Chat extends React.Component {
     }
 
     /**
-     * Checks if first message is from npc and sends it to user
-     */
-    sendFirstMessage(){
-        const index = this.state.index;
-        if( this.state.newMessages ){
-            const firstMessage = this.state.newMessages[0];
-            const oldMessages = this.state.oldMessages;
-            if( firstMessage ){
-                if( index == 0 && firstMessage.speaker == "anon" ){
-                    if( oldMessages && oldMessages[oldMessages.length] != firstMessage ){
-                        let newArr = this.state.oldMessages;
-                        newArr.push(firstMessage);
-                        this.setState({
-                            oldMessages: newArr,
-                            index: index+1
-                        })
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Is used as clickevent Handler and sends responses to player.
      * @param {string} sender - Only player triggers another message
      */
@@ -199,23 +191,74 @@ class Chat extends React.Component {
         const newMessages = this.state.newMessages;
         const message = newMessages[index];
         const nextMessage = newMessages[index+1];
+        const overNextMessage = newMessages[index+2];
         console.log("message");
         if( sender == "player" ){
             this.sendMessage(message);
+            document.querySelector(".userInput").value = "";
             if( nextMessage && nextMessage.speaker == "anon"){
                 setTimeout( () => this.setState({sendingMessage: true}), 1000 );
                 setTimeout( () => this.setState({sendingMessage: false}), nextMessage.delay);
-                this.sendMessage(nextMessage);
+                await this.sendMessage(nextMessage);
+
+/*                 if( overNextMessage && overNextMessage.speaker == "anon" ){
+                    setTimeout( () => this.setState({sendingMessage: true}), 1000 );
+                    setTimeout( () => this.setState({sendingMessage: false}), overNextMessage.delay);
+                    this.sendMessage(overNextMessage);
+                } */
             }
         }
     }
 
     /**
-     * Scrolls down to latest message
+     * Renders message in the list above the userInput
+     * @param {object} message - messageObject in the format delivered by the API
+     * @returns {bool}
      */
-    scrollDown(){
-        if( document.querySelector(".messageList") ){
-            document.querySelector(".messageList").scrollTop = document.querySelector(".messageList").scrollHeight;
+     async sendMessage(message){
+        console.log("Sending message");
+        console.log(message);
+        let delay;
+        message.delay ? delay = message.delay : delay = 0;
+        setTimeout(() => {
+                let newArr = this.state.oldMessages;
+                console.log(newArr);
+                newArr.push(message);
+                console.log(newArr);
+                this.setState({
+                    oldMessages: newArr,
+                    index: this.state.index + 1
+                })
+                if( message.markDone ) {
+                    this.markDone(message.id);
+                    localStorage.setItem("arg_dialog", "[]");
+                } else if( message.tip ){
+                    let index = this.state.tipIndex;
+                    this.setState({tipIndex: index + 1});
+                    localStorage.setItem("arg_tipIndex", index + 1);
+                }
+            }, delay);
+    }
+
+    /**
+     * Checks if first message is from npc and sends it to user
+     */
+     sendFirstMessage(){
+        const index = this.state.index;
+        const newMessages = this.state.newMessages;
+        if( newMessages ){
+            console.log(newMessages);
+            console.log("New messages found");
+            const firstMessage = newMessages[0];
+            console.log(firstMessage);
+            const oldMessages = this.state.oldMessages;
+            if( firstMessage ){
+                console.log("FIRST MESSAGE");
+                if( index == 0 && firstMessage.speaker == "anon" ){
+                    console.log("SENDING FIRST MESSAGE");
+                    this.sendMessage(firstMessage);
+                }
+            }
         }
     }
 
@@ -243,36 +286,15 @@ class Chat extends React.Component {
         })
         .then( response => response.json() )
         .then( data => console.log(data) );
-
     }
 
     /**
-     * Renders message in the list above the userInput
-     * @param {object} message - messageObject in the format delivered by the API
-     * @returns {bool}
+     * Scrolls down to latest message
      */
-    sendMessage(message){
-        let delay;
-        message.delay ? delay = message.delay : delay = 0;
-        const sentMessage = new Promise( () => {
-            setTimeout(() => {
-                let newArr = this.state.oldMessages;
-                newArr.push(message);
-                this.setState({
-                    oldMessages: newArr,
-                    index: this.state.index + 1
-                })
-                if( message.markDone ) {
-                    this.markDone(message.id);
-                    localStorage.setItem("arg_dialog", "[]");
-                } else if( message.tip ){
-                    let index = this.state.tipIndex;
-                    this.setState({tipIndex: index + 1});
-                    localStorage.setItem("arg_tipIndex", index + 1);
-                }
-            }, delay);
-        })
-        return sentMessage;
+    scrollDown(){
+        if( document.querySelector(".messageList") ){
+            document.querySelector(".messageList").scrollTop = document.querySelector(".messageList").scrollHeight;
+        }
     }
 
     /**
@@ -309,7 +331,7 @@ class Chat extends React.Component {
 function UserInput(props){;
     return(
         <div className="userInputBox">
-            <textarea className="userInput" disabled defaultValue={props.text}></textarea>
+            <textarea className="userInput" disabled value={props.text}></textarea>
             <div className="sendButton" onClick={() => props.text ? props.chatHandler("player") : ""}>SKICKA</div>
         </div>
     )
