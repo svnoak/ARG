@@ -81,8 +81,11 @@ class Dialog
                     $messages[] = $tipsMessage;
                 }
             } else {
+                $userEnding = User::getEnding($userID);
                 foreach( $file as $messageObject ){
-                    $messages[] = $messageObject;
+                    if( $messageObject == null || $messageObject->ending == $userEnding ){
+                        $messages[] = $messageObject;
+                    }
                 }
             }
         }

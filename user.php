@@ -35,6 +35,12 @@ class User
         return $lastDialog->lastDialog < $initialDialog->order;
     }
 
+    static function getEnding($id){
+        global $mysqli;
+        $ending = mysqli_query($mysqli, "SELECT ending FROM User WHERE id = $id");
+        return $ending->fetch_object();
+    }
+
 }
 
 ?>
