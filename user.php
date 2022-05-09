@@ -26,10 +26,12 @@ class User
     }
 
     // Gets the userobject, questionably if needed?
-    static function get($id){
+    static function isAtInitialLocation($id){
         global $mysqli;
-        $user = mysqli_query($mysqli, "SELECT * FROM User WHERE id = $id");
-            return $user->fetch_object();
+        $user = mysqli_query($mysqli, "SELECT lastDialog FROM User WHERE id = $id");
+        $lastDialog = $user->fetch_object();
+        $initialDialog = mysqli_query($mysqli, "SELECT order FROM Dialog WHERE `place`=10");
+        return $initialDialog;
     }
 
 }

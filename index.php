@@ -72,6 +72,15 @@ if (class_exists($class) ){
                 exit();
             }
             
+          } elseif ( $arg_1 == 'initial' ) {
+            $atInitialLocation = User::isAtInitialLocation($id);
+            if( $atInitialLocation != null ) {
+              sendJSON( $atInitialLocation );
+              exit();
+            } else{
+                sendJSON("Bad Request", 400);
+                exit();
+            }
           }
         } else {
           sendJSON("Wrong username or password", 401);
