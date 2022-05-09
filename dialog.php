@@ -60,7 +60,6 @@ class Dialog
     static function getSentMessages($userID){
         global $mysqli;
         $userEnding = User::getEnding($userID)->ending;
-        return $userEnding;
         $lastDialog = self::getLastDialog($userID);
         $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`<=$lastDialog AND `ending`=$userEnding AND NOT `type`='dialog'");
         $message_arr = [];
