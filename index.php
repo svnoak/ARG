@@ -70,14 +70,15 @@ if (class_exists($class) ){
             } else{
                 sendJSON("Wrong username or password", 401);
                 exit();
-            }
+              }
             
-        } else {
-          sendJSON("Wrong username or password", 401);
-          exit();
+          } else {
+            sendJSON("Wrong username or password", 401);
+            exit();
+          }
         }
       }
-    } elseif( $_SERVER['REQUEST_METHOD'] == "POST" ){
+   } elseif( $_SERVER['REQUEST_METHOD'] == "GET" ){
       if ( $arg_1 == 'initial' && is_numeric($arg_2) ) {
         $atInitialLocation = User::isAtInitialLocation($id);
         if( $atInitialLocation != null ) {
@@ -89,11 +90,10 @@ if (class_exists($class) ){
         }
       }
     }
-    
     else{
-        sendJSON( "WRONG METHOD", 403 );
-        exit();
-      }
+      sendJSON( "WRONG METHOD", 403 );
+      exit();
+    }
   }
 
   if( $class == 'Place' ){
