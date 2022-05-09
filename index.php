@@ -80,7 +80,7 @@ if (class_exists($class) ){
       }
    } elseif( $_SERVER['REQUEST_METHOD'] == "GET" ){
       if ( $arg_1 == 'initial' && is_numeric($arg_2) ) {
-        $atInitialLocation = User::isAtInitialLocation($id);
+        $atInitialLocation = User::isAtInitialLocation($arg_2);
         if( $atInitialLocation != null ) {
           sendJSON( $atInitialLocation );
           exit();
