@@ -83,7 +83,7 @@ class Dialog
             } else {
                 $userEnding = User::getEnding($userID);
                 foreach( $file as $messageObject ){
-                    $messages[] = $messageObject->ending;
+                    $messages[] = $messageObject;
                     if( $messageObject->ending == $userEnding ){
                         
                     }
