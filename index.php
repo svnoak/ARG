@@ -72,22 +72,25 @@ if (class_exists($class) ){
                 exit();
             }
             
-          } elseif ( $arg_1 == 'initial' ) {
-            $atInitialLocation = User::isAtInitialLocation($id);
-            if( $atInitialLocation != null ) {
-              sendJSON( $atInitialLocation );
-              exit();
-            } else{
-                sendJSON("Bad Request", 400);
-                exit();
-            }
-          }
         } else {
           sendJSON("Wrong username or password", 401);
           exit();
         }
       }
-    } else{
+    } elseif( $_SERVER['REQUEST_METHOD'] == "POST" ){
+      if ( $arg_1 == 'initial' && is_numeric($arg_2) ) {
+        $atInitialLocation = User::isAtInitialLocation($id);
+        if( $atInitialLocation != null ) {
+          sendJSON( $atInitialLocation );
+          exit();
+        } else{
+            sendJSON("Bad Request", 400);
+            exit();
+        }
+      }
+    }
+    
+    else{
         sendJSON( "WRONG METHOD", 403 );
         exit();
       }
