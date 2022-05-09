@@ -32,7 +32,7 @@ class User
         $lastDialog = $user->fetch_object();
         $initialDialogQuery = mysqli_query($mysqli, "SELECT `order` FROM Dialog WHERE place=10 ORDER BY `order` DESC");
         $initialDialog = $initialDialogQuery->fetch_object();
-        return $lastDialog->lastDialog <= $initialDialog->order;
+        return $lastDialog->lastDialog < $initialDialog->order;
     }
 
 }
