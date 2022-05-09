@@ -61,7 +61,7 @@ class Dialog
         global $mysqli;
         $userEnding = User::getEnding($userID);
         $lastDialog = self::getLastDialog($userID);
-        return mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`<=$lastDialog AND (`ending`=$userEnding OR `ending`=null)  AND NOT `type`='dialog'");
+        return mysqli_query($mysqli, "SELECT * FROM Dialog WHERE order<=$lastDialog AND (ending=$userEnding OR ending=null)  AND NOT `type`='dialog'");
         $message_arr = [];
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
