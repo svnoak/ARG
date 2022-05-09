@@ -309,7 +309,7 @@ class Chat extends React.Component {
 function UserInput(props){;
     return(
         <div className="userInputBox">
-            <input type="text" className="userInput" disabled defaultValue={props.text}></input>
+            <textarea className="userInput" disabled defaultValue={props.text}></textarea>
             <div className="sendButton" onClick={() => props.text ? props.chatHandler("player") : ""}>SKICKA</div>
         </div>
     )

@@ -98,3 +98,10 @@ input{
 .notification{
     color: red;
 }
+
+#location{
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    z-index: 2;
+}

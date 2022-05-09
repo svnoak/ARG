@@ -22,7 +22,9 @@ class Camera extends React.Component {
       answer: "",
       initialLocation: true
   }
+    this.debug = true;
     this.dialogHandler = this.dialogHandler.bind(this);
+    this.locationHandler = this.locationHandler.bind(this);
 }
 
   /**
@@ -93,7 +95,13 @@ class Camera extends React.Component {
    * @returns {bool}
    */
   async PlayerIsNearLocation(coords){
-    const playerLocation = { latitude: coords.latitude, longitude: coords.longitude };
+    let playerLat = coords.latitude;
+    let playerLon = coords.longitude
+    if( this.debug ){
+      playerLat = this.state.lat;
+      playerLon = this.state.lon;
+    }
+    const playerLocation = { latitude: playerLat, longitude: playerLon };
 
     if( this.state.initialLocation ){
       await this.setPlaceState(10, this.state.user.id);
@@ -260,6 +268,13 @@ class Camera extends React.Component {
     }
   }
 
+  locationHandler(){
+    let locationID = document.querySelector("#location").value;
+    let locations = this.state.locations;
+    let choosenLocation = locations.find( location => location.id == locationID );
+    this.setState({lat: choosenLocation.latitude, lon: choosenLocation.longitude});
+  }
+
   /**
    * Conditianlly displays puzzle or dialog to player
    * @returns {HTMLElement}
@@ -334,6 +349,7 @@ class Camera extends React.Component {
   render(){
     return(
       <div id="cameraScene">
+        { this.debug && <LocationList handler={this.locationHandler}/> }
         <Waiting />
         { this.displayElement() }
         { !this.state.playerIsNearLocation && this.emptyPlace() }
@@ -352,6 +368,22 @@ function Waiting(){
     <div id="waiting">
       Initializing Locations
     </div>
+  )
+}
+
+function LocationList(props){
+  return(
+    <select name="locations" id="location" onChange={() => props.handler()}>
+      <option value="1">Gamla Väster</option>
+      <option value="2">Boulebaren</option>
+      <option value="3">Baltazargatan</option>
+      <option value="4">Lugnet</option>
+      <option value="5">Davidshall</option>
+      <option value="6">Stadsbiblioteket</option>
+      <option value="7">Lilla Dammen</option>
+      <option value="8">Stora Dammen</option>
+      <option value="9">Slottsmöllan</option>
+    </select> 
   )
 }
  
