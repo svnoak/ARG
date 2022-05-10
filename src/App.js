@@ -13,7 +13,6 @@ import Login from "./login.js";
 import Locations from "./locations.js";
 import Creatures from "./creatures.js";
 import Inventory from "./inventory.js";
-import Login from "./components/Login";
 
 function App() {
 
