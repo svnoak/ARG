@@ -15,10 +15,8 @@ class Chat extends React.Component {
             index: 0,
             place: localStorage.getItem("arg_place") ?? 10,
             sendingMessage: false,
-            tipIndex: parseInt(localStorage.getItem("arg_tipIndex")),
-            loggedIn: false
+            tipIndex: parseInt(localStorage.getItem("arg_tipIndex"))
         }
-        this.loginHandler = this.loginUser.bind(this);
         this.chatHandler = this.chatHandler.bind(this);
     }
 
@@ -55,14 +53,7 @@ class Chat extends React.Component {
         this.scrollDown();
     }
 
-    loginUser(userData){
-        localStorage.setItem("arg_user", JSON.stringify(userData));
-        this.setState({
-            loggedIn: true,
-            username: userData.name,
-            userID: userData.id
-        }, () => this.componentDidMount());
-    }
+
 
     /**
      * Fetches all chatmessages Player should has gotten so far
@@ -330,9 +321,6 @@ class Chat extends React.Component {
         }
         this.scrollDown();
         return (
-            <>
-            { !this.state.loggedIn && <Login loginHandler={this.loginHandler}/> }
-            { this.state.loggedIn &&    
             <div id="chat">
             { this.renderList() }
             <UserInput 
@@ -340,8 +328,6 @@ class Chat extends React.Component {
             chatHandler={this.chatHandler}
                 />
                 </div>
-            }
-            </>
          );
     }
 }
@@ -370,13 +356,6 @@ function Message(props){
     let sender = props.sender == "player" ? props.user : "Anonymous";
     return(
         <div className={"message " + sender}>
-            {/* {props.sender && 
-            <div className="messageHeader">
-                <div className="sender"> 
-                    { sender }
-                </div>
-            </div>
-            } */}
             { props.imageLink && <img src={"https://dev.svnoak.net/assets/images/" + props.imageLink}></img> }
             <div className="messageText">
                 { props.text }
