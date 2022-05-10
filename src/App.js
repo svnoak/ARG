@@ -1,10 +1,10 @@
 import React from "react";
-import Nav from "./Nav";
-import EmailList from "./EmailList";
-import Slide from "./Slide";
-import Login from "./Login";
-import Alert from "./Alert";
-import "../assets/css/style.css"
+import Nav from "./Components/Nav";
+import EmailList from "./Components/EmailList";
+import Slide from "./Components/Slide";
+import Login from "./Components/Login";
+import Alert from "./Components/Alert";
+import "./assets/css/style.css"
 
 class App extends React.Component {
   constructor(props){
@@ -22,15 +22,24 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    const userData = JSON.parse(localStorage.getItem("arg_user"));
+      if( userData ){
+        this.setState({ name: userData.name, loggedIn: true });
+      }
     const request = new Request('https://dev.svnoak.net/api/email/')
     fetch(request)
     .then(response => response.json())
     .then(data => {
-        this.setState({emails: data});
+        /* data.forEach(element => {
+          const newBody = element.body.replace("{username}", this.state.name);
+          element.body = newBody
+        }); */
+        this.setState({emails: data}, () => { if( localStorage.getItem("arg_readEmail") === "true" ) this.showEmail(1)});
       });
   }
 
   showEmail = (id) => {
+    if( id === 1 ) localStorage.setItem("arg_readEmail", "true");
     this.setState({emailId: id-1, showEmail: true})
   }
 
@@ -38,8 +47,11 @@ class App extends React.Component {
     this.setState({showEmail: false});
   }
 
-  loginUser = (name) =>{
+  loginUser = (userData) =>{
+    const name = userData.name;
     this.setState({name: name, loggedIn: true});
+    const stringifiedData = JSON.stringify(userData);
+    localStorage.setItem("arg_user", stringifiedData );
   }
 
   toggleAlert = (state) => {
@@ -49,7 +61,7 @@ class App extends React.Component {
   render(){
     return (
       <>
-      { !this.state.loggedIn && <Login login={this.loginUser}/> }
+      { !this.state.loggedIn && <Login loginUser={this.loginUser}/> }
       { this.state.loggedIn && 
         <>
         <Nav backBtn={this.state.showEmail} closeEmail={this.closeEmail}/>

@@ -24,6 +24,9 @@ class Email extends React.Component{
 
     componentDidMount(){
         this.setAvatarColor();
+        if( localStorage.getItem("arg_readEmail") === "true" ) {
+            this.setState({hidden: false, read: true});
+        } else{
         setTimeout(() => {
             this.setState({hidden: false});
             this.props.toggleAlert(true);
@@ -34,11 +37,9 @@ class Email extends React.Component{
             }, 2000);
         }, 5000);
     }
+    }
 
     render() {
-        console.log(moment.locales("sv"));
-        let momentjs = moment;
-        console.warn(momentjs.locale("sv"));
         let day = parseInt(this.props.date) < 0
         ? moment().add(this.props.date, 'days').format("Do MMMM")
         : this.props.date;

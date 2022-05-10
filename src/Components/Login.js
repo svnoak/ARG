@@ -1,27 +1,50 @@
+import React, { useState } from 'react';
+
 function Login(props){
     const accessCode = Math.floor(100000 + Math.random() * 900000);
-    
-    function login(props){
+    const [failure, setFailure] = useState(false);
+
+
+    async function createUser(props){
         let username = document.getElementById("name").value;
-/*        fetch( new Request("https://dev.svnoak.net/api/user"),{
-            method: "POST",
-            body: {
-                "name": username,
-                "password": accessCode
-            }
-        } ) */
-        props.login(username);
+        const request = new Request(`https://dev.svnoak.net/api/user/create/`);
+        const data = {
+            username: username,
+            password: accessCode
+        }
+
+        const response = await fetch(request ,
+            {  
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)  
+            });
+
+        if( response.status === 201 ){
+            const userData = await response.json()
+            props.loginUser(userData);
+        } else {
+            setFailure(true);
+        }
     }
 
     return(
-        <div className="login">
-            <p>Vad ska vi kalla dig?</p>
-            <form>
-                <input type="text" id="name"></input>
-            </form>
-            <p>{accessCode}</p>
+        <div className='login-background'>
+            <div className="login">
+                <h1>Inbox</h1>
+                <form>
+                    <label htmlFor="name">Ditt användarnamn</label>
+                    <input type="text" id="name"></input>
+                    { failure && <p>Användarnamnet finns redan</p> }
+                </form>
+                <p className="code">{accessCode}</p>
+                <p className="info">Detta är din tillgångskod för alla nödvändiga system</p>
 
-            <button onClick={() => login(props)}>Login</button>
+                <button onClick={() => createUser(props)}>Skapa användare</button>
+            </div>
         </div>
     )
 }
