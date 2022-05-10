@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
     BrowserRouter,
     Routes,
@@ -9,6 +9,7 @@ import Chat from "./chat.js";
 import NavBar from "./navBar.js";
 import Inventory from "./inventory.js";
 import Login from "./components/Login";
+import Camera from "./camera.js";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
 
     useEffect(() => {
         localStorage.getItem("arg_user") ? setLoggedIn(true) : setLoggedIn(false);
+        console.log(loggedIn);
     })
 
     function loginUser(userData){
@@ -30,8 +32,8 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/" element={<Chat />} />
+        <Route path="/camera" element={<Camera />} />
         <Route path="/inventory" element={<Inventory />} />
     </Routes>
     <NavBar />

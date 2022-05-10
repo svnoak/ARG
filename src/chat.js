@@ -1,7 +1,6 @@
 import React from "react";
 import "./assets/css/chat.css";
 import Loading from "./components/Loading";
-import Login from "./components/Login";
 
 class Chat extends React.Component {
     constructor(){
@@ -10,8 +9,8 @@ class Chat extends React.Component {
         this.state = {
             oldMessages: null,
             newMessages: [],
-            username: null,
-            userID: null,
+            username: JSON.parse(localStorage.getItem("arg_user"))["name"],
+            userID: JSON.parse(localStorage.getItem("arg_user"))["id"],
             index: 0,
             place: localStorage.getItem("arg_place") ?? 10,
             sendingMessage: false,
@@ -21,20 +20,9 @@ class Chat extends React.Component {
     }
 
     async componentDidMount(){
-        console.log("RENDER");
-        const loggedIn = localStorage.getItem("arg_user");
-        if( loggedIn ){
-            console.log("LOGGED IN!");
-            this.setState({
-                loggedIn: true,
-                username: JSON.parse(localStorage.getItem("arg_user"))["name"],
-                userID: JSON.parse(localStorage.getItem("arg_user"))["id"]
-            }, async () => {
-                localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
-                await this.initializeMessages();
-                this.scrollDown()
-            })
-        }
+        localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
+        await this.initializeMessages();
+        this.scrollDown()
     }
 
     /**
