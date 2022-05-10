@@ -15,7 +15,7 @@ class Dialog
 
     static function getByPlace($placeID, $userID){
         global $mysqli;
-        $lastDialog = getLastDialog($userID);
+        $lastDialog = self::getLastDialog($userID);
         $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place=$placeID AND `order`>$lastDialog");
         while ($row = $dialog->fetch_object()){
             $dialog_arr[] = $row;
