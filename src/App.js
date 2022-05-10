@@ -34,8 +34,7 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/" element={<Chat />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/archive" element={<Archive />} />
         <Route path="/camera" element={<Camera />} />
