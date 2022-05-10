@@ -30,7 +30,7 @@ class Place
         return $npc_query->fetch_object();
     }
 
-    // Gets relevant dialog that user has not yet gotten.
+/*     // Gets relevant dialog that user has not yet gotten.
     static function getDialog($placeID, $userID){
         global $mysqli;
         $lastDialog = Dialog::getLastDialog($userID);
@@ -39,13 +39,13 @@ class Place
             $dialog_arr[] = $row;
         }
         return $dialog_arr;
-    }
+    } */
 
     
     // Packs all data for client to be used for each place.
     static function getData($placeID, $userID){
         $npc = self::getNPC($placeID);
-        $dialogData = self::getDialog($placeID, $userID);
+        $dialogData = Dialog::getByPlace($placeID, $userID);
         $dialogs = Dialog::fetchDialogs($dialogData);
         $place = self::getPlaceByID($placeID);
         $data = ["place"=>$place, "npc" =>$npc, "dialog"=>$dialogs];
