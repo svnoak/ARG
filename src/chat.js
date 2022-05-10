@@ -4,13 +4,12 @@ import Loading from "./components/Loading";
 
 class Chat extends React.Component {
     constructor(){
-        localStorage.setItem("arg_user", '{"id":"1", "username":"Kim"}');
        /*  document.querySelector("nav > a:first-child").classList.remove("notification"); */
         super()
         this.state = {
             oldMessages: null,
             newMessages: [],
-            username: JSON.parse(localStorage.getItem("arg_user"))["username"],
+            username: JSON.parse(localStorage.getItem("arg_user"))["name"],
             userID: JSON.parse(localStorage.getItem("arg_user"))["id"],
             index: 0,
             place: localStorage.getItem("arg_place") ?? 10,

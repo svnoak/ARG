@@ -14,7 +14,6 @@ import KvarnLock from './components/puzzles/Kvarnen';
 class Camera extends React.Component {
   constructor(props){
     super(props)
-    localStorage.setItem("arg_user", '{"id":"1", "username":"Kim"}');
     this.state = {
       locations: JSON.parse(localStorage.getItem("locations")),
       place: {},
