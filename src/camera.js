@@ -8,6 +8,8 @@ import PuzzleTrolls from './components/puzzles/Trolls';
 import RuneTranslation from './components/puzzles/RuneTranslation';
 import Alvkungen from './components/Alvkungen';
 import AlvkungenRunes from './components/puzzles/AlvkungenRunes';
+import AlvBattle from './components/puzzles/AlvBattle';
+import KvarnLock from './components/puzzles/Kvarnen';
 
 class Camera extends React.Component {
   constructor(props){
@@ -186,9 +188,17 @@ class Camera extends React.Component {
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
+    let nextDialog = this.state.dialog[index + 1];
+    let npc = this.state.npc;
 
     if( currentDialog ){
     
+      if( nextDialog && nextDialog.reveal && npc.name != nextDialog.reveal ){
+        console.log("REVEAL!")
+        npc.name = nextDialog.reveal;
+        this.setState({npc: npc});
+      }
+
         // Check what kind of dialog is shown.
       if(currentDialog.type == "puzzle"){
         if( currentDialog.initial ) this.setState({initialLocation: false});
@@ -239,8 +249,8 @@ class Camera extends React.Component {
           if( dialog.id == "19" && localStorage.getItem("arg_ending") != "fail") localStorage.setItem("arg_ending", "success");
           let userEnding = localStorage.getItem("arg_ending");
           if( userEnding ){
-            console.log(userEnding);
-            this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding) }, this.setState({index: this.state.index + 1}));
+            console.log("SET DIALOG FOR ENDING");
+            this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding || dialog.ending == undefined )} , this.setState({index: this.state.index + 1}));
             return
           }
           this.setState({index: this.state.index + 1});
@@ -365,6 +375,23 @@ class Camera extends React.Component {
         />
         break;
 
+      case "25":
+      case "27":
+      case "29":
+        puzzleElement = <AlvBattle
+        image={puzzle.image}
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
+
+      case "31":
+        puzzleElement = <KvarnLock
+        image={puzzle.image}
+        text={puzzle.text}
+        handler={this.dialogHandler}
+        />
+        break;
       default:
         break;
     }
