@@ -1,6 +1,7 @@
 import React from "react";
 import "./assets/css/chat.css";
 import Loading from "./components/Loading";
+import Login from "./components/Login";
 
 class Chat extends React.Component {
     constructor(){
@@ -9,21 +10,33 @@ class Chat extends React.Component {
         this.state = {
             oldMessages: null,
             newMessages: [],
-            username: JSON.parse(localStorage.getItem("arg_user"))["name"],
-            userID: JSON.parse(localStorage.getItem("arg_user"))["id"],
+            username: null,
+            userID: null,
             index: 0,
             place: localStorage.getItem("arg_place") ?? 10,
             sendingMessage: false,
-            tipIndex: parseInt(localStorage.getItem("arg_tipIndex"))
+            tipIndex: parseInt(localStorage.getItem("arg_tipIndex")),
+            loggedIn: false
         }
-
+        this.loginHandler = this.loginUser.bind(this);
         this.chatHandler = this.chatHandler.bind(this);
     }
 
     async componentDidMount(){
-        localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
-        await this.initializeMessages();
-        this.scrollDown();
+        console.log("RENDER");
+        const loggedIn = localStorage.getItem("arg_user");
+        if( loggedIn ){
+            console.log("LOGGED IN!");
+            this.setState({
+                loggedIn: true,
+                username: JSON.parse(localStorage.getItem("arg_user"))["name"],
+                userID: JSON.parse(localStorage.getItem("arg_user"))["id"]
+            }, async () => {
+                localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
+                await this.initializeMessages();
+                this.scrollDown()
+            })
+        }
     }
 
     /**
@@ -40,6 +53,15 @@ class Chat extends React.Component {
     async initializeMessages(){
         this.setOldMessages();
         this.scrollDown();
+    }
+
+    loginUser(userData){
+        localStorage.setItem("arg_user", JSON.stringify(userData));
+        this.setState({
+            loggedIn: true,
+            username: userData.name,
+            userID: userData.id
+        }, () => this.componentDidMount());
     }
 
     /**
@@ -159,9 +181,7 @@ class Chat extends React.Component {
         <div className="messageList">
         { 
             oldMessages && oldMessages.map( (oldMessage, index) => {
-                oldMessage.class = oldMessage.speaker;
                 if( oldMessages[index-1] && oldMessages[index-1].speaker == oldMessage.speaker ) oldMessage.speaker = "";
-                if( oldMessages[index+1] && oldMessages[index+1].speaker == oldMessage.speaker ) oldMessage.class = "before";
                 return (
                 <Message
                 key={index}
@@ -169,7 +189,6 @@ class Chat extends React.Component {
                 text={oldMessage.text}
                 imageLink={oldMessage.imageLink}
                 user={this.state.username}
-                class={oldMessage.class}
                 />
                 )
             })
@@ -311,13 +330,18 @@ class Chat extends React.Component {
         }
         this.scrollDown();
         return (
+            <>
+            { !this.state.loggedIn && <Login loginHandler={this.loginHandler}/> }
+            { this.state.loggedIn &&    
             <div id="chat">
-             { this.renderList() }
+            { this.renderList() }
             <UserInput 
             text={userInput}
             chatHandler={this.chatHandler}
-            />
-            </div>
+                />
+                </div>
+            }
+            </>
          );
     }
 }
@@ -345,7 +369,7 @@ function UserInput(props){;
 function Message(props){
     let sender = props.sender == "player" ? props.user : "Anonymous";
     return(
-        <div className={"message " + props.class}>
+        <div className={"message " + sender}>
             {/* {props.sender && 
             <div className="messageHeader">
                 <div className="sender"> 
