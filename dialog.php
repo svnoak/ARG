@@ -24,19 +24,24 @@ class Dialog
        return $dialog_arr;
     }
 
-    static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex, $ending){
+    static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex){
         global $mysqli;
+        $ending = "NULL";
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
-                return $puzzleSolved;
+                if( $dialogID == "19" ){
+                    $ending = "'fail'";
+                } else {
+                    return $puzzleSolved;
+                }
+            } elseif( $dialogID == "19" ){
+                $ending == "'success'";
             }
         }
 
-        $endingVal = $ending ? "'$ending'" : "NULL"; 
-
         $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID WHERE id = $userID");
-        $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$endingVal WHERE id = $userID");
+        $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$ending WHERE id = $userID");
         return $endingResponse;
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
@@ -59,7 +64,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return $dialogResponse && $rewardResponse && $inventoryPlaceResponse;
+        return $ending;
     }
 
     static function getSentMessages($userID){
