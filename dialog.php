@@ -63,10 +63,18 @@ class Dialog
         $userEnding = User::getEnding($userID)->ending;
         $lastDialog = self::getLastDialog($userID);
         $chatMessages = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order`<=$lastDialog AND (`ending`='$userEnding' OR `ending` IS NULL) AND NOT `type`='dialog'");
+        $puzzleTips = mysqli_query($mysqli, "SELECT dialogID, tips FROM UserTip WHERE `userID`=$userID");
+
+        $puzzleTips_arr =[];
+        while ($row = $puzzleTips->fetch_object()){
+            $puzzleTips_arr[] = $row;
+        }
+
         $message_arr = [];
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
         }
+
         $messages = [];
         foreach( $message_arr as $message ){
             $fileName = $message->jsonLink;
@@ -74,8 +82,10 @@ class Dialog
             $path = "../assets/$type/$fileName";
             $file = json_decode(file_get_contents($path), true);
             if( $type == "puzzle" ){
-                $num = $message->tips;
-                $tipsText = array_slice($file["tips"], 0, $num);
+                $tipsArrColumn = array_column($puzzleTips_arr, "dialogID");
+                $tipsIndex = array_search($message->id, $tipsArrColumn);
+                $numTips = $tipsArrColumn[$tipsIndex]->tips;
+                $tipsText = array_slice($file["tips"], 0, $numTips);
                 foreach( $tipsText as $index=>$tip ){
                     $userRequest = ["speaker"=>"player", "text"=>"Jag kommer inte vidare, har du något tips?"];
                     $tipsMessage = ["text"=>$tip, "speaker"=>"anon"];
