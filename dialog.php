@@ -24,16 +24,16 @@ class Dialog
        return $dialog_arr;
     }
 
-    static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex){
+    static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex, $ending){
         global $mysqli;
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
                 return $puzzleSolved;
-            }            
+            }
         }
 
-        $dialogRespone = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID WHERE id = $userID");
+        $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID AND ending = $ending WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
         $rewardResponse = true;
