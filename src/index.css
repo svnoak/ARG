@@ -19,8 +19,16 @@ code {
   background-color: gray;
 }
 
-.navWrapper a{
-height: 50px;
-width: 50;
-
+.navWrap {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+  align-items: center;
+	background-color: gray;
+	width: 100vw;
+	position: absolute;
+	z-index: 2;
+	height: 50px;
+	left: 0;
+	top: 0;
 }

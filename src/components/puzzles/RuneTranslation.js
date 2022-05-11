@@ -1,9 +1,16 @@
+import { useEffect } from "react";
+
 /**
  * Displays Textbased/imagebased puzzles
  * @param {object} props - Object from state.dialog and state.answer 
  * @returns 
  */
  function RuneTranslation(props){
+
+    useEffect(() => {
+      props.video();
+    })
+
     return(
       <div id="puzzleBox">
         <img src={props.image} alt="Runor som ska översättas från kvarngubbens papper"/>

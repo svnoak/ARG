@@ -8,7 +8,7 @@ class Chat extends React.Component {
         super()
         this.state = {
             oldMessages: null,
-            newMessages: [],
+            newMessages: null,
             username: JSON.parse(localStorage.getItem("arg_user"))["name"],
             userID: JSON.parse(localStorage.getItem("arg_user"))["id"],
             index: 0,
@@ -37,6 +37,7 @@ class Chat extends React.Component {
        * Triggers first message if npc writes, then scrolls down.
        */
     async initializeMessages(){
+        console.log("inital messages");
         this.setOldMessages();
         this.scrollDown();
     }
@@ -60,6 +61,7 @@ class Chat extends React.Component {
             console.log("fetching old messages");
             this.setState({oldMessages: messages}, () => {
                 this.setNewMessages(this.state.oldMessages)
+                console.log("Set old messages");
                 this.sendFirstMessage();
             });
         } else {
@@ -81,6 +83,7 @@ class Chat extends React.Component {
         // Puzzlecomponent resets puzzletips, but chat component resets dialog.
         let localDialog = JSON.parse(localStorage.getItem("arg_dialog"));
         let puzzleTips = JSON.parse(localStorage.getItem("arg_puzzleTips"));
+        console.log(puzzleTips);
 
         // Check if any dialog
         if( localDialog && localDialog.length > 0){
@@ -89,29 +92,32 @@ class Chat extends React.Component {
 
         // Check if any puzzle
         } else if( puzzleTips && puzzleTips.length > 0 ){
+            console.log("PUZZLETIPS!");
             let puzzleMessages = this.createPuzzleMessages(puzzleTips);
             let index = this.state.tipIndex;
+            console.log(puzzleMessages);
 
             // Get amount of tips already used and render accordingly
             if( index > 0 ){
-                puzzleMessages.splice(0, index);
-/* 
+                let oldPuzzles = puzzleMessages.splice(0, index);
                 if( this.state.oldMessages ){
                     let newArr = this.state.oldMessages;
                     oldPuzzles.forEach( puzzle => newArr.push(puzzle) );
                     this.setState({oldMessages: newArr});
-                } */
+                }
             }
             newMessages = puzzleMessages;
+            console.log(newMessages);
 
             // Checks if any oldMessages are available
         } else if( oldMessages.length == 0) {
+            console.log(" Initial messages ");
             newMessages = await this.fetchInitialMessages();
-            return;
         }
 
+        console.log(newMessages);
         // Sets the state for all new Messages.
-        this.setState({newMessages: newMessages}, console.log(this.state));
+        this.setState({newMessages: newMessages}, this.sendFirstMessage(newMessages));
     }
 
     /**
@@ -147,7 +153,7 @@ class Chat extends React.Component {
         const request = new Request(`https://dev.svnoak.net/api/dialog/initial/${userID}`);
         const response = await fetch(request);
         const json = await response.json();
-        this.setState({newMessages: await json}, () => this.sendFirstMessage());
+        return await json;
     }
 
     /**
@@ -160,7 +166,7 @@ class Chat extends React.Component {
         <div className="messageList">
         { 
             oldMessages && oldMessages.map( (oldMessage, index) => {
-                if( oldMessages[index-1] && oldMessages[index-1].speaker == oldMessage.speaker ) oldMessage.speaker = "";
+                //if( oldMessages[index-1] && oldMessages[index-1].speaker == oldMessage.speaker ) oldMessage.speaker = "";
                 return (
                 <Message
                 key={index}
@@ -240,12 +246,11 @@ class Chat extends React.Component {
     /**
      * Checks if first message is from npc and sends it to user
      */
-     sendFirstMessage(){
+     sendFirstMessage(messages){
         const index = this.state.index;
-        const newMessages = this.state.newMessages;
+        const newMessages = messages;
         if( newMessages ){
             console.log(newMessages);
-            console.log("New messages found");
             const firstMessage = newMessages[0];
             console.log(firstMessage);
             const oldMessages = this.state.oldMessages;
@@ -341,9 +346,8 @@ function UserInput(props){;
  * @returns {HTML Element}
  */
 function Message(props){
-    let sender = props.sender == "player" ? props.user : "Anonymous";
     return(
-        <div className={"message " + sender}>
+        <div className={"message " + props.sender}>
             { props.imageLink && <img src={"https://dev.svnoak.net/assets/images/" + props.imageLink}></img> }
             <div className="messageText">
                 { props.text }

@@ -47,27 +47,29 @@ class Camera extends React.Component {
     }
 
     await this.setInitialLocation();
-    
-    /**
-     * Gets Playerposition
-     * @param {function} success - Runs the function if position was successfully determined
-     * @param {function} error - Runs the callback for position not being retrieved
-     */
+
+    if( !this.state.usingCamera ) this.removeVideoBackground();
     }
 
+  /**
+   * Gets Playerposition
+   * @param {function} success - Runs the function if position was successfully determined
+   * @param {function} error - Runs the callback for position not being retrieved
+   */
    startTracking(){
-      console.log("Start tracking");
-
+     console.log("TRACKING");
       const options = {
         enableHighAccuracy: true,
-        timeout: 5000, 
+        timeout: 30000,
         maximumAge: 0
       }
       navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error, options);
       this.setState({usingCamera: true});
     }
     
-
+/**
+ * Gets locations from server.
+ */
   async setInitialLocation(){
     const request = new Request(`https://dev.svnoak.net/api/user/initial/${this.state.user.id}`);
     const response = await fetch(request);
@@ -99,7 +101,7 @@ class Camera extends React.Component {
    * @param {object} pos - Object that holds player coordinates
    */
   async success(pos){
-    console.log("Getting position");
+    console.log("SUCCESS");
     let playerLat = pos.coords.latitude;
     let playerLon = pos.coords.longitude;
     if( this.debug ){
@@ -111,7 +113,6 @@ class Camera extends React.Component {
       playerLat = locLat;
       playerLon = locLon;
     }
-    console.log("Checking location");
     const playerIsNearLocation  = await this.PlayerIsNearLocation(playerLat, playerLon);
     this.setState({
       playerIsNearLocation: playerIsNearLocation,
@@ -136,7 +137,6 @@ class Camera extends React.Component {
       const locationCoords = { latitude: location.latitude, longitude: location.longitude };
       const distance = haversine(playerLocation, locationCoords);
       if( distance < location.area ){
-        console.log("Location found");
         await this.setPlaceState(location.id, this.state.user.id);
         return true;
       }
@@ -152,7 +152,6 @@ class Camera extends React.Component {
    * @param {int} userID 
    */
   async setPlaceState(placeID, userID){
-    console.log("Setting data");
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
     const json = await response.json();
@@ -166,7 +165,7 @@ class Camera extends React.Component {
       place: json.place,
       npc: json.npc,
       dialog: json.dialog
-    }, () => console.log(this.state));
+    });
   }
 
   /**
@@ -193,7 +192,6 @@ class Camera extends React.Component {
     if( currentDialog ){
     
       if( nextDialog && nextDialog.reveal && npc.name != nextDialog.reveal ){
-        console.log("REVEAL!")
         npc.name = nextDialog.reveal;
         this.setState({npc: npc});
       }
@@ -237,22 +235,27 @@ class Camera extends React.Component {
     // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
 
-      if( dialog.id == "19" && !dialogDone ){
-        await this.markDialogDone(dialog, "Kvarn");
-        localStorage.setItem("arg_ending", "fail");
-      }
+    localStorage.setItem("arg_ending", dialogDone.ending);
 
-      if( (dialog.id == "19" && !dialogDone) || dialogDone ){
+      if( dialogDone ){
+
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
-          if( dialog.id == "19" && localStorage.getItem("arg_ending") != "fail") localStorage.setItem("arg_ending", "success");
+
+          // Whole special case for the final dialogs;
           let userEnding = localStorage.getItem("arg_ending");
+
           if( userEnding ){
-            console.log("SET DIALOG FOR ENDING");
             this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding || dialog.ending == undefined )} , this.setState({index: this.state.index + 1}));
+            localStorage.setItem("arg_tipIndex", "0");
+            localStorage.removeItem("arg_puzzleTips");
             return
           }
+          localStorage.removeItem("arg_puzzleTips");
+          localStorage.setItem("arg_tipIndex", 0);
           this.setState({index: this.state.index + 1});
+          
+          // Reset all states if there are no more dialogs
         } else {
           this.setState({
             playerIsNearLocation: false, 
@@ -260,6 +263,7 @@ class Camera extends React.Component {
             dialog:{}, npc:{},
             answer: "" });
         }
+        localStorage.removeItem("arg_puzzleTips")
         localStorage.setItem("arg_tipIndex", 0);
       } else {
         this.setState({answer: answer});
@@ -278,8 +282,9 @@ class Camera extends React.Component {
         dialog: dialog.id,
         user: this.state.user.id,
         place: this.state.place.id,
-        tips: localStorage.getItem("arg_tipIndex"),
-        answer: answer
+        tips: parseInt(localStorage.getItem("arg_tipIndex")) / 2,
+        answer: answer,
+        ending: localStorage.getItem("arg_ending")
     }
 
     let response = await fetch(request ,{
@@ -323,14 +328,24 @@ class Camera extends React.Component {
     }
   }
 
+  /**
+   * Chooses the location depending on an ID.
+   * @param {int} locationID
+   * @returns 
+   */
   locationHandler(locationID){
     let locations = this.state.locations;
     let choosenLocation = locations.find( location => location.id == locationID );
     return choosenLocation;
   }
 
+  /**
+   * Chooses puzzle accordingly to display
+   * Needs to be a case each, because each puzzle has it's little nifty thing going on.
+   * @param {object} puzzle 
+   * @returns 
+   */
   puzzleHandler(puzzle){
-    console.log(puzzle.id);
     let puzzleElement;
     switch (puzzle.id) {
       case "2":
@@ -347,6 +362,7 @@ class Camera extends React.Component {
         text={puzzle.text}
         answer={this.state.answer}
         handler={this.dialogHandler}
+        video={this.removeVideoBackground}
         />
         break;
 
@@ -363,6 +379,7 @@ class Camera extends React.Component {
         image={puzzle.image}
         text={puzzle.text}
         handler={this.dialogHandler}
+        video={this.removeVideoBackground}
         />
         break;
       
@@ -371,6 +388,7 @@ class Camera extends React.Component {
         image={puzzle.image}
         text={puzzle.text}
         handler={this.dialogHandler}
+        video={this.removeVideoBackground}
         />
         break;
 
@@ -389,6 +407,7 @@ class Camera extends React.Component {
         image={puzzle.image}
         text={puzzle.text}
         handler={this.dialogHandler}
+        video={this.removeVideoBackground}
         />
         break;
       default:
@@ -397,6 +416,10 @@ class Camera extends React.Component {
     return puzzleElement;
   }
 
+  /**
+   * Gets all NPCS from database to use in final Scene.
+   * @returns {array} Array of all NPCS in the game
+   */
   async fetchNPCS(){
     const userID = this.state.user.id;
     const request = new Request(`https://dev.svnoak.net/api/inventory/npc/${userID}`);
@@ -424,7 +447,6 @@ class Camera extends React.Component {
 
             // If dialog, check who speaks or if it's only an info dialog.
               if( this.state.place.id == "6" ){
-                console.log(this.state.npc);
                 element = <Alvkungen
                     npc = {this.state.npc}
                     user = {this.state.user}
@@ -450,24 +472,12 @@ class Camera extends React.Component {
               else if( currentDialog.type == "puzzle"){
                 this.removeVideoBackground();
                 element = this.puzzleHandler(currentDialog);
-                /* if( currentDialog.interaction == "text" ){
-                  this.removeVideoBackground();
 
-                  element =
-                  <Textpuzzle
-                    handler = {this.dialogHandler}
-                    answer = {this.state.answer}
-                    dialog = {currentDialog}
-                    />
-                } else {
-                  console.log("PUZZLE TIME!");
-                  element = 
-                  <ARpuzzle
-                  dialog={currentDialog} 
-                  handler = {this.dialogHandler}
-                  />
-                } */
-                  
+                // Save puzzleTips so they can be retrieved in the chat
+                let puzzleTips = currentDialog.tips;
+                console.log(puzzleTips);
+                let stringifiedTips = JSON.stringify(puzzleTips);
+                localStorage.setItem("arg_puzzleTips", stringifiedTips);             
                 }
 
               // Create some sort of notification and save newly income chat in localStorage
@@ -515,6 +525,11 @@ function Waiting(){
   )
 }
 
+/**
+ * Locationchanger for debug mode.
+ * @param {object} props - this 
+ * @returns 
+ */
 function LocationList(props){
   return(
     <div id="locationChanger">
@@ -534,6 +549,11 @@ function LocationList(props){
   )
 }
 
+/**
+ * Puts up a camera prompt so user needs to activate camera manually.
+ * @param {object} props - this
+ * @returns {HTML Element} 
+ */
 function CameraPrompt(props){
   return(
     <div onClick={() => props.track()}>

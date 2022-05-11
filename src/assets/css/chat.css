@@ -14,13 +14,13 @@ body{
 }
 
 .messageList{
-    background-color: #FFFFFF;
+    background-color: #2D1910;
     overflow-y: scroll;
 }
 
 .messageList > .message{
     width: 60vw;
-    background: #E4E6EB;
+    background: #FCF4C6;
     border-radius: 15px;
     margin-bottom: 9px;
     margin-left: 20px;
@@ -35,28 +35,43 @@ body{
 	border-radius: 15px 15px 4px 4px;
 }
 
+.messageList > div.anon{
+    font-family: 'Special Elite', cursive;
+}
+
 .messageList > div.player{
-    background-color: rgb(0, 132, 255);
-    color: white;
+    background-color: #FFFFFF;
     margin-left: 30vw;
 }
 
-.messageList > div.before{
-    margin-bottom: 2px;
-    border-radius: 15px 15px 5px 5px;
+.messageList > div.anon + div.anon{ 
+    margin-top: -6px;
 }
 
-.messageList > div.before + div{
+/* .messageList > div.anon + div.anon,
+.messageList > div.anon + div.anon > img{
     border-radius: 5px 5px 15px 15px;
 }
 
-.messageList > div.before + div img{
-    border-radius: 5px 5px 4px 4px;
+.messageList > div.player ~ div.anon:first-child{
+    background-color: green;
+    border-radius: 15px 15px 5px 5px;
+} */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .userInputBox{
-    border-top: 1px solid grey;
-    background: #E4E6EB;
+    background: #4D5E31;
     display: flex;
     align-items: center;
 }
@@ -67,10 +82,10 @@ body{
 }
 
 .userInput[disabled]{
-    background-color: white;
+    background-color: #FCF4C6;
     color: black;
     border-radius: 15px;
-    border: 1px solid grey;
+    border: 1px solid #4D5E31;
     padding: 8px 0px 8px 8px;
     resize: none;
     font-family: inherit;

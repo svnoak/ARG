@@ -17,7 +17,6 @@ function App() {
 
     useEffect(() => {
         localStorage.getItem("arg_user") ? setLoggedIn(true) : setLoggedIn(false);
-        console.log(loggedIn);
     })
 
     function loginUser(userData){
