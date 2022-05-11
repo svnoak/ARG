@@ -64,7 +64,7 @@ class Dialog
         if( !$placeExists ){
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
-        return $rewardQuery;
+
         return ["ending"=>$ending, "done"=>$dialogResponse, $endingResponse, $reward_response,  $tipIndexQuery, $inventoryPlaceResponse];
     }
 
