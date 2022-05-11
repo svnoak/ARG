@@ -33,7 +33,7 @@ class Dialog
             }
         }
 
-        $endingVal = $ending ? '$ending' : null; 
+        $endingVal = $ending ? '$ending' : "NULL"; 
 
         $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID WHERE id = $userID");
         $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$endingVal WHERE id = $userID");
