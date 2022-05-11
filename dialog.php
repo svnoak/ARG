@@ -36,7 +36,7 @@ class Dialog
                     return $puzzleSolved;
                 }
             } elseif( $dialogID == 19 ){
-                $ending == "'success'";
+                $ending = "'success'";
             }
         }
 
