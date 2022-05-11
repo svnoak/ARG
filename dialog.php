@@ -84,7 +84,7 @@ class Dialog
             if( $type == "puzzle" ){
                 $tipsArrColumn = array_column($puzzleTips_arr, "dialogID");
                 $tipsIndex = array_search($message->id, $tipsArrColumn);
-                return $tipsIndex;
+                return $tipsColumn;
                 $numTips = $tipsArrColumn[$tipsIndex]->tips;
                 return $numTips;
                 $tipsText = array_slice($file["tips"], 0, $numTips);
