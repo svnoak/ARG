@@ -93,7 +93,7 @@ class Dialog
             $file = json_decode(file_get_contents($path), true);
             if( $type == "puzzle" ){
                 $tipsArrColumn = array_column($puzzleTips_arr, "dialogID");
-                return $tipsColumn;
+                return $tipsArrColumn;
                 $tipsIndex = array_search($message->id, $tipsArrColumn);
                 $numTips = $puzzleTips_arr[0]->tips;
                 $tipsText = array_slice($file["tips"], 0, $numTips);
