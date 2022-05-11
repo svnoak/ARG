@@ -93,9 +93,8 @@ class Dialog
             $file = json_decode(file_get_contents($path), true);
             if( $type == "puzzle" ){
                 $tipsArrColumn = array_column($puzzleTips_arr, "dialogID");
-                return $tipsArrColumn;
                 $tipsIndex = array_search($message->id, $tipsArrColumn);
-                $numTips = $puzzleTips_arr[0]->tips;
+                $numTips = $puzzleTips_arr[$tipsIndex]->tips;
                 $tipsText = array_slice($file["tips"], 0, $numTips);
                 foreach( $tipsText as $index=>$tip ){
                     $userRequest = ["speaker"=>"player", "text"=>"Jag kommer inte vidare, har du något tips?"];
