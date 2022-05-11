@@ -45,7 +45,7 @@ class Dialog
             }
         }
 
-        $tipIndexQuery = mysqli_query($mysqli, "UPDATE Dialog SET tips = $tipIndex WHERE id = $dialogID");
+        $tipIndexQuery = mysqli_query($mysqli, "INSERT INTO UserTip(userID, dialogID, tips) VALUES ($userID, $dialogID, $tipIndex)");
 
         $placeExists_query = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place = $placeID ");
         $placeExists = $placeExists_query->fetch_object() != null;
