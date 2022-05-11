@@ -96,6 +96,7 @@ class Dialog
                 $tipsIndex = array_search($message->id, $tipsArrColumn);
                 $numTips = $puzzleTips_arr[0]->tips;
                 $tipsText = array_slice($file["tips"], 0, $numTips);
+                return $tipsText;
                 foreach( $tipsText as $index=>$tip ){
                     $userRequest = ["speaker"=>"player", "text"=>"Jag kommer inte vidare, har du något tips?"];
                     $tipsMessage = ["text"=>$tip, "speaker"=>"anon"];
