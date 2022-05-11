@@ -70,6 +70,7 @@ class Dialog
             $puzzleTips_arr[] = $row;
         }
 
+        return $puzzleTips_arr;
         $message_arr = [];
         while ($row = $chatMessages->fetch_object()){
             $message_arr[] = $row;
