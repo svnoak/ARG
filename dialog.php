@@ -51,7 +51,7 @@ class Dialog
             $rewardExists_query = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item = $rewardID ");
             $rewardExists = $rewardExists_query->fetch_object() != null;
             if( !$rewardExists ) {
-                $reward_response = mysqli_query($mysqli, "INSERT INTO UserInventory(user, item) VALUES ($userID, $rewardID) ");
+                $rewardResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, item) VALUES ($userID, $rewardID) ");
             }
         }
 
@@ -65,7 +65,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return ["ending"=>$ending, "done"=>$dialogResponse, $endingResponse, $reward_response,  $tipIndexQuery, $inventoryPlaceResponse];
+        return ["ending"=>$ending, "done"=>$dialogResponse, $endingResponse, $rewardResponse,  $tipIndexQuery, $inventoryPlaceResponse];
     }
 
     static function getSentMessages($userID){
