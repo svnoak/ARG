@@ -33,7 +33,7 @@ class Dialog
             }
         }
 
-        $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID AND ending = $ending WHERE id = $userID");
+        $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog = $dialogID, ending = $ending WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
         $rewardResponse = true;
