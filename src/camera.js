@@ -101,7 +101,8 @@ class Camera extends React.Component {
    * @param {object} pos - Object that holds player coordinates
    */
   async success(pos){
-    console.log("SUCCESS");
+    console.log("TRACKING USER");
+    console.log(pos);
     let playerLat = pos.coords.latitude;
     let playerLon = pos.coords.longitude;
     if( this.debug ){
@@ -427,6 +428,21 @@ class Camera extends React.Component {
     return await response.json();
   }
 
+  loadingPlace(){
+    let npc = { imageLink: "transparent.png" };
+          let dialog = {
+            text: "Du ser dig omkring",
+            type: "placeholder"
+        };
+    let element =
+    <Dialog
+      npc = {npc}
+      handler = {this.dialogHandler}
+      dialog = {dialog}
+    />
+    return element;
+  }
+
   /**
    * Conditianlly displays puzzle or dialog to player
    * @returns {HTMLElement}
@@ -504,7 +520,7 @@ class Camera extends React.Component {
       <div id="cameraScene">
         <Waiting />
         { !this.state.usingCamera && <CameraPrompt track={this.startTracking.bind(this)}/>}
-        { !this.state.playerIsNearLocation && this.state.usingCamera && this.emptyPlace() }
+        { !this.state.playerIsNearLocation && this.state.usingCamera && this.loadingPlace() }
         {  this.state.playerIsNearLocation && this.state.usingCamera && this.displayElement() }
         { this.debug && <LocationList handler={this.locationHandler}/> }
       </div>
