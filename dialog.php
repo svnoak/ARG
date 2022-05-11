@@ -32,16 +32,17 @@ class Dialog
             if( !$puzzleSolved ){
                 if( $dialogID == 19 ){
                     $ending = 'fail';
+                    return ["ending"=>$ending, "done"=>true];
                 } else {
-                    return $puzzleSolved;
+                    return ["ending"=>$ending, "done"=>$puzzleSolved];
                 }
             } elseif( $dialogID == 19 ){
                 $ending = 'success';
+                return ["ending"=>$ending, "done"=>true];
             }
         }
 
-        $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID WHERE id = $userID");
-        $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$ending WHERE id = $userID");
+        $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID,ending=$ending WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
         $rewardResponse = true;
@@ -63,7 +64,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return $ending;
+        return ["ending"=>$ending, "done"=>true];
     }
 
     static function getSentMessages($userID){
