@@ -65,7 +65,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return ["ending"=>$ending, "done"=>$dialogResponse, $endingResponse, $rewardResponse,  $tipIndexQuery, $inventoryPlaceResponse];
+        return ["ending"=>$ending, "dialogResp"=>$dialogResponse, "endingResp"=>$endingResponse, "rewardResp"=>$rewardResponse,  "tipResp"=>$tipIndexQuery, "inventoryResp"=>$inventoryPlaceResponse];
     }
 
     static function getSentMessages($userID){
