@@ -139,6 +139,7 @@ class Dialog
                 $dialogs[] = $file;
             } else {
                 foreach( $file as $dialogObject ){
+                        str_replace( $dialogObject->text, '{username}', "Kim" );
                     if( $dialogObject['markDone'] ){
                         $dialogObject['id'] = $dialog->order;
                         $dialogObject['place'] = $dialog->place;
