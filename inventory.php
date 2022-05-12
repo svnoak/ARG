@@ -26,7 +26,7 @@ class Inventory
         foreach( $places as $place ){
             $placeID = $place->id;
             $npc = Npc::getByPlace($placeID);
-            $npc_arr[] = $npc;
+            if( !in_array($npc, $npc_arr) ) $npc_arr[] = $npc;
         }
         return $npc_arr;
     }
