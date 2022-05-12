@@ -39,11 +39,9 @@ code {
 }
 
 .buttons {
-  height: 100px;
-  width: 100px;
+  height: 25px;
+  width: 25px;
   background-color: red;
-  display: flex;
-  flex-direction: row;
 }
 
 .viewpanel {
