@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jag vet</title>
+    <link rel="stylesheet" href="./site.css" type="text/css">
+</head>
+<body>
+    <p>Ibland behöver vi gå tillbaka för att se</p>
+    <p>Tiden visar vägen</p>
+    <p>För varje steg vi tar, behöver vi räkna hur långt vi går</p>
+    <p>Alla goda ting 4</p>
+    <p>Hoppar du rätt hittar du meningen</p>
+    <p>Hittar du meningen, kan du komma till mig</p>
+    <form>
+        <input type="text">
+        <button type="button">Ta mig till dig</button>
+    </form>
+   
+</body>
+
+<script>
+    let tipsAmount = 0;
+    document.querySelector("button").addEventListener("click", () => {
+        const answer = document.querySelector("input").value;
+        const solution = "Barnen är i fara";
+        if( answer.toLocaleLowerCase() == solution.toLocaleLowerCase() ){
+            location.href = 'https://prod.svnoak.net';
+        } else {
+            if( tipsAmount < 3 )
+            displayTips();
+        }
+    });
+
+    function displayTips(){
+        if( !document.querySelector("#tipsBtn") ){
+            document.body.append(renderButton());
+        }
+    }
+
+    function renderButton(){
+        const button = document.createElement("button");
+        button.innerText = "Jag kanske behöver ett tips..";
+        button.id = "tipsBtn";
+        button.addEventListener("click", () => renderTip());
+        return button; 
+    }
+
+    function renderTip(){
+
+        const tips = [
+            "Tiden måste vara datumet...",
+            "Varje steg... kan det vara paragrapherna?",
+            "Kanske jag behöver räkna ord i varje paragraf utifrån datumet..."
+        ]
+
+        if( tips[tipsAmount] ){
+            const p = document.createElement("p");
+            p.innerText = tips[tipsAmount];
+            p.className = "tip";
+            document.body.append(p);
+        }
+    
+        tipsAmount = tipsAmount + 1;
+        if( tipsAmount === 3 ) document.querySelector("#tipsBtn").remove();
+    }
+</script>
+</html>

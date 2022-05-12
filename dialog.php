@@ -17,7 +17,7 @@ class Dialog
         global $mysqli;
         $lastDialog = self::getLastDialog($userID);
         $userEnding = User::getEnding($userID)->ending;
-        $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place=$placeID AND `order`>$lastDialog AND (`ending`='$userEnding' OR `ending` IS NULL)");
+        $dialog = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE place=$placeID AND `order`>$lastDialog AND (`ending`='$userEnding' OR `ending` IS NULL) ORDER BY `order` DESC");
         while ($row = $dialog->fetch_object()){
             $dialog_arr[] = $row;
         }
