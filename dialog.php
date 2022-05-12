@@ -130,12 +130,12 @@ class Dialog
             $file = json_decode(file_get_contents($path), true);
              if( $type == 'puzzle' ){
                 unset($file['solution']);
-                $file['id'] = $dialog->id;
+                $file['id'] = $dialog->order;
                 $dialogs[] = $file;
             } else {
                 foreach( $file as $dialogObject ){
                     if( $dialogObject['markDone'] ){
-                        $dialogObject['id'] = $dialog->id;
+                        $dialogObject['id'] = $dialog->order;
                         $dialogObject['place'] = $dialog->place;
                     }
                     $dialogs[] = $dialogObject;
