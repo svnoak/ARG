@@ -174,6 +174,7 @@ class Camera extends React.Component {
    * @param {object} err - Errorobject from watchposition function.
    */
   error(err){
+    alert("Något gick fel. Har du aktiverat din GPS?");
     console.warn('ERROR(' + err.code + '): ' + err.message);
   }
 
@@ -377,7 +378,7 @@ class Camera extends React.Component {
 
       case "16":
         puzzleElement = <RuneTranslation
-        image={puzzle.image}
+        image={puzzle.imageLink}
         text={puzzle.text}
         handler={this.dialogHandler}
         video={this.removeVideoBackground}
@@ -386,7 +387,7 @@ class Camera extends React.Component {
       
       case "19":
         puzzleElement = <AlvkungenRunes
-        image={puzzle.image}
+        image={puzzle.imageLink}
         text={puzzle.text}
         handler={this.dialogHandler}
         video={this.removeVideoBackground}
@@ -397,7 +398,7 @@ class Camera extends React.Component {
       case "27":
       case "29":
         puzzleElement = <AlvBattle
-        image={puzzle.image}
+        image={puzzle.imageLink}
         text={puzzle.text}
         handler={this.dialogHandler}
         />
@@ -405,7 +406,7 @@ class Camera extends React.Component {
 
       case "31":
         puzzleElement = <KvarnLock
-        image={puzzle.image}
+        image={puzzle.imageLink}
         text={puzzle.text}
         handler={this.dialogHandler}
         video={this.removeVideoBackground}
@@ -430,10 +431,11 @@ class Camera extends React.Component {
 
   loadingPlace(){
     let npc = { imageLink: "transparent.png" };
-          let dialog = {
-            text: "Du ser dig omkring",
-            type: "placeholder"
-        };
+    let dialog = {
+      type: "placeholder"
+    };
+
+    dialog.text = localStorage.getItem("arg_puzzleTips") ? "Du tittar på puzzlet genom kameran" : "Du ser dig omkring";
     let element =
     <Dialog
       npc = {npc}
@@ -516,12 +518,14 @@ class Camera extends React.Component {
   }
 
   render(){
+    let puzzle = localStorage.getItem("arg_puzzleTips");
+    console.log(this.state.playerIsNearLocation);
     return(
       <div id="cameraScene">
         <Waiting />
         { !this.state.usingCamera && <CameraPrompt track={this.startTracking.bind(this)}/>}
         { !this.state.playerIsNearLocation && this.state.usingCamera && this.loadingPlace() }
-        {  this.state.playerIsNearLocation && this.state.usingCamera && this.displayElement() }
+        { this.state.playerIsNearLocation && this.state.usingCamera && this.displayElement() }
         { this.debug && <LocationList handler={this.locationHandler}/> }
       </div>
     )
@@ -571,9 +575,10 @@ function LocationList(props){
  * @returns {HTML Element} 
  */
 function CameraPrompt(props){
+  let prompt = localStorage.getItem("arg_puzzleTips") ? "Titta på puzzlet" : "Se dig omkring"
   return(
     <div onClick={() => props.track()}>
-      Aktivera kamera
+      {prompt}
     </div>
   )
 }

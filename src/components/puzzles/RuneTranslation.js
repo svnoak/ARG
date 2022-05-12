@@ -6,6 +6,7 @@ import { useEffect } from "react";
  * @returns 
  */
  function RuneTranslation(props){
+   console.log(props);
 
     useEffect(() => {
       props.video();
@@ -13,11 +14,11 @@ import { useEffect } from "react";
 
     return(
       <div id="puzzleBox">
-        <img src={props.image} alt="Runor som ska översättas från kvarngubbens papper"/>
+        <img src={"https://dev.svnoak.net/assets/images/" + props.image} alt="Runor som ska översättas från kvarngubbens papper" className="image-puzzle-1"/>
         <p className="info">{props.text}</p>
         <input type="text"></input>
         { props.answer ? <div className="wrongAnswer">"{props.answer}" verkar inte helt rätt. Jag kanske borde fråga Anon...</div> : <div></div> }
-        <button onClick={ () => props.handler() }>Nu vet jag!</button>
+        <button onClick={ props.handler }>Nu vet jag!</button>
       </div>
     )
   }

@@ -6,6 +6,7 @@ import {useState} from "react";
  * @returns 
  */
 function Dialog(props) {
+  console.log(props);
 
   let speaker;
   if( props.dialog.speaker ) speaker = props.dialog.speaker == "npc" ? props.npc.name : props.user.username;
@@ -16,7 +17,7 @@ function Dialog(props) {
         <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + props.npc.imageLink}></img>
         </a-assets>
       
-        <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
+        <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1.2" ></a-image>
           
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'></a-camera>
             
@@ -28,8 +29,9 @@ function Dialog(props) {
         {speaker && <div className="speaker">{speaker}</div> }
         <div className={props.dialog.type}>{props.dialog.text}</div>
     </div>
-    : <div></div> 
+    : <div></div>
     }
+    <div id="camera"></div>
     </>
     )
   }
