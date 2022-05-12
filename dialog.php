@@ -32,7 +32,7 @@ class Dialog
 
     static function markDone($dialogID, $userID, $placeID, $answer, $tipIndex){
         global $mysqli;
-        $ending = "NULL";
+        $ending = User::getEnding($userID)->ending;
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
