@@ -21,7 +21,7 @@ class Puzzle
 
     static function checkAnswer($id, $answer){
         global $mysqli;
-        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `id` = $id AND `type` = 'puzzle'");
+        $query = mysqli_query($mysqli, "SELECT * FROM Dialog WHERE `order` = $id AND `type` = 'puzzle'");
         $puzzle = $query->fetch_object();
         $fileName = $puzzle->jsonLink;
         $path = "../assets/puzzle/$fileName";
