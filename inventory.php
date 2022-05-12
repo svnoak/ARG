@@ -28,8 +28,7 @@ class Inventory
             $npc = Npc::getByPlace($placeID);
             $npc_arr[] = $npc;
         }
-        $unique_arr = array_unique($npc_arr);
-        return $unique_arr;
+        return $npc_arr;
     }
 
     // Gets places user has been to.
