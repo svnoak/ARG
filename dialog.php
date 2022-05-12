@@ -46,7 +46,7 @@ class Dialog
                 $ending = 'success';
             }
         }
-        
+
         $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID WHERE id = $userID");
         $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$ending WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
@@ -70,7 +70,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return ["ending"=>$ending, "done"=>true];
+        return ["ending"=>$ending, "done"=>$endingResponse];
     }
 
     static function getSentMessages($userID){
