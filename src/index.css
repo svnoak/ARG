@@ -35,7 +35,6 @@ code {
 }
 
 .buttongrid {
-  width: 80vw;
   grid-gap: 2px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -47,9 +46,8 @@ code {
   background-color: white;
   display: flex;
   justify-content: center;
+  align-items: center;
   border: 1px solid black;
-  padding: 2px;
-  box-sizing: border-box;
 }
 
 .viewpanel {
