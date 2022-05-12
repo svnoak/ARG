@@ -10,14 +10,23 @@ import { useEffect } from "react";
     useEffect(() => {
       props.video();
     })
+
+    function nextField(event){
+      const target = event.target;
+      if( target.value.length == target.maxLength && target.nextElementSibling ) target.nextElementSibling.focus();
+      if( target.value.length == 0 && target.previousElementSibling ) target.previousElementSibling.focus();
+    }
   
     return(
       <div id="puzzleBox">
-        <img src={props.image} alt="Ett hänglås med sifferkombination som behöver anges för att öppna det."/>
         <p className="info">{props.text}</p>
-        <input type="text"></input>
-        { props.answer ? <div className="wrongAnswer">"{props.answer}" verkar inte helt rätt. Jag kanske borde fråga Anon...</div> : <div></div> }
-        <button onClick={ () => props.handler() }>Nu vet jag!</button>
+        <div className="lock">
+        <input type="text" pattern="[0-9]*" inputMode="numeric" min="0" max="9" maxLength="1" onChange={nextField}></input>
+        <input type="text" pattern="[0-9]*" inputMode="numeric" min="0" max="9" maxLength="1" onChange={nextField}></input>
+        <input type="text" pattern="[0-9]*" inputMode="numeric" min="0" max="9" maxLength="1" onChange={nextField}></input>
+        </div>
+        { props.answer ? <div className="wrongAnswer">"{props.answer}" är inte rätt kombination... Jag kanske borde fråga Anon...</div> : <div></div> }
+        <button onClick={ () => props.handler() }>Öppna låset</button>
       </div>
     )
   }

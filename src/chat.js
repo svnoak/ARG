@@ -53,7 +53,7 @@ class Chat extends React.Component {
         console.log(this.state.oldMessages);
         console.log(this.state.newMessages);
         if( !this.state.oldMessages && this.state.index == 0 ){
-            const userID = 1;
+            const userID = this.state.userID;
             const request = new Request(`https://dev.svnoak.net/api/dialog/chat/${userID}`);
     
             const response = await fetch(request);
@@ -233,6 +233,7 @@ class Chat extends React.Component {
                     index: this.state.index + 1
                 })
                 if( message.markDone ) {
+                    console.log(message.markDone);
                     this.markDone(message.id);
                     localStorage.setItem("arg_dialog", "[]");
                 } else if( message.tip ){

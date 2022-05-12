@@ -16,8 +16,12 @@ function Alvkungen(props) {
       
 
 
-        <a-image onClick={() => props.dialogHandler("trigger")} id="alvakungen" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
-          
+        <a-image src="#6" npc look-at="[camera]" position="0 0 -4" height="2" width="1"></a-image>
+        <a-image src="#8" npc look-at="[camera]" position="-3 0 -10" height="2" width="1"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-1.8 1 -10" height="1" width=".5"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-4 1.5 -13" height="1" width=".5"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-4 1 -10" height="1" width=".5"></a-image>
+
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
 
         </a-camera>
@@ -26,12 +30,13 @@ function Alvkungen(props) {
       </a-scene>
     {
     props.dialog ? 
-    <div id="dialogBox" onClick={ () => props.dialogHandler(props.dialog.types) }>
+    <div id="dialogBox" onClick={ () => props.dialogHandler('trigger') }>
         <div className="speaker">{speaker}</div>
         <div className={props.dialog.type}>{props.dialog.text}</div>
     </div>
     : <div></div> 
     }
+    <div id="camera"></div>
     </>
     )
   }

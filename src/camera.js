@@ -10,6 +10,8 @@ import Alvkungen from './components/Alvkungen';
 import AlvkungenRunes from './components/puzzles/AlvkungenRunes';
 import AlvBattle from './components/puzzles/AlvBattle';
 import KvarnLock from './components/puzzles/Kvarnen';
+import PaperPickup from './components/puzzles/PaperPickup';
+import "./assets/css/puzzle.css"
 
 class Camera extends React.Component {
   constructor(props){
@@ -28,7 +30,7 @@ class Camera extends React.Component {
       initialLocation: false,
       usingCamera: false
   }
-    this.debug = true;
+    this.debug = false;
     this.dialogHandler = this.dialogHandler.bind(this);
     this.locationHandler = this.locationHandler.bind(this);
 }
@@ -142,7 +144,7 @@ class Camera extends React.Component {
         return true;
       }
     }
-    return false
+    return false;
   }
 
 
@@ -185,6 +187,7 @@ class Camera extends React.Component {
    * @param {string} triggerType - "puzzle", "trigger" or "dialog"
    */
   dialogHandler(triggerType){
+    console.log(triggerType);
     let index = this.state.index;
     let currentDialog = this.state.dialog[index];
     let dialogLength = this.state.dialog.length;
@@ -230,28 +233,43 @@ class Camera extends React.Component {
 
     // If there is an input field, assign answer userInput
     if( document.querySelector("input") != null ){
-      let userInput = document.querySelector("input").value
+      const inputFields = document.querySelectorAll("input")
+      
+      let userInput;
+      if( inputFields.length > 1 ){
+        userInput = `${inputFields[0].value}${inputFields[1].value}${inputFields[2].value}`;
+        console.log(userInput);
+      } else {
+        userInput = document.querySelector("input").value
+      }
+      
       answer = userInput ? userInput : "Inget svar"; 
     }
 
     // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
+    if( dialogDone.ending )  localStorage.setItem("arg_ending", dialogDone.ending);
+    console.log(dialogDone);
 
-    localStorage.setItem("arg_ending", dialogDone.ending);
+      if( dialogDone.done ){
 
-      if( dialogDone ){
+        console.log("DIALOG DOEN!");
 
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
 
+          console.log(index);
+          console.log(dialogLength);
+
           // Whole special case for the final dialogs;
           let userEnding = localStorage.getItem("arg_ending");
-
+          console.log(userEnding)
           if( userEnding ){
+            console.log("USER ENDING EXISTS");
             this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding || dialog.ending == undefined )} , this.setState({index: this.state.index + 1}));
             localStorage.setItem("arg_tipIndex", "0");
             localStorage.removeItem("arg_puzzleTips");
-            return
+            return;
           }
           localStorage.removeItem("arg_puzzleTips");
           localStorage.setItem("arg_tipIndex", 0);
@@ -259,17 +277,24 @@ class Camera extends React.Component {
           
           // Reset all states if there are no more dialogs
         } else {
+          const placeID = this.state.place.id;
+          const locations = this.state.locations;
+          const newLocations = locations.filter( location => location.id != placeID );
+
           this.setState({
             playerIsNearLocation: false, 
             index: 0, place: {}, 
             dialog:{}, npc:{},
-            answer: "" });
+            answer: "",
+            usingCamera: false
+          });
         }
         localStorage.removeItem("arg_puzzleTips")
         localStorage.setItem("arg_tipIndex", 0);
       } else {
         this.setState({answer: answer});
       }
+      console.log(answer);
   }
 
   /**
@@ -285,8 +310,7 @@ class Camera extends React.Component {
         user: this.state.user.id,
         place: this.state.place.id,
         tips: parseInt(localStorage.getItem("arg_tipIndex")) / 2,
-        answer: answer,
-        ending: localStorage.getItem("arg_ending")
+        answer: answer
     }
 
     let response = await fetch(request ,{
@@ -358,7 +382,7 @@ class Camera extends React.Component {
         />
         break;
     
-      case "5":
+      case "6":
         puzzleElement = <PuzzleRings 
         image={puzzle.imageLink}
         text={puzzle.text}
@@ -369,6 +393,16 @@ class Camera extends React.Component {
         break;
 
       case "12":
+        puzzleElement = <PaperPickup 
+        image={puzzle.imageLink}
+        text={puzzle.text}
+        answer={this.state.answer}
+        handler={this.dialogHandler}
+        video={this.removeVideoBackground}
+        />
+      break;
+
+      case "15":
         puzzleElement = <PuzzleTrolls 
         image={puzzle.imageLink}
         text={puzzle.text}
@@ -376,7 +410,7 @@ class Camera extends React.Component {
         />
         break;
 
-      case "16":
+      case "19":
         puzzleElement = <RuneTranslation
         image={puzzle.imageLink}
         text={puzzle.text}
@@ -385,7 +419,7 @@ class Camera extends React.Component {
         />
         break;
       
-      case "19":
+      case "22":
         puzzleElement = <AlvkungenRunes
         image={puzzle.imageLink}
         text={puzzle.text}
@@ -394,22 +428,24 @@ class Camera extends React.Component {
         />
         break;
 
-      case "25":
-      case "27":
-      case "29":
+      case "28":
+      case "31":
+      case "34":
         puzzleElement = <AlvBattle
         image={puzzle.imageLink}
+        itemImage={puzzle.itemImage}
         text={puzzle.text}
         handler={this.dialogHandler}
         />
         break;
 
-      case "31":
+      case "37":
         puzzleElement = <KvarnLock
         image={puzzle.imageLink}
         text={puzzle.text}
         handler={this.dialogHandler}
         video={this.removeVideoBackground}
+        answer={this.state.answer}
         />
         break;
       default:
@@ -435,7 +471,7 @@ class Camera extends React.Component {
       type: "placeholder"
     };
 
-    dialog.text = localStorage.getItem("arg_puzzleTips") ? "Du tittar på puzzlet genom kameran" : "Du ser dig omkring";
+    dialog.text = localStorage.getItem("arg_puzzleTips") ? "Öpnna kameran för att lösa gåtan" : "Du ser dig omkring";
     let element =
     <Dialog
       npc = {npc}
@@ -458,7 +494,7 @@ class Camera extends React.Component {
     if( isAtLocation ){
       if( this.state.dialog ) {
         currentDialog = this.state.dialog[this.state.index];
-
+        console.log(currentDialog);
         // If there are dialogs/puzzles at the location, return elements accordingly
         if( currentDialog ){
           if( currentDialog.type == "dialog" || currentDialog.type == "info" ){
@@ -505,12 +541,13 @@ class Camera extends React.Component {
                 let stringifiedChat = JSON.stringify(chatMessages);
                 localStorage.setItem("arg_dialog", stringifiedChat);
                 localStorage.setItem("arg_place", this.state.place.id);
+                this.setState({usingCamera: false});
               }
           } else {
             element = this.emptyPlace();
           }
         } else {
-          element = this.emptyPlace();          
+          element = this.emptyPlace();
         }
       }
 
@@ -518,12 +555,15 @@ class Camera extends React.Component {
   }
 
   render(){
-    let puzzle = localStorage.getItem("arg_puzzleTips");
-    console.log(this.state.playerIsNearLocation);
+    /* let dialog = this.state.dialog;
+    let index = this.state.index;
+    let off = false;
+    if( dialog && dialog[index] && dialog[index.type] == "chat" ) off = true; */
     return(
       <div id="cameraScene">
         <Waiting />
         { !this.state.usingCamera && <CameraPrompt track={this.startTracking.bind(this)}/>}
+        {/* { this.state.usingCamera && this.state.dialog[this.state.index].type == "chat" && <CameraPrompt track={this.startTracking.bind(this)}/>} */}
         { !this.state.playerIsNearLocation && this.state.usingCamera && this.loadingPlace() }
         { this.state.playerIsNearLocation && this.state.usingCamera && this.displayElement() }
         { this.debug && <LocationList handler={this.locationHandler}/> }
@@ -577,7 +617,8 @@ function LocationList(props){
 function CameraPrompt(props){
   let prompt = localStorage.getItem("arg_puzzleTips") ? "Titta på puzzlet" : "Se dig omkring"
   return(
-    <div onClick={() => props.track()}>
+    <div id="prompt" onClick={() => props.track()}>
+      <div id="camera"></div>
       {prompt}
     </div>
   )

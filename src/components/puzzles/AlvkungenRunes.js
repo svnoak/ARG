@@ -6,7 +6,7 @@
  function AlvkungenRunes(props){
     return(
       <div id="puzzleBox">
-        <img src={props.image} alt="Runor som ska översättas från kvarngubbens papper"/>
+        <img src={props.image} alt="Runor från Alvkungen"/>
         <p className="info">{props.text}</p>
         <input type="text"></input>
         { props.answer ? <div className="wrongAnswer">"{props.answer}" verkar inte helt rätt. Jag kanske borde fråga Anon...</div> : <div></div> }

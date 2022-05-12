@@ -16,7 +16,7 @@ import { useEffect } from "react";
       <div id="puzzleBox">
         <img src={"https://dev.svnoak.net/assets/images/" + props.image} alt="Runor som ska översättas från kvarngubbens papper" className="image-puzzle-1"/>
         <p className="info">{props.text}</p>
-        <input type="text"></input>
+        <input type="text" className="input"></input>
         { props.answer ? <div className="wrongAnswer">"{props.answer}" verkar inte helt rätt. Jag kanske borde fråga Anon...</div> : <div></div> }
         <button onClick={ props.handler }>Nu vet jag!</button>
       </div>

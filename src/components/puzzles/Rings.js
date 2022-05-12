@@ -6,7 +6,7 @@ import { useEffect } from "react";
  * @returns 
  */
 function PuzzleRings(props){
-    
+    console.log("RINGS PUZZLE!");
   useEffect(() => {
     props.video();
   })
@@ -14,7 +14,7 @@ function PuzzleRings(props){
     return(
       <div id="puzzleBox">
         <p className="info">{props.text}</p>
-        <input type="number" pattern="[0-9]*" inputMode="numeric"></input>
+        <input type="number" pattern="[0-9]*" inputMode="numeric" id="hastinput"></input>
         { props.answer ? <div className="wrongAnswer">"{props.answer}" är ej rätt svar. Kanske min vän kan hjälpa mig?</div> : <div></div> }
         <button onClick={ () => props.handler() }>Detta är mitt svar</button>
       </div>

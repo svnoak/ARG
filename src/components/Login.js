@@ -37,7 +37,7 @@ function Login(props) {
         <div className="login-form">
             { fail && <div className="error">Fel användarnamn eller kod</div> }
             <input id="loginUsername" placeholder="Användarnamn"></input>
-            <input id="loginCode" placeholder="Tillgångskod"></input>
+            <input id="loginCode" placeholder="Tillgångskod" type="number" pattern="[0-9]*" inputMode="numeric"></input>
             <button onClick={ () => checkLogin() }>Logga in</button>
         </div>
     )
