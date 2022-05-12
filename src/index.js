@@ -12,7 +12,8 @@ import Login from "./login.js";
 import Locations from "./locations.js";
 import Creatures from "./creatures.js";
 import Inventory from "./inventory.js";
-
+import ReactDOM from 'react-dom/client';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
