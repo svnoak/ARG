@@ -36,13 +36,13 @@ class Dialog
         if( $answer != "" ){
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
-                if( $dialogID == 19 ){
+                if( $dialogID == 22){
                     $ending = 'fail';
                     return ["ending"=>$ending, "done"=>true];
                 } else {
                     return ["ending"=>$ending, "done"=>$puzzleSolved];
                 }
-            } elseif( $dialogID == 19 ){
+            } elseif( $dialogID == 22 ){
                 $ending = 'success';
                 return ["ending"=>$ending, "done"=>true];
             }
