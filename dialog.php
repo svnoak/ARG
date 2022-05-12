@@ -38,17 +38,17 @@ class Dialog
             $puzzleSolved = Puzzle::checkAnswer($dialogID, $answer);
             if( !$puzzleSolved ){
                 if( $dialogID == 22){
-                    $ending = "'fail'";
+                    $ending = "fail";
                 } else {
                     return ["ending"=>$ending, "done"=>$puzzleSolved];
                 }
             } elseif( $dialogID == 22 ){
-                $ending = "'success'";
+                $ending = "success";
             }
         }
 
         $dialogResponse = mysqli_query($mysqli, "UPDATE User SET lastDialog=$dialogID WHERE id = $userID");
-        $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending=$ending WHERE id = $userID");
+        if( $ending ) $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending='$ending' WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE id = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
         $rewardResponse = true;
