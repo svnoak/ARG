@@ -39,13 +39,11 @@ class Dialog
             if( !$puzzleSolved ){
                 if( $dialogID == 22){
                     $ending = 'fail';
-                    return ["ending"=>$ending, "done"=>true];
                 } else {
                     return ["ending"=>$ending, "done"=>$puzzleSolved];
                 }
             } elseif( $dialogID == 22 ){
                 $ending = 'success';
-                return ["ending"=>$ending, "done"=>true];
             }
         }
 
@@ -74,7 +72,7 @@ class Dialog
             $inventoryPlaceResponse = mysqli_query($mysqli, "INSERT INTO UserInventory(user, place) VALUES ($userID, $placeID) ");
         }
 
-        return ["ending"=>$ending, "done"=>$endingResponse];
+        return ["ending"=>$ending, "done"=>true];
     }
 
     static function getSentMessages($userID){
