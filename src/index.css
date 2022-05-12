@@ -42,8 +42,6 @@ code {
   height: 25px;
   width: 25px;
   background-color: red;
-  display: flex;
-  flex-direction: row;
 }
 
 .viewpanel {
