@@ -3,6 +3,7 @@ require_once("./config.php");
 include_once("./place.php");
 include_once("./puzzle.php");
 include_once("./npc.php");
+include_once("./user.php");
 
 class Dialog
 {
