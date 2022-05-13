@@ -20,6 +20,10 @@ code {
   background-color: gray;
   width: 100vw;
   height: 50px;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
 }
 
 .buttonWrapper {

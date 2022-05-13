@@ -4,8 +4,7 @@ const Inventory = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [viewer, setViewer] = useState([]);
-  localStorage.setItem("id", "18");
-  let loggedinUser = localStorage.getItem("id");
+  let loggedinUser = JSON.parse(localStorage.getItem("arg_user"))["id"];
 
   if (data.length === 0) {
     getSomeData();

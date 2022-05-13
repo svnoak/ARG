@@ -10,7 +10,7 @@ import Chat from "./chat.js";
 import Archive from "./archive.js";
 import Camera from "./camera.js";
 import NavBar from "./navBar.js";
-import Login from "./login.js";
+import Login from "./Login.js";
 import Locations from "./locations.js";
 import Creatures from "./creatures.js";
 import Inventory from "./inventory.js";
