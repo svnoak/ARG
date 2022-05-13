@@ -1,0 +1,105 @@
+html{
+    height: 100vh;
+    width: 100vw;
+}
+
+/* body{
+    margin: 0 !important;
+    overflow: hidden;
+} */
+
+#cameraScene {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+}
+
+#ar-scene{
+    position: relative;
+    z-index: 1;
+}
+
+#waiting{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#dialogBox {
+    position: absolute;
+    bottom: 10vh;
+    left: 0;
+    padding: 1em;
+    background-color: rgba(0,0,0,.9);
+    color: white;
+    width: 100%;
+    z-index: 3;
+}
+
+.dialogButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.info,
+.dialog{
+    width: 95%;
+}
+
+.speaker{
+    font-weight: bold;
+    padding-bottom: 1em;
+}
+
+.info{
+    text-align: center;
+    font-style: italic;
+}
+
+.notification{
+    color: red;
+}
+
+#locationChanger {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	z-index: 3;
+}
+
+#camera{
+    height: 100vh;
+    width: 100vw;
+    pointer-events: none;
+    background: url('https://dev.svnoak.net/assets/images/camera.png');
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#prompt{
+    color: snow;
+    height: 100vh;
+    width: 100vh;
+    background-color: rgb(43, 43, 43);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
