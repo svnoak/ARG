@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Inventory = () => {
+const Creatures = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [viewer, setViewer] = useState([]);
@@ -12,7 +12,7 @@ const Inventory = () => {
   }
   function getSomeData() {
     const request = new Request(
-      "https://dev.svnoak.net/api/inventory/item/" + loggedinUser
+      "https://dev.svnoak.net/api/inventory/npc/" + loggedinUser
     );
     fetch(request)
       .then((response) => response.json())
@@ -44,7 +44,6 @@ const Inventory = () => {
             );
           })}
         </div>
-
         <div className="viewpanel">
           {show ? (
             <img
@@ -59,4 +58,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default Creatures;
