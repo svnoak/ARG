@@ -41,7 +41,7 @@ function Login(props){
                     { failure && <p>Användarnamnet finns redan</p> }
                 </form>
                 <p className="code">{accessCode}</p>
-                <p className="info">Detta är din tillgångskod för alla nödvändiga system</p>
+                <p className="info">Skriv ner användarnamn och tillgångskod!</p>
 
                 <button onClick={() => createUser(props)}>Skapa användare</button>
             </div>

@@ -27,7 +27,7 @@
         const answer = document.querySelector("input").value;
         const solution = "Barnen är i fara";
         if( answer.toLocaleLowerCase() == solution.toLocaleLowerCase() ){
-            location.href = 'https://prod.svnoak.net';
+            location.replace('https://prod.svnoak.net');
         } else {
             if( tipsAmount < 3 )
             displayTips();

@@ -48,6 +48,7 @@ class App extends React.Component {
   }
 
   loginUser = (userData) =>{
+    console.log(userData);
     const name = userData.name;
     this.setState({name: name, loggedIn: true});
     const stringifiedData = JSON.stringify(userData);
