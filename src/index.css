@@ -87,22 +87,36 @@ code {
 }
 
 .archiveWrap {
-  border: 1px solid black;
-  background-color: grey;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 50%;
-  width: 30%;
-  align-items: center;
+	background-color: #2D1910;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: 100vw;
+	height: 90vh;
 }
 
 .archiveWrap a {
-  background-color: whitesmoke;
-  margin: 2vh;
-  border: 1px solid black;
-  border-radius: 50%;
-  padding: 10px;
+	background-color: #FCF4C6;
+	margin: 2vh;
+	border-radius: 15px;
+	width: 50vw;
+	height: 7vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	color: black;
+	font-size: 1.3em;
+  font-family: 'Special Elite', cursive;
+}
+
+.archiveWrap a i {
+  margin-right: 10px;
+}
+
+.archiveWrap a span {
+  padding-top: 6px;
 }
 
 .pageWrapper {
@@ -114,4 +128,20 @@ code {
 	position: absolute;
 	top: 0;
 	left: 0;
+  background-color: #2D1910;
+}
+
+.back-arrow {
+	height: 4vh;
+	position: absolute;
+	top: 3vh;
+	left: 6vw;
+	width: 4vw;
+	color: white;
+}
+
+.zmdi.zmdi-arrow-left {
+	color: white;
+	height: 4vh;
+	position: absolute;
 }
