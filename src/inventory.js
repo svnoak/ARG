@@ -45,21 +45,20 @@ const Inventory = () => {
                 }}
                 className="buttons"
               >
-                {prop.name}
+                <img className="thumbnail" alt={"Thumbnail på " + prop.name}  src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}/>
               </div>
             );
           })}
         </div>
 
         <div className="viewpanel">
-          {show ? (
+          {show && (
             <img alt="Bild på föremål"
-              visi
               src={"https://dev.svnoak.net/assets/images/" + viewer.imageLink}
             />
-          ) : null}
+          )}
         </div>
-        <div className="textPanel">{viewer.infoText}</div>
+        {viewer.type == "text" && <div className="textPanel">{viewer.infoText}</div> }
       </div>
     </div>
   );
