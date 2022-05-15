@@ -57,7 +57,7 @@ class Inventory
         $inventoryItems = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item IS NOT NULL ORDER BY `id` ASC");
         while ($row = $inventoryItems->fetch_object()){
             $inventoryItems_arr[] = $row;
-            if( $row->id === 3 ) unset($items_arr[0]);
+            if( $row->id == 3 ) unset($inventoryItems_arr[0]);
         }
 
         $items_arr = [];
