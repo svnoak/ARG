@@ -22,7 +22,7 @@ code {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: gray;
+  background-color: #1B180F;
   width: 100vw;
   height: 10vh;
   position: absolute;
@@ -137,11 +137,38 @@ code {
 	top: 3vh;
 	left: 6vw;
 	width: 4vw;
-	color: white;
+  color: #FCF4C6;
 }
 
 .zmdi.zmdi-arrow-left {
-	color: white;
 	height: 4vh;
 	position: absolute;
+}
+
+.navWrap .zmdi {
+  color: #FCF4C6;
+}
+
+.navWrap a .notification {
+  color: red;
+  transform: scale(1);
+	animation: pulse 2s infinite;
+  border-radius: 100%;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(255, 0, 0, .7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }
