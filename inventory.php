@@ -34,11 +34,9 @@ class Inventory
     // Gets places user has been to.
     static function getPlaces($userID){
         global $mysqli;
-        $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND (place!=10 OR place!=8 OR place!=7) ORDER BY `id` ASC");
+        $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place!=10 AND place!=8 AND place!=7 ORDER BY `id` ASC");
         while ($row = $inventoryPlaces->fetch_object()){
-            if( $row->id != 8 OR $row->id != 7 ){
-                $inventoryPlaces_arr[] = $row;
-            }
+            $inventoryPlaces_arr[] = $row;
         }
 
         $places_arr = [];
