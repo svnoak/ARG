@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+#root{
+  display: flex;
+  flex-direction: column;
+}
+
 .navWrap {
   display: flex;
   flex-direction: row;
@@ -19,11 +24,11 @@ code {
   align-items: center;
   background-color: gray;
   width: 100vw;
-  height: 50px;
+  height: 10vh;
   position: absolute;
   z-index: 3;
   left: 0;
-  top: 0;
+  bottom: 0;
 }
 
 .buttonWrapper {
@@ -101,9 +106,12 @@ code {
 }
 
 .pageWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-  width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 90vh;
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 0;
 }

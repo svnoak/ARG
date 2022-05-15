@@ -174,6 +174,7 @@ class Chat extends React.Component {
                 text={oldMessage.text}
                 imageLink={oldMessage.imageLink}
                 user={this.state.username}
+                link={oldMessage.link}
                 />
                 )
             })
@@ -351,7 +352,7 @@ function Message(props){
         <div className={"message " + props.sender}>
             { props.imageLink && <img src={"https://dev.svnoak.net/assets/images/" + props.imageLink}></img> }
             <div className="messageText">
-                { props.text }
+                { props.text } {props.link && <a href={"https://dev.svnoak.net/assets/files/" + props.link} download target="_blank">Om Älvor</a>}
             </div>
         </div>
     )

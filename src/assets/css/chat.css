@@ -4,9 +4,9 @@ body{
 
 #chat{
     position: absolute;
-    top: 5vh;
+    top: 0;
     left: 0;
-    height: 88vh;
+    height: 90vh;
     width: 100vw;
     overflow: hidden;
     display: grid;

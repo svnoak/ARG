@@ -9,15 +9,15 @@ html{
 } */
 
 #cameraScene {
-	position: absolute;
+/* 	position: absolute;
 	top: 0;
-	left: 0;
+	left: 0; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	width: 100vw;
-	height: 100vh;
+	height: 90vh;
 }
 
 #ar-scene{
@@ -82,7 +82,7 @@ html{
 }
 
 #camera{
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
     pointer-events: none;
     background: url('https://dev.svnoak.net/assets/images/camera.png');
