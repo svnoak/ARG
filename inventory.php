@@ -36,7 +36,10 @@ class Inventory
         global $mysqli;
         $inventoryPlaces = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND place!=10 ORDER BY `id` ASC");
         while ($row = $inventoryPlaces->fetch_object()){
-            $inventoryPlaces_arr[] = $row;
+            if( $row-> id != 7 || $row-> id != 8 ){
+                $inventoryPlaces_arr[] = $row;
+            }
+            
         }
 
         $places_arr = [];
