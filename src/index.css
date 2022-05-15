@@ -25,20 +25,21 @@ code {
   background-color: #1B180F;
   width: 100vw;
   height: 10vh;
-  position: absolute;
+  position: fixed;
   z-index: 3;
   left: 0;
   bottom: 0;
 }
 
 .buttonWrapper {
-  background-color: #2D1910;
-  width: 100vw;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	background-color: #2D1910;
+	/* width: 100vw; */
+	/* height: 90vh; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* margin-top: 5vh; */
 }
 
 .buttongrid {
@@ -46,8 +47,8 @@ code {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	/* grid-template-rows: repeat(4, 1fr); */
-	position: absolute;
-	top: 2vh;
+	/* position: absolute; */
+	/* top: 2vh; */
 	/* width: 80vw; */
 }
 
@@ -57,9 +58,14 @@ code {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100px;
-	width: 100px;
+	height: 20vw;
+	width: 20vw;
 	overflow: hidden;
+}
+
+.thumbnail {
+	max-height: 100%;
+	/* max-width: 100%; */
 }
 
 .viewpanel {
@@ -67,13 +73,14 @@ code {
 	/* height: 30vh; */
 	/* width: 70vw; */
 	display: flex;
+  flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 50vw;
 	/* background-color: #2D1910; */
 	margin: 10px 0px;
-	position: absolute;
-	top: 40vh;
+/* 	position: absolute;
+	top: 40vh; */
 }
 
 .viewpanel img {
@@ -92,8 +99,8 @@ code {
 	/* padding: 5px; */
 	/* box-sizing: border-box; */
 	/* overflow-y: auto; */
-	position: absolute;
-	top: 70vh;
+/* 	position: absolute;
+	top: 70vh; */
   color:#FCF4C6;
   font-family: 'Special Elite', serif;
 }
@@ -132,29 +139,40 @@ code {
 }
 
 .pageWrapper {
-	height: 90vh;
+	height: 80vh;
 	width: 100vw;
 	position: absolute;
 	top: 0;
 	left: 0;
 	background-color: #2D1910;
 	display: grid;
-	grid-template-rows: repeat(3, 1fr);
+	grid-template-rows: 10vh auto 1fr 1fr;
 	overflow: scroll;
+	justify-items: center;
+  padding-bottom: 30vh;
+}
+
+li:first-child {
+	list-style: none;
+	margin-left: -14px;
 }
 
 .back-arrow {
-	height: 4vh;
-	position: absolute;
-	top: 3vh;
-	left: 6vw;
-	width: 4vw;
+	/* height: 4vh; */
+	/* position: absolute; */
+	/* top: 3vh; */
+	/* left: 6vw; */
+	width: 100vw;
+	/* padding-left: 4vw; */
+	display: flex;
+	align-items: center;
 }
 
 .zmdi.zmdi-arrow-left {
 	height: 4vh;
-	position: absolute;
+/* 	position: absolute; */
   color: #FCF4C6;
+  margin-left: 8vw;
 }
 
 .navWrap .zmdi {

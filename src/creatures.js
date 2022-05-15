@@ -46,12 +46,13 @@ const Creatures = () => {
                 }}
                 className="buttons"
               >
-                {prop.name}
+                <img className="thumbnail" alt={"Thumbnail på " + prop.name}  src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}/>
               </div>
             );
           })}
         </div>
-        <div className="viewpanel">
+      </div>
+      <div className="viewpanel">
           {show ? (
             <img alt="Bild på väsen"
               visi
@@ -60,7 +61,6 @@ const Creatures = () => {
           ) : null}
         </div>
         <div className="textPanel">{viewer.infoText}</div>
-      </div>
     </div>
   );
 };

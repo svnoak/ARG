@@ -50,16 +50,16 @@ const Inventory = () => {
             );
           })}
         </div>
-
-        <div className="viewpanel">
+      </div>
+      <div className="viewpanel">
           {show && (
-            <img alt="Bild på föremål"
+            <img alt={"Bild på " + viewer.name}
               src={"https://dev.svnoak.net/assets/images/" + viewer.imageLink}
             />
           )}
+          {viewer.type == "image" && viewer.infoText && <img alt={"Bild på " + viewer.name} src={"https://dev.svnoak.net/assets/images/" + viewer.infoText}/> }
         </div>
         {viewer.type == "text" && <div className="textPanel">{viewer.infoText}</div> }
-      </div>
     </div>
   );
 };
