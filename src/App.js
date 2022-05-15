@@ -3,8 +3,7 @@ import { React, useEffect, useState } from "react";
 import {
     BrowserRouter,
     Routes,
-    Route,
-    Link,
+    Route
   } from "react-router-dom";
 import Chat from "./chat.js";
 import Archive from "./archive.js";
@@ -21,7 +20,7 @@ function App() {
 
     useEffect(() => {
         localStorage.getItem("arg_user") ? setLoggedIn(true) : setLoggedIn(false);
-    })
+    }, [])
 
     function loginUser(userData){
       localStorage.setItem("arg_user", JSON.stringify(userData));
@@ -36,11 +35,11 @@ function App() {
     <BrowserRouter>
     <Routes>
         <Route path="/" element={<Chat />} />
-        <Route path="/locations" element={<Locations />} />
-        <Route path="/archive" element={<Archive />} />
+        <Route path="/platser" element={<Locations />} />
+        <Route path="/anteckningar" element={<Archive />} />
         <Route path="/camera" element={<Camera />} />
-        <Route path="/creatures" element={<Creatures />} />
-        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/vasen" element={<Creatures />} />
+        <Route path="/saker" element={<Inventory />} />
     </Routes>
     <NavBar />
     </BrowserRouter>  

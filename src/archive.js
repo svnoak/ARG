@@ -4,9 +4,9 @@ function Archive() {
   return (
    <div className="pageWrapper">
    <div className="archiveWrap">
-      <Link to="/inventory">Inventory</Link>
-      <Link to="/locations">Locations</Link>
-      <Link to="/creatures">Creatures</Link>
+      <Link to="/saker"><i class="zmdi zmdi-attachment-alt"></i><span>Saker</span></Link>
+      <Link to="/platser"><i class="zmdi zmdi-compass"></i><span>Platser</span></Link>
+      <Link to="/vasen"><i class="zmdi zmdi-male"></i><span>Väsen</span></Link>
     </div>
     </div>
   );

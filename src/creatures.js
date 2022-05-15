@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 const Creatures = () => {
   const [data, setData] = useState([]);
@@ -27,6 +29,7 @@ const Creatures = () => {
 
   return (
     <div className="pageWrapper">
+      <div className="back-arrow"><Link to="/anteckningar"><i className="zmdi zmdi-arrow-left zmdi-hc-2x"></i></Link></div>
       <div className="buttonWrapper">
         <div className="buttongrid">
           {data.map(function (prop) {
@@ -45,7 +48,7 @@ const Creatures = () => {
         </div>
         <div className="viewpanel">
           {show ? (
-            <img
+            <img alt="Bild på väsen"
               visi
               src={"https://dev.svnoak.net/assets/images/" + viewer.imageLink}
             />
