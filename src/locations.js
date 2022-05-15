@@ -22,8 +22,13 @@ const Locations = () => {
   }
 
   function buttonClick(propid) {
-    setViewer(data[propid - 1]);
+    const item = getItem(propid);
+    setViewer(item);
     setShow(true);
+  }
+
+  function getItem(id){
+    return data.find( item => item.id == id );
   }
 
   return (
