@@ -20,7 +20,7 @@ class Chat extends React.Component {
     }
 
     async componentDidMount(){
-        document.querySelector("#chatNav").classList.remove("notification");
+        if( document.querySelector("#chatNav") ) document.querySelector("#chatNav").classList.remove("notification");
         localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
         await this.initializeMessages();
         this.scrollDown()
