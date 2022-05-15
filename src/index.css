@@ -149,11 +149,11 @@ code {
   color: #FCF4C6;
 }
 
-.navWrap a .notification {
-  color: red;
-  transform: scale(1);
-	animation: pulse 2s infinite;
-  border-radius: 100%;
+.notification {
+  color: red !important;
+  transform: scale(1) !important;
+	animation: pulse 2s infinite !important;
+  border-radius: 100% !important;
 }
 
 @keyframes pulse {

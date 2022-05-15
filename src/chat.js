@@ -20,6 +20,7 @@ class Chat extends React.Component {
     }
 
     async componentDidMount(){
+        document.querySelector("#chatNav").classList.remove("notification");
         localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
         await this.initializeMessages();
         this.scrollDown()
@@ -196,7 +197,8 @@ class Chat extends React.Component {
         const message = newMessages[index];
         const nextMessage = newMessages[index+1];
         const overNextMessage = newMessages[index+2];
-        console.log("message");
+
+        console.log(message);
         if( sender == "player" ){
             this.sendMessage(message);
             document.querySelector(".userInput").value = "";
@@ -225,23 +227,25 @@ class Chat extends React.Component {
         let delay;
         message.delay ? delay = message.delay : delay = 0;
         setTimeout(() => {
-                let newArr = this.state.oldMessages;
-                console.log(newArr);
-                newArr.push(message);
-                console.log(newArr);
-                this.setState({
-                    oldMessages: newArr,
-                    index: this.state.index + 1
-                })
-                if( message.markDone ) {
-                    console.log(message.markDone);
-                    this.markDone(message.id);
-                    localStorage.setItem("arg_dialog", "[]");
-                } else if( message.tip ){
-                    let index = this.state.tipIndex;
-                    this.setState({tipIndex: index + 1});
-                    localStorage.setItem("arg_tipIndex", index + 1);
-                }
+            let newArr = this.state.oldMessages;
+            console.log(newArr);
+            newArr.push(message);
+            console.log(newArr);
+            this.setState({
+                oldMessages: newArr,
+                index: this.state.index + 1
+            })
+            if( message.markDone ) {
+                console.log(message.markDone);
+                this.markDone(message.id);
+                localStorage.setItem("arg_dialog", "[]");
+            } else if( message.tip ){
+                let index = this.state.tipIndex;
+                this.setState({tipIndex: index + 1});
+                localStorage.setItem("arg_tipIndex", index + 1);
+            }
+            if( message.camera ) document.querySelector("#cameraNav").classList.add("notification");
+            if( message.reward ) document.querySelector("#inventoryNav").classList.add("notification");
             }, delay);
     }
 

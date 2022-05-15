@@ -30,7 +30,7 @@ class Camera extends React.Component {
       initialLocation: false,
       usingCamera: false
   }
-    this.debug = false;
+    this.debug = true;
     this.dialogHandler = this.dialogHandler.bind(this);
     this.locationHandler = this.locationHandler.bind(this);
 }
@@ -40,6 +40,7 @@ class Camera extends React.Component {
    * Shows waiting element if Locations are still initialized.
    */
   async componentDidMount(){
+    document.querySelector("#cameraNav").classList.remove("notification");
     localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
     const waiting = document.querySelector("#waiting");
     if( !localStorage.getItem("locations") ){
@@ -243,18 +244,21 @@ class Camera extends React.Component {
         userInput = document.querySelector("input").value
       }
       
-      answer = userInput ? userInput : "Inget svar"; 
+      answer = userInput ? userInput : "Inget svar";
     }
 
     // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
     if( dialogDone.ending )  localStorage.setItem("arg_ending", dialogDone.ending);
-    console.log(dialogDone);
+      console.log(dialog.camera);
+
+      if ( dialog.chat ) document.querySelector("#chatNav").classList.add("notification");
+      if( dialog.reward && dialog.type !== "puzzle"  ) document.querySelector("#inventoryNav").classList.add("notification");
 
       if( dialogDone.done ){
-
-        console.log("DIALOG DOEN!");
-
+        console.log(dialog.camera)
+        if( dialog.reward && dialog.type === "puzzle") document.querySelector("#inventoryNav").classList.add("notification");
+        
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
 
@@ -294,7 +298,6 @@ class Camera extends React.Component {
       } else {
         this.setState({answer: answer});
       }
-      console.log(answer);
   }
 
   /**
@@ -536,7 +539,6 @@ class Camera extends React.Component {
 
               // Create some sort of notification and save newly income chat in localStorage
               else if( currentDialog.type == "chat" ){
-                document.querySelector("nav > a:first-child").classList.add("notification");
                 let chatMessages = this.state.dialog.filter( dialog => dialog.type == "chat" );
                 let stringifiedChat = JSON.stringify(chatMessages);
                 localStorage.setItem("arg_dialog", stringifiedChat);

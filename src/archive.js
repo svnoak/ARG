@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
+
 function Archive() {
+  document.querySelector("#inventoryNav").classList.remove("notification")
   return (
    <div className="pageWrapper">
    <div className="archiveWrap">

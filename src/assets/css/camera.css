@@ -93,13 +93,16 @@ html{
     z-index: 2;
 }
 
-#prompt{
-    color: snow;
-    height: 100vh;
-    width: 100vh;
-    background-color: rgb(43, 43, 43);
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#prompt {
+	color: snow;
+	height: 90vh;
+	width: 100vw;
+	background-color: rgb(43, 43, 43);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+    border-radius: 100px;
 }
