@@ -51,6 +51,8 @@ class Dialog
         if( $ending ) $endingResponse = mysqli_query($mysqli, "UPDATE User SET ending='$ending' WHERE id = $userID");
         $rewardQuery = mysqli_query($mysqli, "SELECT reward FROM Dialog WHERE `order` = $dialogID");
         $rewardID = $rewardQuery->fetch_object()->reward;
+        if( $rewardID == 3 ) mysqli_query($mysqli, "DELETE FROM UserInventory WHERE `user`=$userID AND `item`=1");
+
         $rewardResponse = true;
         if( $rewardID != null ){
             $rewardExists_query = mysqli_query($mysqli, "SELECT * FROM UserInventory WHERE user = $userID AND item = $rewardID ");
