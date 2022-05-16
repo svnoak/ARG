@@ -12,7 +12,7 @@
           
           </a-assets>
 
-          <a-image onClick={() => props.handler("trigger")} id="npc" src="#image" npc look-at="[camera]" position="0 -10 -1" height="2" width="1"></a-image>
+          <a-image onClick={() => props.handler("trigger")} id="npc" src="#image" npc look-at="[camera]" position="-1 -10 -16" height="4" width="3"></a-image>
             
           <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
           </a-camera>
