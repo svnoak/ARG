@@ -31,7 +31,7 @@ class Camera extends React.Component {
       initialLocation: false,
       usingCamera: false
   }
-    this.debug = true;
+    this.debug = false;
     this.dialogHandler = this.dialogHandler.bind(this);
     this.locationHandler = this.locationHandler.bind(this);
 }
