@@ -34,7 +34,7 @@ function Dialog(props) {
     props.dialog ? 
     <div id="dialogBox" onClick={ () => {props.dialogHandler("trigger")} }>
         {speaker && <div className="speaker">{speaker}</div> }
-        <div className={props.dialog.type}>{props.dialog.text}</div>
+        <div className={props.dialog.type}><span>{props.dialog.text}</span><span className="pulse"></span></div>
     </div>
     : <div></div>
     }

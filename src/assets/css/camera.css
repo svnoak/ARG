@@ -110,3 +110,39 @@ html{
     border-radius: 100px;
     font-family: "Special Elite", sans-serif;
 }
+
+#dialogBox div {
+	display: grid;
+	grid-template-columns: 50fr 1fr;
+}
+
+.pulse {
+	height: 1px;
+	width: 1px;
+	transform: scale(1) !important;
+	animation: pulse 2s infinite !important;
+	border-radius: 100% !important;
+	display: block;
+	text-align: right;
+	/* position: relative; */
+	grid-column: 2;
+	align-self: flex-end;
+	/* justify-self: end; */
+}
+  
+  @keyframes pulse {
+      0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgb(255, 255, 255, .7);
+      }
+  
+      70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+      }
+  
+      100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+  }

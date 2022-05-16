@@ -335,7 +335,7 @@ class Camera extends React.Component {
    * @returns {HTMLElement}
    */
   emptyPlace(){
-    this.setState({usingCamera: false});
+    
     let npc = { imageLink: "transparent.png" };
           let dialog = {
             text: "Det verkar inte finnas något här",
@@ -563,6 +563,7 @@ class Camera extends React.Component {
           element = this.emptyPlace();
         }
       }
+      /* element = this.emptyPlace(); */
 
       return element;
   }
