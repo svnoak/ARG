@@ -11,6 +11,7 @@ import AlvkungenRunes from './components/puzzles/AlvkungenRunes';
 import AlvBattle from './components/puzzles/AlvBattle';
 import KvarnLock from './components/puzzles/Kvarnen';
 import PaperPickup from './components/puzzles/PaperPickup';
+import FinalDialog from "./components/FinalDialog"
 import "./assets/css/puzzle.css"
 
 class Camera extends React.Component {
@@ -159,7 +160,7 @@ class Camera extends React.Component {
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
     const json = await response.json();
-      if( placeID == "6" ){
+      if( placeID == "6" || placeID == "9"){
         let allNPCs = await this.fetchNPCS();
         allNPCs.push(json.npc);
         json.npc = allNPCs;
@@ -513,6 +514,15 @@ class Camera extends React.Component {
                     dialogTriggered = {this.state.dialogTriggered} 
                     dialogHandler = {this.dialogHandler}
                   />
+              } else if ( this.state.place.id == "9" ){
+                element = <FinalDialog
+                  npc = {this.state.npc}
+                  user = {this.state.user}
+                  dialog = {currentDialog}
+                  triggerHandler = {this.triggerHandler}
+                  dialogTriggered = {this.state.dialogTriggered} 
+                  dialogHandler = {this.dialogHandler}
+                />
               } else {
                 element = <Dialog 
                 npc = {this.state.npc}
