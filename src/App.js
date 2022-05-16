@@ -13,6 +13,7 @@ import Login from "./Login.js";
 import Locations from "./locations.js";
 import Creatures from "./creatures.js";
 import Inventory from "./inventory.js";
+import End from "./End.js";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/camera" element={<Camera />} />
         <Route path="/vasen" element={<Creatures />} />
         <Route path="/saker" element={<Inventory />} />
+        <Route path="/end" element={<End />} />
     </Routes>
     <NavBar />
     </BrowserRouter>  
