@@ -21,7 +21,7 @@ class User
     // Gets user from DB and returns the user id object
     static function login($username, $password){
         global $mysqli;
-        $user = mysqli_query($mysqli, "SELECT id, name FROM User WHERE name = '$username' AND password = $password");
+        $user = mysqli_query($mysqli, "SELECT id, name, ending FROM User WHERE name = '$username' AND password = $password");
             return $user->fetch_object();
     }
 
