@@ -17,13 +17,21 @@ const Locations = () => {
     fetch(request)
       .then((response) => response.json())
       .then((data) => {
+        // I don't get it done with two conditions in one for some fucking reason.
+/*         const filter1 = data.filter(d => d.id != "8");
+        const filter2 = filter1.filter(d => d.id != "7"); */
         setData(data);
       });
   }
 
   function buttonClick(propid) {
-    setViewer(data[propid - 1]);
+    const item = getItem(propid);
+    setViewer(item);
     setShow(true);
+  }
+
+  function getItem(id){
+    return data.find( item => item.id == id );
   }
 
   return (
@@ -40,12 +48,13 @@ const Locations = () => {
                 }}
                 className="buttons"
               >
-                {prop.name}
+                <img className="thumbnail" alt={"Thumbnail på " + prop.name}  src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}/>
               </div>
             );
           })}
         </div>
-        <div className="viewpanel">
+      </div>
+      <div className="viewpanel">
           {show ? (
             <img alt="Bild på plats"
               visi
@@ -53,8 +62,7 @@ const Locations = () => {
             />
           ) : null}
         </div>
-        <div className="textPanel">{viewer.infoText}</div>
-      </div>
+        {show && <ul className="textPanel">{ viewer.infoText.split(",").map(e => <li>{e}</li>) }</ul> }
     </div>
   );
 };

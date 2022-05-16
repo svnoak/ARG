@@ -11,6 +11,7 @@ import AlvkungenRunes from './components/puzzles/AlvkungenRunes';
 import AlvBattle from './components/puzzles/AlvBattle';
 import KvarnLock from './components/puzzles/Kvarnen';
 import PaperPickup from './components/puzzles/PaperPickup';
+import FinalDialog from "./components/FinalDialog"
 import "./assets/css/puzzle.css"
 
 class Camera extends React.Component {
@@ -40,6 +41,7 @@ class Camera extends React.Component {
    * Shows waiting element if Locations are still initialized.
    */
   async componentDidMount(){
+    document.querySelector("#cameraNav").classList.remove("notification");
     localStorage.getItem("arg_tipIndex") ?? localStorage.setItem("arg_tipIndex", 0);
     const waiting = document.querySelector("#waiting");
     if( !localStorage.getItem("locations") ){
@@ -158,7 +160,7 @@ class Camera extends React.Component {
     const request = new Request(`https://dev.svnoak.net/api/place/${placeID}/${userID}`);
     const response = await fetch(request);
     const json = await response.json();
-      if( placeID == "6" ){
+      if( placeID == "6" || placeID == "9"){
         let allNPCs = await this.fetchNPCS();
         allNPCs.push(json.npc);
         json.npc = allNPCs;
@@ -243,18 +245,21 @@ class Camera extends React.Component {
         userInput = document.querySelector("input").value
       }
       
-      answer = userInput ? userInput : "Inget svar"; 
+      answer = userInput ? userInput : "Inget svar";
     }
 
     // Move players forward in story or give appropriate puzzlefeedback.
     let dialogDone = await this.markDialogDone(dialog, answer);
     if( dialogDone.ending )  localStorage.setItem("arg_ending", dialogDone.ending);
-    console.log(dialogDone);
+      console.log(dialog.camera);
+
+      if ( dialog.chat ) document.querySelector("#chatNav").classList.add("notification");
+      if( dialog.reward && dialog.type !== "puzzle"  ) document.querySelector("#inventoryNav").classList.add("notification");
 
       if( dialogDone.done ){
-
-        console.log("DIALOG DOEN!");
-
+        console.log(dialog.camera)
+        if( dialog.reward && dialog.type === "puzzle") document.querySelector("#inventoryNav").classList.add("notification");
+        
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
 
@@ -263,8 +268,8 @@ class Camera extends React.Component {
 
           // Whole special case for the final dialogs;
           let userEnding = localStorage.getItem("arg_ending");
-          console.log(userEnding)
-          if( userEnding ){
+          console.log(dialog)
+          if( userEnding && dialog.id == "22"){
             console.log("USER ENDING EXISTS");
             this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding || dialog.ending == undefined )} , this.setState({index: this.state.index + 1}));
             localStorage.setItem("arg_tipIndex", "0");
@@ -294,7 +299,6 @@ class Camera extends React.Component {
       } else {
         this.setState({answer: answer});
       }
-      console.log(answer);
   }
 
   /**
@@ -331,6 +335,7 @@ class Camera extends React.Component {
    * @returns {HTMLElement}
    */
   emptyPlace(){
+    
     let npc = { imageLink: "transparent.png" };
           let dialog = {
             text: "Det verkar inte finnas något här",
@@ -509,6 +514,15 @@ class Camera extends React.Component {
                     dialogTriggered = {this.state.dialogTriggered} 
                     dialogHandler = {this.dialogHandler}
                   />
+              } else if ( this.state.place.id == "9" ){
+                element = <FinalDialog
+                  npc = {this.state.npc}
+                  user = {this.state.user}
+                  dialog = {currentDialog}
+                  triggerHandler = {this.triggerHandler}
+                  dialogTriggered = {this.state.dialogTriggered} 
+                  dialogHandler = {this.dialogHandler}
+                />
               } else {
                 element = <Dialog 
                 npc = {this.state.npc}
@@ -536,7 +550,6 @@ class Camera extends React.Component {
 
               // Create some sort of notification and save newly income chat in localStorage
               else if( currentDialog.type == "chat" ){
-                document.querySelector("nav > a:first-child").classList.add("notification");
                 let chatMessages = this.state.dialog.filter( dialog => dialog.type == "chat" );
                 let stringifiedChat = JSON.stringify(chatMessages);
                 localStorage.setItem("arg_dialog", stringifiedChat);
@@ -550,6 +563,7 @@ class Camera extends React.Component {
           element = this.emptyPlace();
         }
       }
+      /* element = this.emptyPlace(); */
 
       return element;
   }
@@ -615,7 +629,7 @@ function LocationList(props){
  * @returns {HTML Element} 
  */
 function CameraPrompt(props){
-  let prompt = localStorage.getItem("arg_puzzleTips") ? "Titta på puzzlet" : "Se dig omkring"
+  let prompt = localStorage.getItem("arg_puzzleTips") ? "Tryck för att titta på puzzlet" : "Tryck för att se dig omkring"
   return(
     <div id="prompt" onClick={() => props.track()}>
       <div id="camera"></div>

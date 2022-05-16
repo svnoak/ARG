@@ -6,11 +6,11 @@
  function AlvkungenRunes(props){
     return(
       <div id="puzzleBox">
-        <img src={props.image} alt="Runor från Alvkungen"/>
-        <p className="info">{props.text}</p>
+        <img src={"https://dev.svnoak.net/assets/images/" +  props.image} alt="Runor från Alvkungen"/>
+        <img src={"https://dev.svnoak.net/assets/images/pusselmoment_bokstäver.png"} alt="Runor från Alvkungen"/>
+        <p className="text">{props.text}</p>
         <input type="text"></input>
-        { props.answer ? <div className="wrongAnswer">"{props.answer}" verkar inte helt rätt. Jag kanske borde fråga Anon...</div> : <div></div> }
-        <button onClick={ () => props.handler() }>Nu vet jag!</button>
+        <button onClick={ () => props.handler() }>Detta är det!</button>
       </div>
     )
   }

@@ -18,8 +18,13 @@ function Dialog(props) {
         <a-assets>
         { props.npc &&  <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + props.npc.imageLink}></img> }
         </a-assets>
-      
-        { props.npc && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="4" width="3" ></a-image> }
+
+        { props.npc && props.npc.id == "2" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -4" height="4" width="6" ></a-image> }
+        { props.npc && props.npc.id == "3" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -15" height="4" width="6" ></a-image> }
+        { props.npc && props.npc.id == "4" && <a-image id="npc" src="#image" npc look-at="[camera]" position="-10 8 -20" height="4" width="6" ></a-image> }
+        { props.npc && props.npc.id == "5" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 8" height="5" width="6" ></a-image> }
+        { props.npc && props.npc.id == "8" && <a-image id="npc" src="#image" npc look-at="[camera]" position="16 0 -15" height="4" width="6" ></a-image> }
+
           
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'></a-camera>
             
@@ -29,7 +34,7 @@ function Dialog(props) {
     props.dialog ? 
     <div id="dialogBox" onClick={ () => {props.dialogHandler("trigger")} }>
         {speaker && <div className="speaker">{speaker}</div> }
-        <div className={props.dialog.type}>{props.dialog.text}</div>
+        <div className={props.dialog.type}><span>{props.dialog.text}</span><span className="pulse"></span></div>
     </div>
     : <div></div>
     }

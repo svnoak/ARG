@@ -22,8 +22,13 @@ const Inventory = () => {
   }
 
   function buttonClick(propid) {
-    setViewer(data[propid - 1]);
+    const item = getItem(propid);
+    setViewer(item);
     setShow(true);
+  }
+
+  function getItem(id){
+    return data.find( item => item.id == id );
   }
 
   return (
@@ -40,22 +45,21 @@ const Inventory = () => {
                 }}
                 className="buttons"
               >
-                {prop.name}
+                <img className="thumbnail" alt={"Thumbnail på " + prop.name}  src={"https://dev.svnoak.net/assets/images/" + prop.imageLink}/>
               </div>
             );
           })}
         </div>
-
-        <div className="viewpanel">
-          {show ? (
-            <img alt="Bild på föremål"
-              visi
+      </div>
+      <div className="viewpanel">
+          {show && (
+            <img alt={"Bild på " + viewer.name}
               src={"https://dev.svnoak.net/assets/images/" + viewer.imageLink}
             />
-          ) : null}
+          )}
+          {viewer.type == "image" && viewer.infoText && <img alt={"Bild på " + viewer.name} src={"https://dev.svnoak.net/assets/images/" + viewer.infoText}/> }
         </div>
-        <div className="textPanel">{viewer.infoText}</div>
-      </div>
+        {viewer.type == "text" && <div className="textPanel">{viewer.infoText}</div> }
     </div>
   );
 };

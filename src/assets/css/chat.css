@@ -6,14 +6,16 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    height: 90vh;
+    height: 84vh;
     width: 100vw;
     overflow: hidden;
     display: grid;
     grid-template-rows: 99fr 1fr;
+    background-color: #2D1910;
 }
 
 .messageList{
+    padding-top: 8px;
     background-color: #2D1910;
     overflow-y: scroll;
 }

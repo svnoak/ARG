@@ -40,7 +40,7 @@ html{
 
 #dialogBox {
     position: absolute;
-    bottom: 10vh;
+    bottom: 20vh;
     left: 0;
     padding: 1em;
     background-color: rgba(0,0,0,.9);
@@ -87,19 +87,62 @@ html{
     pointer-events: none;
     background: url('https://dev.svnoak.net/assets/images/camera.png');
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 150vh;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
 }
 
-#prompt{
-    color: snow;
-    height: 100vh;
-    width: 100vh;
-    background-color: rgb(43, 43, 43);
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#prompt {
+	color: snow;
+	height: 90vh;
+	width: 100vw;
+	background-color: rgb(43, 43, 43);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+    border-radius: 100px;
+    font-family: "Special Elite", sans-serif;
 }
+
+#dialogBox div {
+	display: grid;
+	grid-template-columns: 50fr 1fr;
+}
+
+.pulse {
+	height: 1px;
+	width: 1px;
+	transform: scale(1) !important;
+	animation: pulse 2s infinite !important;
+	border-radius: 100% !important;
+	display: block;
+	text-align: right;
+	/* position: relative; */
+	grid-column: 2;
+	align-self: flex-end;
+	/* justify-self: end; */
+}
+  
+  @keyframes pulse {
+      0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgb(255, 255, 255, .7);
+      }
+  
+      70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+      }
+  
+      100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+  }

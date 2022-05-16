@@ -15,13 +15,9 @@ function Alvkungen(props) {
         </a-assets>
       
 
-
-        <a-image src="#6" npc look-at="[camera]" position="0 0 -4" height="2" width="2"></a-image>
-        <a-image src="#8" npc look-at="[camera]" position="-3 0 -10" height="2" width="2"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-1.8 1 -10" height="1" width="1"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-4 1.5 -13" height="1" width="1"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-5 1 -10" height="1" width="1"></a-image>
-
+        { console.log(props.dialog.scene) }
+        {props.dialog.scene != "final" && <a-image src="#4" npc look-at="[camera]" position="0 0 -10" height="2" width="2"></a-image> }
+        {props.dialog.scene == "final" && <a-image src="#7" npc look-at="[camera]" position="0 0 -5" height="2" width="2"></a-image>}
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
 
         </a-camera>

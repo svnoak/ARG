@@ -25,65 +25,84 @@ code {
   background-color: #1B180F;
   width: 100vw;
   height: 10vh;
-  position: absolute;
+  position: fixed;
   z-index: 3;
   left: 0;
   bottom: 0;
 }
 
 .buttonWrapper {
-  background-color: black;
-  width: 100vw;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	background-color: #2D1910;
+	/* width: 100vw; */
+	/* height: 90vh; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* margin-top: 5vh; */
 }
 
 .buttongrid {
-  grid-gap: 2px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+	grid-gap: 10px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	/* grid-template-rows: repeat(4, 1fr); */
+	/* position: absolute; */
+	/* top: 2vh; */
+	/* width: 80vw; */
 }
 
 .buttons {
-  border-radius: 10px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
+	border-radius: 15px;
+	background-color: rgba(0,0,0,.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 20vw;
+	width: 20vw;
+	overflow: hidden;
+}
+
+.thumbnail {
+	max-height: 100%;
+	/* max-width: 100%; */
 }
 
 .viewpanel {
-  border-radius: 10px;
-  height: 30vh;
-  width: 70vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50vw;
-  background-color: black;
-  margin: 10px 0px;
+	border-radius: 10px;
+	/* height: 30vh; */
+	/* width: 70vw; */
+	display: flex;
+  flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 50vw;
+	/* background-color: #2D1910; */
+	margin: 10px 0px;
+/* 	position: absolute;
+	top: 40vh; */
 }
 
 .viewpanel img {
-  width: 60%;
+	max-width: 80vw;
+	max-height: 40vh;
 }
 
 .textPanel {
-  border-radius: 10px;
-  height: 30vh;
-  width: 55vw;
-  display: flex;
-  flex-wrap: wrap;
-  width: 70vw;
-  background-color: white;
-  padding: 5px;
-  box-sizing: border-box;
-  overflow-y: auto;
+	/* border-radius: 10px; */
+	/* height: 30vh; */
+	width: 55vw;
+	/* display: flex; */
+	/* flex-wrap: wrap; */
+	width: 80vw;
+	/* background-color: white; */
+	/* padding: 5px; */
+	/* box-sizing: border-box; */
+	/* overflow-y: auto; */
+/* 	position: absolute;
+	top: 70vh; */
+  color:#FCF4C6;
+  font-family: 'Special Elite', serif;
 }
 
 .archiveWrap {
@@ -120,40 +139,51 @@ code {
 }
 
 .pageWrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 90vh;
+	height: 80vh;
 	width: 100vw;
 	position: absolute;
 	top: 0;
 	left: 0;
-  background-color: #2D1910;
+	background-color: #2D1910;
+	display: grid;
+	grid-template-rows: 10vh auto 1fr 1fr;
+	overflow: scroll;
+	justify-items: center;
+  padding-bottom: 30vh;
+}
+
+li:first-child {
+	list-style: none;
+	margin-left: -14px;
 }
 
 .back-arrow {
-	height: 4vh;
-	position: absolute;
-	top: 3vh;
-	left: 6vw;
-	width: 4vw;
-  color: #FCF4C6;
+	/* height: 4vh; */
+	/* position: absolute; */
+	/* top: 3vh; */
+	/* left: 6vw; */
+	width: 100vw;
+	/* padding-left: 4vw; */
+	display: flex;
+	align-items: center;
 }
 
 .zmdi.zmdi-arrow-left {
 	height: 4vh;
-	position: absolute;
+/* 	position: absolute; */
+  color: #FCF4C6;
+  margin-left: 8vw;
 }
 
 .navWrap .zmdi {
   color: #FCF4C6;
 }
 
-.navWrap a .notification {
-  color: red;
-  transform: scale(1);
-	animation: pulse 2s infinite;
-  border-radius: 100%;
+.notification {
+  color: red !important;
+  transform: scale(1) !important;
+	animation: pulse 2s infinite !important;
+  border-radius: 100% !important;
 }
 
 @keyframes pulse {
