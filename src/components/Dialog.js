@@ -19,7 +19,7 @@ function Dialog(props) {
         { props.npc &&  <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + props.npc.imageLink}></img> }
         </a-assets>
 
-        { props.npc && props.npc.id == "2" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -4" height="4" width="6" ></a-image> }
+        { props.npc && props.npc.id == "2" && <a-image id="npc" src="#image" npc look-at="[camera]" position="4 0 -8" height="4" width="6" ></a-image> }
         { props.npc && props.npc.id == "3" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -15" height="4" width="6" ></a-image> }
         { props.npc && props.npc.id == "4" && <a-image id="npc" src="#image" npc look-at="[camera]" position="-10 8 -20" height="4" width="6" ></a-image> }
         { props.npc && props.npc.id == "5" && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 8" height="5" width="6" ></a-image> }

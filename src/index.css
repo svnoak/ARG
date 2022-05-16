@@ -202,3 +202,41 @@ li:first-child {
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	}
 }
+
+.outro ~ nav {
+	display: none;
+}
+
+.outro {
+	background-color: #FCF4C6;
+	font-family: 'Special Elite', cursive;
+	word-wrap: break-word;
+	padding: 0 10px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+p {
+	margin: .5vh;
+}
+
+button{
+	margin-top: 20px;
+	width: 80vw;
+	height: 70px;
+	border: none;
+	background-color: #1B180F;
+	color: #FCF4C6;
+	font-family: 'Special Elite', cursive;
+	font-size: 30px;
+	border-radius: 15px;
+}
+
+.tidning {
+	width: 95vw;
+}

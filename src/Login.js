@@ -35,6 +35,7 @@ function Login(props) {
 
     return(
         <div className="login-form">
+            <span className="title">V.A.R.G</span>
             { fail && <div className="error">Fel användarnamn eller kod</div> }
             <input id="loginUsername" placeholder="Användarnamn"></input>
             <input id="loginCode" placeholder="Tillgångskod" type="number" pattern="[0-9]*" inputMode="numeric"></input>
@@ -43,4 +44,4 @@ function Login(props) {
     )
 }
 
-export default Login; 
+export default Login;

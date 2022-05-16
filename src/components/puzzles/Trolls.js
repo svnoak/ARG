@@ -45,6 +45,7 @@ const THREE = window.THREE;
           <div className="a-loader-title" style={{display: 'none'}}></div>
       </a-scene>
     <div id="dialogBox">
+        <div className="counter">{count}/11</div>
         <div className="info">{props.text}</div>
     </div>
     <div id="camera"></div>

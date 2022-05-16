@@ -13,6 +13,7 @@ import KvarnLock from './components/puzzles/Kvarnen';
 import PaperPickup from './components/puzzles/PaperPickup';
 import FinalDialog from "./components/FinalDialog"
 import "./assets/css/puzzle.css"
+import { withRouter } from "react-router-dom";
 
 class Camera extends React.Component {
   constructor(props){
@@ -31,7 +32,7 @@ class Camera extends React.Component {
       initialLocation: false,
       usingCamera: false
   }
-    this.debug = false;
+    this.debug = true;
     this.dialogHandler = this.dialogHandler.bind(this);
     this.locationHandler = this.locationHandler.bind(this);
 }
@@ -259,7 +260,7 @@ class Camera extends React.Component {
       if( dialogDone.done ){
         console.log(dialog.camera)
         if( dialog.reward && dialog.type === "puzzle") document.querySelector("#inventoryNav").classList.add("notification");
-        
+        if( dialog.finish ) window.location.href = "/end";
         // See so there are more dialogs to continue to otherwise reset all states
         if( index < dialogLength){
 
@@ -637,5 +638,10 @@ function CameraPrompt(props){
     </div>
   )
 }
+/* 
+function navigateToEnd(){
+  let navigate = useNavigate();
+  navigate("/end");
+} */
  
 export default Camera;
