@@ -19,7 +19,7 @@ function Dialog(props) {
         { props.npc &&  <img id="image" crossOrigin="anonymous" src={"https://dev.svnoak.net/assets/images/" + props.npc.imageLink}></img> }
         </a-assets>
       
-        { props.npc && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="4" width="3" ></a-image> }
+        { props.npc && <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -15" height="4" width="6" ></a-image> }
           
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'></a-camera>
             

@@ -6,7 +6,7 @@
 function Alvkungen(props) {
   console.log(props);
   let speaker;
-  if( props.dialog.speaker ) speaker = props.dialog.speaker == "npc" ? props.npc.name : props.user.username;
+  if( props.dialog.speaker ) speaker = props.dialog.speaker == "player" ? props.user.username : props.dialog.speaker;
     return (
     <>
       <a-scene id="ar-scene" vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;" inspector="" keyboard-shortcuts="" screenshot="" device-orientation-permission-ui="" aframe-inspector-removed-embedded="undefined" cursor="rayOrigin: mouse">
@@ -16,11 +16,11 @@ function Alvkungen(props) {
       
 
 
-        <a-image src="#6" npc look-at="[camera]" position="0 0 -4" height="2" width="1"></a-image>
-        <a-image src="#8" npc look-at="[camera]" position="-3 0 -10" height="2" width="1"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-1.8 1 -10" height="1" width=".5"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-4 1.5 -13" height="1" width=".5"></a-image>
-        <a-image src="#4" npc look-at="[camera]" position="-4 1 -10" height="1" width=".5"></a-image>
+        <a-image src="#6" npc look-at="[camera]" position="0 0 -4" height="2" width="2"></a-image>
+        <a-image src="#8" npc look-at="[camera]" position="-3 0 -10" height="2" width="2"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-1.8 1 -10" height="1" width="1"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-4 1.5 -13" height="1" width="1"></a-image>
+        <a-image src="#4" npc look-at="[camera]" position="-5 1 -10" height="1" width="1"></a-image>
 
         <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
 

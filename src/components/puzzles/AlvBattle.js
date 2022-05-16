@@ -11,7 +11,7 @@
           <img id="image" crossOrigin="anonymous" src="https://dev.svnoak.net/assets/images/alva.png"></img>
           </a-assets>
         
-          <a-image onClick={() => props.handler("trigger")} id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
+          <a-image id="npc" src="#image" npc look-at="[camera]" position="0 0 -6" height="2" width="1"></a-image>
             
           <a-camera camera look-controls rotation-reader arjs-look-controls='smoothingFactor: 0.1'>
           </a-camera>
@@ -21,6 +21,7 @@
       <div id="itemBox" onClick={ () => props.handler() }>
           <img id="itemImage" src={"https://dev.svnoak.net/assets/images/" + props.itemImage}/>
       </div>
+      <div id="camera"></div>
       </>
       )
     }

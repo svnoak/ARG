@@ -267,8 +267,8 @@ class Camera extends React.Component {
 
           // Whole special case for the final dialogs;
           let userEnding = localStorage.getItem("arg_ending");
-          console.log(userEnding)
-          if( userEnding ){
+          console.log(dialog)
+          if( userEnding && dialog.id == "22"){
             console.log("USER ENDING EXISTS");
             this.setState( {dialog: this.state.dialog.filter(dialog => dialog.ending == userEnding || dialog.ending == undefined )} , this.setState({index: this.state.index + 1}));
             localStorage.setItem("arg_tipIndex", "0");
@@ -334,6 +334,7 @@ class Camera extends React.Component {
    * @returns {HTMLElement}
    */
   emptyPlace(){
+    this.setState({usingCamera: false});
     let npc = { imageLink: "transparent.png" };
           let dialog = {
             text: "Det verkar inte finnas något här",

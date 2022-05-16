@@ -21,6 +21,7 @@
       <div id="dialogBox">
           <div className="info">{props.text}</div>
       </div>
+      <div id="camera"></div>
       </>
       )
     }

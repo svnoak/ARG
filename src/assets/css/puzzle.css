@@ -10,6 +10,9 @@
 	align-items: center;
 	flex-direction: column;
 	background-color: #424B46;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 #hastinput {
@@ -37,7 +40,7 @@
 	border-radius: 15px;
 }
 
-.input{
+input{
     height: 3vh;
     width: 50vw;
     font-size: 20px;
@@ -67,4 +70,18 @@
 #itemImage {
 	height: 40vh;
 	transform: rotate(45deg);
+	position: relative;
+	z-index: 4;
+	left: 80vw;
+}
+
+#puzzleBox > img {
+	max-width: 90vw;
+}
+
+.text {
+	text-align: center;
+	font-style: italic;
+	font-family: Special Elite;
+	color: #FCF4C6;
 }

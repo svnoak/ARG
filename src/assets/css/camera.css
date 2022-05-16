@@ -40,7 +40,7 @@ html{
 
 #dialogBox {
     position: absolute;
-    bottom: 10vh;
+    bottom: 20vh;
     left: 0;
     padding: 1em;
     background-color: rgba(0,0,0,.9);
@@ -87,6 +87,9 @@ html{
     pointer-events: none;
     background: url('https://dev.svnoak.net/assets/images/camera.png');
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 150vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -105,4 +108,5 @@ html{
 	top: 0;
 	left: 0;
     border-radius: 100px;
+    font-family: "Special Elite", sans-serif;
 }

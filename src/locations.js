@@ -18,9 +18,9 @@ const Locations = () => {
       .then((response) => response.json())
       .then((data) => {
         // I don't get it done with two conditions in one for some fucking reason.
-        const filter1 = data.filter(d => d.id != "8");
-        const filter2 = filter1.filter(d => d.id != "7");
-        setData(filter2);
+/*         const filter1 = data.filter(d => d.id != "8");
+        const filter2 = filter1.filter(d => d.id != "7"); */
+        setData(data);
       });
   }
 
