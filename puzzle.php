@@ -26,7 +26,7 @@ class Puzzle
         $fileName = $puzzle->jsonLink;
         $path = "../assets/puzzle/$fileName";
         $file = json_decode(file_get_contents($path),true);
-        return $file['solution'] == $answer;
+        return $file['solution'] == strtolower($answer);
     }
 }
 
