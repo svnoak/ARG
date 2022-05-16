@@ -628,7 +628,7 @@ function LocationList(props){
  * @returns {HTML Element} 
  */
 function CameraPrompt(props){
-  let prompt = localStorage.getItem("arg_puzzleTips") ? "Titta på puzzlet" : "Se dig omkring"
+  let prompt = localStorage.getItem("arg_puzzleTips") ? "Tryck för att titta på puzzlet" : "Tryck för att se dig omkring"
   return(
     <div id="prompt" onClick={() => props.track()}>
       <div id="camera"></div>
