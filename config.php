@@ -1,9 +1,9 @@
 <?php
 // Basic connection settings
 $databaseHost = 'localhost';
-$databaseUsername = 'varg';
-$databasePassword = 'q3FMeGyWwfMnHzt4BKW9HEKfTeUAWeFMFcUacxs3SMFqkZwZE4kLHeUvfeAKbZxD';
-$databaseName = 'varg';
+$databaseUsername = 'xxx';
+$databasePassword = 'xxx';
+$databaseName = 'xxx';
 
 // Connect to the database
 $mysqli = mysqli_connect($databaseHost, $databaseUsername, $databasePassword, $databaseName);
